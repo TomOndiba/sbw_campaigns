@@ -1,0 +1,19 @@
+<?php
+
+use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Donation;
+
+$entity = elgg_extract('entity', $vars);
+
+if (!$entity instanceof Campaign) {
+	return;
+}
+
+echo elgg_list_entities([
+	'types' => 'object',
+	'subtypes' => Donation::SUBTYPE,
+	'container_guids' => $entity->guid,
+	'limit' => 20,
+	'offset_key' => 'donations',
+	'no_results' => elgg_echo('campaigns:donations:no_results'),
+		]);

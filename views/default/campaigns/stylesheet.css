@@ -1,0 +1,155 @@
+.campaigns-filter .elgg-state-disabled > a {
+	cursor: not-allowed;
+}
+.campaigns-gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+.campaigns-gallery > li {
+    flex: 0 1 33.3%;
+    border: 1px solid #dcdcdc;
+    padding: 0;
+}
+.campaigns-sidebar .campaigns-gallery > li {
+	flex: 1 1 100%;
+}
+
+.campaigns-card img {
+    width: 100%;
+    height: auto;
+}
+
+.campaigns-card-head,
+.campaigns-card-body,
+.campaigns-card-foot {
+	padding: 10px;
+}
+
+.campaigns-card-head .campaigns-status {
+    float: right;
+    font-size: 13px;
+    background: #f4f4f4;
+    padding: 3px 6px;
+    border-radius: 3px;
+	color: #666;
+}
+.campaigns-card-head .campaigns-status.campaigns-state-active {
+	background: #43AC6A;
+	color: #fff;
+}
+
+.campaigns-profile {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.campaigns-main {
+    flex: 0 0 65%;
+}
+
+.campaigns-sidebar {
+    flex: 0 0 35%;
+}
+
+.campaigns-cover-video iframe {
+    max-width: 100%;
+}
+
+.campaigns-table select {
+    width: auto;
+}
+
+.campaigns-table tr > td,
+.campaigns-table tr > th {
+    width: auto;
+	vertical-align: middle
+}
+
+.campaigns-table tr > td:first-child {
+	width: auto;
+}
+
+.campaigns-table .elgg-text-help {
+    font-size: 12px;
+    line-height: normal;
+    font-style: italic;
+}
+
+.campaigns-give-item-minimimum-donation {
+    margin: 0 10px;
+    font-weight: bold;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+span.campaigns-give-item-stock {
+    font-size: 90%;
+    font-style: italic;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.campaigns-give-item-title {
+    font-size: 18px;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.campaigns-payment-methods img {
+	max-height: 16px;
+    display: inline;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.campaigns-stats {
+    padding: 10px;
+}
+
+.campaigns-progress-container {
+    display: block;
+    height: 15px;
+    background: #ccc;
+    border-radius: 10px;
+    margin: 10px auto;
+    position: relative;
+}
+
+.campaigns-progress-bar {
+    display: block;
+    height: 15px;
+    background: #43AC6A;
+    border-radius: 10px;
+	min-width: 1%;
+	max-width: 100%;
+}
+
+.campaigns-stats-counters > div {
+	display: inline-block;
+	padding: 5px 15px 5px 0;
+	font-size: 12px;
+}
+
+.campaigns-stats-counters > div > .campaigns-stats-counter {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+	.campaigns-profile {
+		flex-wrap: wrap;
+	}
+
+	.campaigns-main {
+		flex: 1 1 100%;
+	}
+
+	.campaigns-sidebar {
+		flex: 1 1 100%;
+	}
+
+	.campaigns-gallery > li {
+		flex: 1 1 100%;
+	}
+}
