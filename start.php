@@ -99,7 +99,7 @@ elgg_register_event_handler('init', 'system', function() {
 	
 	// Cron jobs
 	elgg_register_plugin_hook_handler('cron', 'hourly', [Cron::class, 'endCampaigns']);
-	elgg_register_plugin_hook_handler('cron', 'hourly', [Cron::class, 'launchCampaigns']);
+	elgg_register_plugin_hook_handler('cron', 'hourly', [Cron::class, 'startCampagns']);
 
 	// Search
 	elgg_register_entity_type('object', $subtype);
