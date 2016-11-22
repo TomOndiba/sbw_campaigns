@@ -45,10 +45,7 @@ $metadata = elgg_view_menu('campaign:reward', [
 	'sort_by' => 'priority',
 		]);
 
-$title = elgg_view('output/url', [
-	'text' => $entity->getDisplayName(),
-	'href' => $campaign->getURL(),
-		]);
+$title = $entity->getDisplayName();
 
 $title = elgg_format_element('h3', [
 	'class' => 'elgg-title',
