@@ -5,20 +5,6 @@ if (!$entity instanceof \SBW\Campaigns\Campaign) {
 	return;
 }
 
-if (!$entity->started) {
-	$period = elgg_echo('campaigns:funding_period', [
-		'<strong>' . date('F j, Y', $entity->calendar_start) . '</strong>',
-		date('F j, Y', $entity->calendar_end)
-	]);
-	$stats = elgg_format_element('div', [
-		'class' => 'campaigns-funding-period',
-			], $period);
-	echo elgg_format_element('div', [
-		'class' => 'campaigns-stats',
-	], $stats);
-	return;
-}
-
 $funded_percentage = round((float) $entity->funded_percentage);
 $backers = (int) $entity->backers;
 
@@ -56,6 +42,18 @@ if ($diff > 24 * 60 * 60) {
 	$days = '';
 }
 
+$items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
+foreach ($items as &$item) {
+	$item->addLinkClass('elgg-button elgg-button-action');
+}
+
+$metadata = elgg_view_menu('campaign:profile', [
+	'entity' => $entity,
+	'items' => $items,
+	'class' => 'elgg-menu-hz',
+	'sort_by' => 'priority',
+		]);
+
 ?>
 <div class="campaigns-stats">
 	<div class="campaigns-progress-container">
@@ -69,4 +67,7 @@ if ($diff > 24 * 60 * 60) {
 		<div><?= $backers ?></div>
 		<div><?= $days ?></div>
 	</div>
+</div>
+<div class="campaigns-actions">
+	<?= $metadata ?>
 </div>

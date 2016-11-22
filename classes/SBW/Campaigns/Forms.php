@@ -56,6 +56,14 @@ class Forms {
 				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
 			],
 				[
+				'#type' => 'text',
+				'#label' => elgg_echo('campaigns:field:briefdescription'),
+				'name' => 'briefdescription',
+				'maxlenght' => 200,
+				'required' => true,
+				'value' => elgg_extract('briefdescription', $params, $entity->briefdescription),
+			],
+				[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('campaigns:field:description'),
 				'name' => 'description',
@@ -94,7 +102,7 @@ class Forms {
 				'name' => 'website',
 				'value' => elgg_extract('website', $params, $entity->website),
 			],
-			[
+				[
 				'#type' => 'location',
 				'#label' => elgg_echo('campaigns:field:location'),
 				'name' => 'location',
@@ -126,7 +134,7 @@ class Forms {
 			$target_amount = $entity->target_amount;
 			$donation_minimum = $entity->donation_minimum;
 		}
-		
+
 		$non_editable = [];
 		if (!$entity->started) {
 			// Details that can not be changed after the campaign start

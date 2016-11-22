@@ -8,6 +8,9 @@
 .campaigns-gallery > li {
     flex: 0 1 50%;
     padding: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .campaigns-sidebar .campaigns-gallery > li {
 	flex: 1 1 100%;
@@ -23,8 +26,7 @@
 }
 
 .campaigns-card-head,
-.campaigns-card-body,
-.campaigns-card-foot {
+.campaigns-card-body {
 	padding: 10px;
 }
 
@@ -44,10 +46,11 @@
 .campaigns-profile {
     display: flex;
     flex-wrap: nowrap;
+	justify-content: space-between;
 }
 
 .campaigns-main {
-    flex: 0 0 65%;
+    flex: 0 0 64%;
 }
 
 .campaigns-sidebar {
@@ -105,7 +108,8 @@ span.campaigns-give-item-stock {
     vertical-align: middle;
 }
 
-.campaigns-stats {
+.campaigns-stats,
+.campaigns-actions {
     padding: 10px;
 }
 
@@ -116,6 +120,7 @@ span.campaigns-give-item-stock {
     border-radius: 10px;
     margin: 10px auto;
     position: relative;
+	overflow: hidden;
 }
 
 .campaigns-progress-bar {
@@ -137,6 +142,60 @@ span.campaigns-give-item-stock {
     display: block;
     font-weight: bold;
     font-size: 18px;
+}
+
+.elgg-form-campaigns-edit-about .elgg-fieldset-horizontal .elgg-field,
+.elgg-form-campaigns-edit-reward .elgg-fieldset-horizontal .elgg-field {
+    max-width: 32%;
+    vertical-align: top;
+}
+.elgg-form-campaigns-edit-about .elgg-fieldset-horizontal .elgg-field label {
+	display: block;
+}
+.campaigns-module,
+.campaigns-sidebar .elgg-no-results {
+    border: 1px solid #dcdcdc;
+    background: white;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);
+	margin-bottom: 2%;
+	padding: 10px;
+}
+
+.campaigns-cover-video {
+	margin-bottom: 2%;
+}
+
+.campaigns-sidebar > .campaigns-rewards > li {
+	background: #fff;
+}
+
+.campaigns-data-item {
+	padding: 5px 20px;
+}
+.campaigns-data-item .elgg-icon {
+	color: inherit;
+	width: 20px;
+	line-height: 20px;
+	text-align: center;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+.campaigns-data-item .campaigns-data-item-value {
+	line-height: 20px;
+	vertical-align: middle;
+}
+
+.campaigns-card-head .elgg-menu {
+    float: right;
+}
+
+.elgg-menu-campaign-profile > li:not(:last-child) {
+    margin-right: 5px;
+}
+
+.elgg-menu-campaigns-about-rules > li {
+    margin: 10px 0px;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {

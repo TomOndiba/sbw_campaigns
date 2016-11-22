@@ -35,8 +35,8 @@ $balance = elgg_list_entities_from_relationship([
 	'limit' => 0,
 		]);
 
-echo elgg_view_module('info', elgg_echo('campaigns:balance'), $balance);
+echo elgg_view_module('aside', elgg_echo('campaigns:balance'), $balance);
 
 $form = elgg_view_form('campaigns/edit/payout', [], $vars);
 
-echo elgg_view_module('info', elgg_echo('campaigns:payout:details'), $form);
+echo elgg_view_module('aside', elgg_echo('campaigns:payout:details'), $form);

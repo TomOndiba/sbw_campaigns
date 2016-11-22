@@ -10,7 +10,7 @@ if (!$entity instanceof NewsItem) {
 $icon_size = elgg_extract('size', $vars, 'small');
 $icon = elgg_view_entity_icon($entity, $icon_size);
 
-$content .= elgg_view('campaigns/stats', [
+$content .= elgg_view('campaigns/modules/stats', [
 	'entity' => $container,
 		]);
 

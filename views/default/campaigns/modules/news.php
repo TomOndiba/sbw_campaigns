@@ -19,19 +19,3 @@ echo elgg_list_entities([
 	'pagination_type' => 'infinite',
 	//'no_results' => elgg_echo('campaigns:news:no_results'),
 		]);
-
-
-if ($entity->canWriteToContainer(0, 'object', NewsItem::SUBTYPE)) {
-	$items = [
-			[
-			'name' => 'news:add',
-			'text' => elgg_echo('campaigns:news:add'),
-			'href' => "campaigns/edit/$entity->guid/news#campaigns-news-form",
-		]
-	];
-	echo elgg_view_menu('campaigns:news:module', [
-		'items' => $items,
-		'class' => 'elgg-menu-hz',
-		'entity' => $entity,
-	]);
-}

@@ -21,7 +21,7 @@ if ($player) {
 }
 
 $content = elgg_view('output/longtext', [
-	'value' => elgg_get_excerpt($entity->description),
+	'value' => $entity->briefdescription,
 		]);
 
 $subtitle = [];
@@ -33,28 +33,6 @@ if ($container) {
 	]);
 	$subtitle[] = elgg_echo('byline', [$link]);
 }
-
-$subtitle[] = elgg_echo("campaigns:model:$entity->model");
-
-if ($entity->website) {
-	$subtitle[] = elgg_view('output/url', [
-		'icon' => 'globe',
-		'href' => $entity->website,
-		'target' => '_blank',
-	]);
-}
-
-$items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
-foreach ($items as &$item) {
-	$item->addLinkClass('elgg-button elgg-button-action');
-}
-
-$metadata = elgg_view_menu('campaign:profile', [
-	'entity' => $entity,
-	'items' => $items,
-	'class' => 'elgg-menu-hz',
-	'sort_by' => 'priority',
-		]);
 
 if (!$entity->isPublished()) {
 	$status = elgg_format_element('span', [
@@ -78,7 +56,7 @@ if (!$entity->isPublished()) {
 			], elgg_echo('campaigns:status:starting_soon'));
 }
 
-$stats = elgg_view('campaigns/stats', [
+$stats = elgg_view('campaigns/modules/stats', [
 	'entity' => $entity,
 ]);
 
@@ -95,6 +73,7 @@ $subtitle = elgg_format_element('div', [
 	'class' => 'elgg-subtext',
 		], implode('<br />', $subtitle));
 
+$data = elgg_view('campaigns/modules/data', $vars);
 ?>
 <div class="campaigns-card">
 	<div class="campaigns-card-head elgg-head">
@@ -109,9 +88,9 @@ $subtitle = elgg_format_element('div', [
 		<?= $content ?>
 	</div>
 	<div class="campaigns-card-data">
-		<?= $stats ?>
+		<?= $data ?>
 	</div>
-	<div class="campaigns-card-foot elgg-foot">
-		<?= $metadata ?>
+	<div class="campaigns-card-stats">
+		<?= $stats ?>
 	</div>
 </div>

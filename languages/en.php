@@ -24,6 +24,7 @@ return [
 	'campaigns:field:calendar_end' => 'End date',
 	'campaigns:field:target_amount' => 'Target amount',
 	'campaigns:field:donation_minimum' => 'Minimum donation amount',
+	'campaigns:field:funding_period' => 'Funding period',
 	'campaigns:field:currency' => 'Currency',
 	'campaigns:field:target_unit' => 'Unit type',
 	'campaigns:field:terms' => 'I agree to %s',
@@ -36,6 +37,7 @@ return [
 	'campaigns:field:rules:help' => 'Specify terms and conditions that apply to individual donations',
 	'campaigns:field:quantity' => 'Available quantity',
 	'campaigns:field:location' => 'Location',
+	'campaigns:field:briefdescription' => 'Brief description',
 
 	'campaigns:status:published' => 'Published',
 	'campaigns:status:draft' => 'Draft',
@@ -106,7 +108,7 @@ return [
 	'campaigns:payments:money_pot_fee' => 'Money Pot Campaign Fee',
 	'campaigns:payments:money_pot_fee:help' => 'Enter amount (in percentage) of the donation amount to be withheld by the site',
 
-	'campaigns:funding_period' => 'Funding Period: %s - %s',
+	'campaigns:funding_period' => '%s - %s',
 	'campaigns:ends:in_days' => '%s days left',
 	'campaigns:ends:in_hours' => '%s hours left',
 	'campaigns:ends:in_minutes' => '%s minutes left',
@@ -220,7 +222,7 @@ return [
 	',
 	
 	'campaigns:edit:news' => 'News',
-	'camapigns:news' => 'Campaign news',
+	'campaigns:news' => 'Campaign news',
 	'campaigns:news:add' => 'Add news',
 	'campaigns:news:edit' => 'Edit news',
 

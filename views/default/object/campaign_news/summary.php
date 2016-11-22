@@ -17,14 +17,6 @@ if ($entity->hasIcon($icon_size)) {
 	]);
 }
 
-$content = elgg_view('output/longtext', [
-	'value' => elgg_get_excerpt($entity->description),
-		]);
-
-if ($icon) {
-	$content = elgg_view_image_block($icon, $content);
-}
-
 $subtitle = [];
 $subtitle[] = elgg_view('page/elements/by_line', $vars);
 
@@ -39,6 +31,7 @@ if (!elgg_in_context('widgets')) {
 echo elgg_view('object/elements/summary', [
 	'entity' => $entity,
 	'subtitle' => implode('<br />', $subtitle),
-	'content' => $content,
+	'content' => elgg_get_excerpt($entity->description),
 	'metadata' => $metadata,
+	'icon' => $icon,
 		]);

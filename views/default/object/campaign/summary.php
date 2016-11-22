@@ -9,10 +9,10 @@ $icon_size = elgg_extract('size', $vars, 'large');
 $icon = elgg_view_entity_icon($entity, $icon_size);
 
 $content = elgg_view('output/longtext', [
-	'value' => elgg_get_excerpt($entity->description),
+	'value' => $entity->briefdescription,
 ]);
 
-$content .= elgg_view('campaigns/stats', [
+$content .= elgg_view('campaigns/modules/stats', [
 	'entity' => $entity,
 ]);
 

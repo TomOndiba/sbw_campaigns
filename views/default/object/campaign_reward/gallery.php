@@ -2,8 +2,6 @@
 
 use SBW\Campaigns\Menus;
 use SBW\Campaigns\Reward;
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
 
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof Reward) {
@@ -62,6 +60,7 @@ $subtitle = elgg_format_element('div', [
 ?>
 <div class="campaigns-card">
 	<div class="campaigns-card-head elgg-head">
+		<?= $metadata ?>
 		<h3><?= $title ?></h3>
 		<?= $subtitle ?>
 	</div>
@@ -70,8 +69,5 @@ $subtitle = elgg_format_element('div', [
 	</div>
 	<div class="campaigns-card-body elgg-body">
 		<?= $content ?>
-	</div>
-	<div class="campaigns-card-foot elgg-foot">
-		<?= $metadata ?>
 	</div>
 </div>

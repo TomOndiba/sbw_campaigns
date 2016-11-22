@@ -26,12 +26,6 @@ if ($container instanceof ElggUser) {
 
 elgg_push_breadcrumb($campaign->getDisplayName(), $campaign->getURL());
 
-$items = Menus::getProfileMenuItems($campaign);
-foreach ($items as $item) {
-	$item->addLinkClass('elgg-button elgg-button-action');
-	elgg_register_menu_item('title', $item);
-}
-
 $vars['entity'] = $entity;
 
 $title = $entity->getDisplayName();

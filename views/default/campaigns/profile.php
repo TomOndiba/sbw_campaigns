@@ -8,7 +8,19 @@ if (!$entity instanceof Campaign) {
 	return;
 }
 
-$stats = elgg_view('campaigns/stats', $vars);
+$stats = elgg_view('campaigns/modules/stats', $vars);
+if ($stats) {
+	$stats = elgg_view_module('aside', false, $stats, [
+		'class' => 'campaigns-module',
+	]);
+}
+
+$data = elgg_view('campaigns/modules/data', $vars);
+if ($data) {
+	$data = elgg_view_module('aside', false, $data, [
+		'class' => 'campaigns-module',
+	]);
+}
 
 $video = elgg_view('output/player', [
 	'href' => $entity->video_url,
@@ -21,43 +33,40 @@ if ($video) {
 
 $news = elgg_view('campaigns/modules/news', $vars);
 if ($news) {
-	$news = elgg_view_module('info', elgg_echo('campaigns:news'), $news);
+	$news = elgg_view_module('aside', elgg_echo('campaigns:news'), $news, [
+		'class' => 'campaigns-module',
+	]);
 }
 
 $about = elgg_view('campaigns/modules/about', $vars);
 if ($about) {
-	$about = elgg_view_module('info', elgg_echo('campaigns:about'), $about);
-}
-
-$rules = elgg_view('campaigns/modules/rules', $vars);
-if ($rules) {
-	$rules = elgg_view_module('info', elgg_echo('campaigns:rules'), $rules);
+	$about = elgg_view_module('aside', elgg_echo('campaigns:about'), $about, [
+		'class' => 'campaigns-module',
+	]);
 }
 
 $donations = elgg_view('campaigns/modules/donations', $vars);
 if ($donations) {
-	$donations = elgg_view_module('info', elgg_echo('campaigns:donations'), $donations);
+	$donations = elgg_view_module('aside', elgg_echo('campaigns:donations'), $donations, [
+		'class' => 'campaigns-module',
+	]);
 }
 
+$comments = elgg_view_comments($entity);
+
 $rewards = elgg_view('campaigns/modules/rewards', $vars);
-if ($rewards) {
-	$rewards = elgg_view_module('info', elgg_echo('campaigns:rewards'), $rewards);
-}
 ?>
-<div class="elgg-module campaigns-intro">
-	<?= $stats ?>
-	<?= $video ?>
-</div>
 <div class="elgg-module campaigns-profile">
 	<div class="campaigns-main">
-		<div class="campaigns-details">
-			<?= $news ?>
-			<?= $about ?>
-			<?= $rules ?>
-			<?= $donations ?>
-		</div>
+		<?= $video ?>
+		<?= $about ?>
+		<?= $news ?>
+		<?= $donations ?>
+		<?= $comments ?>
 	</div>
 	<div class="campaigns-sidebar">
+		<?= $stats ?>
+		<?= $data ?>
 		<?= $rewards ?>
 	</div>
 </div>

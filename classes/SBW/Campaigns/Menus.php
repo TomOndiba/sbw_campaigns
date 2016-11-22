@@ -89,16 +89,6 @@ class Menus {
 			return;
 		}
 
-		if ($entity->canEdit()) {
-			$return[] = ElggMenuItem::factory([
-						'name' => 'edit',
-						'text' => elgg_echo('edit'),
-						'icon' => 'pencil',
-						'href' => "campaigns/edit/$entity->guid",
-						'priority' => 600,
-			]);
-		}
-
 		if ($entity->canDelete()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
@@ -118,7 +108,7 @@ class Menus {
 							'text' => elgg_echo('campaigns:manual_start'),
 							'href' => "action/campaigns/start?guid=$entity->guid",
 							'confirm' => elgg_echo('campaigns:manual_start:confirm'),
-							'section' => 'admin',
+								//'section' => 'admin',
 				]);
 			} else if (!$entity->ended) {
 				$return[] = ElggMenuItem::factory([
@@ -126,14 +116,14 @@ class Menus {
 							'text' => elgg_echo('campaigns:manual_end'),
 							'href' => "action/campaigns/end?guid=$entity->guid",
 							'confirm' => elgg_echo('campaigns:manual_end:confirm'),
-							'section' => 'admin',
+								//'section' => 'admin',
 				]);
 			}
 		}
 
 		$profile_items = self::getProfileMenuItems($entity);
 		foreach ($profile_items as $item) {
-			$item->setSection('action');
+			//$item->setSection('action');
 			$return[] = $item;
 		}
 
@@ -227,6 +217,31 @@ class Menus {
 			]);
 		}
 
+		if ($entity->canEdit()) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'edit',
+						'text' => elgg_echo('edit'),
+						'icon' => 'pencil',
+						'href' => "campaigns/edit/$entity->guid",
+						'priority' => 600,
+			]);
+		}
+		
+		if ($entity->canWriteToContainer(0, 'object', NewsItem::SUBTYPE)) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'news:add',
+						'text' => elgg_echo('campaigns:news:add'),
+						'href' => "campaigns/edit/$entity->guid/news#campaigns-news-form",
+			]);
+		}
+
+		if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && !$entity->started) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'rewards:add',
+						'text' => elgg_echo('campaigns:rewards:add'),
+						'href' => "campaigns/edit/$entity->guid/rewards#campaigns-reward-form",
+			]);
+		}
 		return $return;
 	}
 

@@ -24,12 +24,6 @@ if ($container instanceof ElggUser) {
 
 elgg_push_breadcrumb($entity->getDisplayName(), $entity->getURL());
 
-$items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
-foreach ($items as $item) {
-	$item->addLinkClass('elgg-button elgg-button-action');
-	elgg_register_menu_item('title', $item);
-}
-
 $filter_context = elgg_extract('filter_context', $vars);
 
 $vars['entity'] = $entity;
@@ -55,7 +49,7 @@ if (elgg_is_xhr()) {
 $sidebar = elgg_view('campaigns/sidebar', $vars);
 $filter = elgg_view('campaigns/filters/view', $vars);
 
-$layout = elgg_view_layout('content', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
 	'sidebar' => $sidebar,

@@ -39,9 +39,10 @@ if ($guid) {
 
 $title = get_input('title', '');
 $description = get_input('description', '');
+$briefdescription = get_input('briefdescription', '');
 $rules = get_input('rules', '');
 
-if (empty($title) || empty($description) || empty($rules)) {
+if (empty($title) || empty($description) || empty($briefdescription) || empty($rules)) {
 	$error = elgg_echo('campaigns:error:required');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
@@ -105,6 +106,7 @@ $location = get_input('location', '');
 
 $entity->title = htmlentities($title, ENT_QUOTES, 'UTF-8');
 $entity->description = $description;
+$entity->briefdescription = elgg_get_excerpt($briefdescription);
 $entity->rules = $rules;
 $entity->tags = string_to_tag_array($tags);
 $entity->video_url = $video_url;

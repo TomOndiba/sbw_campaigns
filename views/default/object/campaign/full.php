@@ -14,34 +14,20 @@ $body = elgg_format_element('div', [
 	'class' => 'campaigns-full-listing',
 		], $content);
 
-
-$subtitle = [];
-$subtitle[] = elgg_view('page/elements/by_line', $vars);
-
-$subtitle[] = elgg_echo("campaigns:model:$entity->model");
-
-if ($entity->website) {
-	$subtitle[] = elgg_view_icon('globe') . elgg_view('output/url', [
-		'href' => $entity->website,
-		'target' => '_blank',
-	]);
-}
-
-$params = $vars;
-$params['sort_by'] = 'priority';
-$params['class'] = 'elgg-menu-hz';
-$metadata = elgg_view_menu('entity', $params);
-
-$summary = elgg_view('object/elements/summary', [
-	'entity' => $entity,
-	'title' => false,
-	'subtitle' => implode('<br />', $subtitle),
-	'metadata' => $metadata,
-		]);
+//$menu = elgg()->menus->getMenu('entity', [
+//	'entity' => $entity,
+//	'handler' => 'campaigns',
+//]);
+//
+//foreach ($menu->getSections() as $section => $items) {
+//	foreach ($items as $item) {
+//		elgg_register_menu_item('title', $item);
+//	}
+//}
 
 echo elgg_view('object/elements/full', [
 	'entity' => $entity,
-	'summary' => $summary,
+	'summary' => '',
 	'body' => $body,
-	'icon' => $icon,
+	'icon' => '',
 ]);

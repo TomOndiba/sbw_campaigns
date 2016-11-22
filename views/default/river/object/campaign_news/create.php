@@ -33,7 +33,7 @@ $summary = elgg_echo('river:create:object:campaign_news', [$subject_link, $objec
 
 $vars['summary'] = $summary;
 $vars['message'] = elgg_get_excerpt($object->description);
-$vars['attachments'] = elgg_view('campaigns/stats', [
+$vars['attachments'] = elgg_view('campaigns/modules/stats', [
 	'entity' => $object,
 ]);
 

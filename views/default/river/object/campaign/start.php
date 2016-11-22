@@ -8,7 +8,7 @@ if (!$object) {
 }
 
 $vars['message'] = elgg_get_excerpt($object->description);
-$vars['attachments'] = elgg_view('campaigns/stats', [
+$vars['attachments'] = elgg_view('campaigns/modules/stats', [
 	'entity' => $object,
 ]);
 
