@@ -174,6 +174,49 @@ class Menus {
 	}
 
 	/**
+	 * Setup news item menu
+	 *
+	 * @param string         $hook   "register"
+	 * @param string         $type   "menu:entity"
+	 * @param ElggMenuItem[] $return Menu items
+	 * @param array          $params Hook params
+	 * @return ElggMenuItem[]
+	 */
+	public static function setupNewsEntityMenu($hook, $type, $return, $params) {
+
+		$entity = elgg_extract('entity', $params);
+		if (!$entity instanceof NewsItem) {
+			return;
+		}
+
+		$campaign = $entity->getContainerEntity();
+
+		if ($entity->canEdit()) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'edit',
+						'text' => elgg_echo('edit'),
+						'icon' => 'pencil',
+						'href' => "campaigns/edit/$campaign->guid/news?guid=$entity->guid#campaigns-news-form",
+						'priority' => 600,
+			]);
+		}
+
+		if ($entity->canDelete()) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'delete',
+						'text' => elgg_echo('delete'),
+						'icon' => 'delete',
+						'href' => "action/entity/delete?guid=$entity->guid",
+						'confirm' => true,
+						'is_action' => true,
+						'priority' => 700,
+			]);
+		}
+
+		return $return;
+	}
+
+	/**
 	 * Returns campaign profile menu items
 	 *
 	 * @param Campaign $entity Campaign entity
