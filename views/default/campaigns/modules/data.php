@@ -79,6 +79,26 @@ if ($entity->website) {
 		]),
 	];
 }
+	
+if (elgg_extract('full_view', $vars, false)) {
+	$data['tags'] = [
+		'icon' => 'tag',
+		'label' => elgg_echo('campaigns:field:tags'),
+		'value' => elgg_view('output/tags', [
+			'entity' => $entity,
+			'icon_class' => 'hidden',
+		]),
+	];
+
+	$managers = elgg_view('campaigns/modules/managers', $vars);
+	if ($managers) {
+		$data['managers'] = [
+			'icon' => 'envelope',
+			'label' => elgg_echo('campaigns:field:managers'),
+			'value' => $managers,
+		];
+	}
+}
 
 foreach ($data as $item) {
 	?>

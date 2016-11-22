@@ -20,7 +20,6 @@ $links[] = [
 	'class' => 'elgg-lightbox',
 ];
 
-
 $terms = elgg_get_plugin_setting('terms:donor', 'sbw_campaigns');
 if ($terms) {
 	$links[] = [

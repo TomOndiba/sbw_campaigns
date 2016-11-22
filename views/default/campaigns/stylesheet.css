@@ -198,6 +198,12 @@ span.campaigns-give-item-stock {
     font-weight: bold;
 }
 
+.campaigns-data-item-value > ul,
+.campaigns-data-item-value > .clearfix {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;

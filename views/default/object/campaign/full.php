@@ -5,9 +5,6 @@ if (!$entity instanceof \SBW\Campaigns\Campaign) {
 	return;
 }
 
-$icon_size = elgg_extract('size', $vars, 'small');
-$icon = elgg_view_entity_icon($entity, $icon_size);
-
 $content = elgg_view('campaigns/profile', $vars);
 
 $body = elgg_format_element('div', [
