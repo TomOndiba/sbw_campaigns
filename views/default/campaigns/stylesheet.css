@@ -6,12 +6,13 @@
     flex-wrap: wrap;
 }
 .campaigns-gallery > li {
-    flex: 0 1 33.3%;
+    flex: 0 1 50%;
     border: 1px solid #dcdcdc;
-    padding: 0;
+    padding: 10px;
 }
 .campaigns-sidebar .campaigns-gallery > li {
 	flex: 1 1 100%;
+	padding: 0;
 }
 
 .campaigns-card img {
