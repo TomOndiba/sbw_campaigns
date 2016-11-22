@@ -57,7 +57,7 @@ if ($container->model !== 'relief') {
 }
 
 if ($donation_minimum < $container->donation_minimum) {
-	$error = elgg_echo('campaigns:error:reward_minimum_too_low', [$container->donation_minimum]);
+	$error = elgg_echo('campaigns:error:reward_minimum_too_low', [$price->getConvertedAmount()]);
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
 
