@@ -24,7 +24,9 @@ use SBW\Campaigns\Reward;
  * @property int    ${'terms:campaigner'}
  * @property int    $net_amount
  * @property int    $gross_amount
+ * @property int    $avg_donation_amount
  * @property float  $funded_percentage
+ * @property int    $processor_fees
  * @property int    $backers
  * @property string $payout_instructions
  */

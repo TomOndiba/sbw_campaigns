@@ -34,6 +34,18 @@ $address_part = function(TransactionInterface $transaction, $part) {
 	return $shipping->$part ?: '';
 };
 
+$billing_part = function(TransactionInterface $transaction, $part) {
+	$shipping = $transaction->getOrder()->getBillingAddress();
+	if (!$shipping) {
+		return '';
+	}
+	return $shipping->$part ?: '';
+};
+
+$transaction_meta = function(TransactionInterface $transaction, $name) {
+	return $transaction->$meta ?: '';
+};
+
 $headers = [
 	'invoice' => function(TransactionInterface $transaction) {
 		return $transaction->guid;
@@ -57,10 +69,6 @@ $headers = [
 		$customer = $transaction->getCustomer();
 		return $customer ? $customer->name : '';
 	},
-	'payee_email' => function(TransactionInterface $transaction) {
-		$customer = $transaction->getCustomer();
-		return $customer ? $customer->email : '';
-	},
 	'merchant' => function(TransactionInterface $transaction) {
 		$merchant = $transaction->getMerchant();
 		return $merchant ? $merchant->title : '';
@@ -75,12 +83,24 @@ $headers = [
 		}
 		return '';
 	},
+	'first_name' => $transaction_meta,
+	'last_name' => $transaction_meta,
+	'email' => $transaction_meta,
+	'phone' => $transaction_meta,
+	'company_name' => $transaction_meta,
+	'tax_id' => $transaction_meta,
 	'street_address' => $address_part,
 	'extended_address' => $address_part,
 	'locality' => $address_part,
 	'region' => $address_part,
 	'postal_code' => $address_part,
 	'country_code' => $address_part,
+	'billing_street_address' => $billing_part,
+	'billing_extended_address' => $billing_part,
+	'billing_locality' => $billing_part,
+	'billing_region' => $billing_part,
+	'billing_postal_code' => $billing_part,
+	'billing_country_code' => $billing_part,
 ];
 
 $fh = @fopen('php://output', 'w');

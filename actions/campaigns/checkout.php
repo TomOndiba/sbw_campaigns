@@ -25,12 +25,18 @@ if (!$donor_terms || !$campaign_rules) {
 }
 
 $email = get_input('email');
-$name = get_input('name');
+$first_name = get_input('first_name');
+$last_name = get_input('last_name');
+$company_name = get_input('compnay_name');
+$tax_id = get_input('tax_id');
+$phone = get_input('phone');
 
-if (!$name || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!$first_name || $last_name || !$phone || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	$error = elgg_echo('campaigns:error:required');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
+
+$name = "$first_name $last_name";
 
 $contact = (array) get_input('contact', []);
 $street_address = elgg_extract('street_address', $contact);
@@ -60,28 +66,59 @@ $ia = elgg_set_ignore_access(true);
 $users = get_user_by_email($email);
 if ($users) {
 	$user = array_shift($users);
-	$user->campaigns_street_address = $street_address;
-	$user->campaigns_extended_address = $extended_address;
-	$user->campaigns_locality = $locality;
-	$user->campaigns_region = $region;
-	$user->campaigns_postal_code = $postal_code;
-	$user->campaigns_country_code = $country_code;
+} else {
+	$register = get_input('register');
+	$username = get_input('username');
+	$password = get_input('password');
 
-	$subscribe = (bool) get_input('subscribe');
-	if ($subscribe) {
-		$methods = elgg_get_notification_methods();
-		foreach ($methods as $method) {
-			elgg_add_subscription($user->guid, $method, $campaign->guid);
+	if ($register && $username && $password) {
+		try {
+			$guid = register_user($username, $password, $name, $email);
+		} catch (Exception $e) {
+			register_error($e->getMessage());
+		}
+
+		if ($guid) {
+			$user = get_entity($guid);
+			$params = array(
+				'user' => $user,
+				'password' => $password,
+			);
+			if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
+				$ia = elgg_set_ignore_access(true);
+				$user->delete();
+				elgg_set_ignore_access($ia);
+			}
 		}
 	}
-} else {
-	$user = new Donor();
-	$user->owner_guid = $campaign->guid;
-	$user->container_guid = $campaign->guid;
-	$user->email = $email;
-	$user->name = $name;
-	$user->access_id = $campaign->access_id;
-	$user->save();
+
+	if (!$user) {
+		$user = new Donor();
+		$user->owner_guid = $campaign->guid;
+		$user->container_guid = $campaign->guid;
+		$user->email = $email;
+		$user->name = $name;
+		$user->access_id = $campaign->access_id;
+		$user->save();
+	}
+}
+
+$user->campaigns_street_address = $street_address;
+$user->campaigns_extended_address = $extended_address;
+$user->campaigns_locality = $locality;
+$user->campaigns_region = $region;
+$user->campaigns_postal_code = $postal_code;
+$user->campaigns_country_code = $country_code;
+$user->campaigns_company_name = $company_name;
+$user->campaigns_tax_id = $tax_id;
+$user->campaigns_phone = $phone;
+
+$subscribe = (bool) get_input('subscribe');
+if ($subscribe) {
+	$methods = elgg_get_notification_methods();
+	foreach ($methods as $method) {
+		elgg_add_subscription($user->guid, $method, $campaign->guid);
+	}
 }
 
 $storage = new SessionStorage();
@@ -112,11 +149,17 @@ $transaction->setOrder($order);
 $transaction->setPaymentMethod($payment_method);
 $transaction->origin = 'campaigns';
 $transaction->email = $email;
+$transaction->first_name = $first_name;
+$transaction->last_name = $last_name;
+$transaction->company_name = $company_name;
+$transaction->tax_id = $tax_id;
+$transaction->phone = $phone;
 $transaction->name = $name;
 $transaction->anonymous = (bool) get_input('anonymize');
 $transaction->owner_guid = $user->guid;
 $transaction->container_guid = $campaign->guid;
 $transaction->access_id = $campaign->write_access_id;
+
 $transaction->save();
 
 elgg_clear_sticky_form('campaigns/checkout');

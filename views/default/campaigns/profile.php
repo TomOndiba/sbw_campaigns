@@ -1,6 +1,7 @@
 <?php
 
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Menus;
 
 $entity = elgg_extract('entity', $vars);
 
@@ -55,6 +56,21 @@ if ($donations) {
 $comments = elgg_view_comments($entity);
 
 $rewards = elgg_view('campaigns/modules/rewards', $vars);
+
+$items = Menus::getPageMenuItems($entity);
+foreach ($items as $item) {
+	elgg_register_menu_item('page', $item);
+}
+
+$menu = elgg_view_menu('page', [
+	'entity' => $entity,
+	'sort_by' => 'priority',
+		]);
+if ($menu) {
+	$menu = elgg_view_module('aside', '', $menu, [
+		'class' => 'campaigns-module',
+	]);
+}
 ?>
 <div class="elgg-module campaigns-profile">
 	<div class="campaigns-main">
@@ -66,6 +82,7 @@ $rewards = elgg_view('campaigns/modules/rewards', $vars);
 	</div>
 	<div class="campaigns-sidebar">
 		<?= $stats ?>
+		<?= $menu ?>
 		<?= $data ?>
 		<?= $rewards ?>
 	</div>

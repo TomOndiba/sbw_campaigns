@@ -9,9 +9,7 @@ foreach ($methods as $method) {
 	$icon = elgg_extract('icon', $method);
 
 	$label = "$icon $name";
-	if (!$fee) {
-		$label .= elgg_echo("campaigns:payment_method:no_fee");
-	} else {
+	if ($fee) {
 		$label .= elgg_echo("campaigns:payment_method:fee", [$fee]);
 	}
 	

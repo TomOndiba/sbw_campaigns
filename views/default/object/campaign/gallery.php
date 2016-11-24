@@ -1,7 +1,10 @@
 <?php
 
+use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Menus;
+
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof \SBW\Campaigns\Campaign) {
+if (!$entity instanceof Campaign) {
 	return;
 }
 
@@ -46,11 +49,11 @@ if (!$entity->isPublished()) {
 	$status = elgg_format_element('span', [
 		'class' => 'campaigns-status campaigns-state-active',
 			], elgg_echo('campaigns:status:ongoing'));
-} else if ($entity->calendar_end < time()) {
+} else if ($entity->ended) {
 	$status = elgg_format_element('span', [
 		'class' => 'campaigns-status campaigns-state-inactive',
 			], elgg_echo('campaigns:status:ended'));
-} else if ($entity->calendar_start < time()) {
+} else if (!$entity->started) {
 	$status = elgg_format_element('span', [
 		'class' => 'campaigns-status campaigns-state-inactive',
 			], elgg_echo('campaigns:status:starting_soon'));
@@ -74,6 +77,19 @@ $subtitle = elgg_format_element('div', [
 		], implode('<br />', $subtitle));
 
 $data = elgg_view('campaigns/modules/data', $vars);
+
+$items = Menus::getProfileMenuItems($entity);
+foreach ($items as &$item) {
+	$item->addLinkClass('elgg-button elgg-button-action');
+}
+
+$metadata = elgg_view_menu('campaign:profile', [
+	'entity' => $entity,
+	'items' => $items,
+	'class' => 'elgg-menu-hz',
+	'sort_by' => 'priority',
+		]);
+
 ?>
 <div class="campaigns-card">
 	<div class="campaigns-card-head elgg-head">
@@ -92,5 +108,8 @@ $data = elgg_view('campaigns/modules/data', $vars);
 	</div>
 	<div class="campaigns-card-stats">
 		<?= $stats ?>
+	</div>
+	<div class="campaigns-actions">
+		<?= $metadata ?>
 	</div>
 </div>

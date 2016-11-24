@@ -1,7 +1,12 @@
 <?php
 
+use hypeJunction\Payments\Amount;
+use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Donation;
+use SBW\Campaigns\Menus;
+
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof \SBW\Campaigns\Campaign) {
+if (!$entity instanceof Campaign) {
 	return;
 }
 
@@ -42,17 +47,28 @@ if ($diff > 24 * 60 * 60) {
 	$days = '';
 }
 
-$items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
-foreach ($items as &$item) {
-	$item->addLinkClass('elgg-button elgg-button-action');
+$sum_donation = 0;
+$count_donation = 0;
+$donations = elgg_get_entities([
+	'types' => 'object',
+	'subtypes' => Donation::SUBTYPE,
+	'container_guids' => $entity->guid,
+	'limit' => 0,
+	'batch' => true,
+]);
+foreach ($donations as $donation) {
+	$count_donation++;
+	$sum_donation += $donation->net_amount;
+}
+$avg_donation = 0;
+if ($count_donation) {
+	$avg_donation = $sum_donation / $count_donation;
 }
 
-$metadata = elgg_view_menu('campaign:profile', [
-	'entity' => $entity,
-	'items' => $items,
-	'class' => 'elgg-menu-hz',
-	'sort_by' => 'priority',
-		]);
+$count = elgg_format_element('span', [
+		'class' => 'campaigns-stats-counter',
+			], (new Amount($avg_donation, $entity->currency))->format());
+$avg_donation = elgg_echo('campaigns:avg_donation', [$count]);
 
 ?>
 <div class="campaigns-stats">
@@ -66,8 +82,6 @@ $metadata = elgg_view_menu('campaign:profile', [
 		<div><?= $funded ?></div>
 		<div><?= $backers ?></div>
 		<div><?= $days ?></div>
+		<div><?= $avg_donation ?></div>
 	</div>
-</div>
-<div class="campaigns-actions">
-	<?= $metadata ?>
 </div>

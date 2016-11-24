@@ -8,7 +8,9 @@ use hypeJunction\Payments\Amount;
 use hypeJunction\Payments\Order;
 use hypeJunction\Payments\OrderInterface;
 use hypeJunction\Payments\ProcessingFee;
+use hypeJunction\Payments\Stripe\Adapter;
 use hypeJunction\Payments\Transaction;
+use hypeJunction\Payments\TransactionInterface;
 
 class Payments {
 
@@ -47,7 +49,7 @@ class Payments {
 		}
 
 		if (elgg_is_active_plugin('payments_stripe')) {
-			$adapter = new \hypeJunction\Payments\Stripe\Adapter();
+			$adapter = new Adapter();
 			$spec = $adapter->getCountrySpec();
 			if (in_array(strtolower($entity->currency), $spec->supported_payment_currencies)) {
 				$percentile = (float) elgg_get_plugin_setting('stripe_percentile_fee', 'sbw_campaigns');
@@ -89,6 +91,30 @@ class Payments {
 				'icon' => elgg_view('output/img', array(
 					'src' => elgg_get_simplecache_url('payments/method/pp-logo-100px.png'),
 					'alt' => elgg_echo('payments:method:paypal'),
+				)),
+				'fee' => implode(' + ', $fee),
+			];
+		}
+
+		if (elgg_is_active_plugin('payments_sofort') && in_array($entity->currency, ['CHF', 'PLN', 'EUR', 'GBP', 'CZK', 'HUF'])) {
+
+			$percentile = (float) elgg_get_plugin_setting('sofort_percentile_fee', 'sbw_campaigns');
+			$flat = (float) elgg_get_plugin_setting('sofort_flat_fee', 'sbw_campaigns');
+
+			$fee = [];
+			if ($percentile) {
+				$fee[] = "{$percentile}%";
+			}
+			if ($flat) {
+				$fee[] = "{$flat}{$entity->currency}";
+			}
+
+			$return[] = [
+				'id' => 'sofort',
+				'name' => elgg_echo('payments:method:sofort'),
+				'icon' => elgg_view('output/img', array(
+					'src' => elgg_get_simplecache_url('payments/method/sofort.png'),
+					'alt' => elgg_echo('payments:method:sofort'),
 				)),
 				'fee' => implode(' + ', $fee),
 			];
@@ -137,12 +163,22 @@ class Payments {
 				break;
 
 			case 'stripe' :
-				$percentile = (float) elgg_get_plugin_setting('wire_percentile_fee', 'sbw_campaigns');
-				$flat = elgg_get_plugin_setting('wire_flat_fee', 'sbw_campaigns', '0');
+				$percentile = (float) elgg_get_plugin_setting('stripe_percentile_fee', 'sbw_campaigns');
+				$flat = elgg_get_plugin_setting('stripe_flat_fee', 'sbw_campaigns', '0');
 
 				if ($percentile || $flat) {
 					$flat = Amount::fromString($flat, $order->getCurrency());
 					$return[] = new ProcessingFee('stripe_fee', $percentile, $flat);
+				}
+				break;
+
+			case 'sofort' :
+				$percentile = (float) elgg_get_plugin_setting('sofort_percentile_fee', 'sbw_campaigns');
+				$flat = elgg_get_plugin_setting('sofort_flat_fee', 'sbw_campaigns', '0');
+
+				if ($percentile || $flat) {
+					$flat = Amount::fromString($flat, $order->getCurrency());
+					$return[] = new ProcessingFee('sofort_fee', $percentile, $flat);
 				}
 				break;
 		}
@@ -418,6 +454,8 @@ class Payments {
 			return;
 		}
 
+		$site = elgg_get_site_entity();
+		$admins = elgg_get_admins();
 		if ($entity->model == 'tipping_point') {
 			$fee = (float) elgg_get_plugin_setting('tipping_point_fee', 'sbw_campaigns', 0);
 			if ($entity->funded_percentage < 100) {
@@ -426,9 +464,7 @@ class Payments {
 				$transactions = new ElggBatch('elgg_get_entities_from_relationship', [
 					'types' => 'object',
 					'subtypes' => Transaction::SUBTYPE,
-					'relationship' => 'merchant',
-					'relationship_guid' => (int) $entity->guid,
-					'inverse_relationship' => false,
+					'container_guids' => (int) $entity->guid,
 					'limit' => 0,
 				]);
 
@@ -436,7 +472,40 @@ class Payments {
 					$params = [
 						'entity' => $transaction,
 					];
-					elgg_trigger_plugin_hook('refund', 'payments', $params, false);
+					$refunded = elgg_trigger_plugin_hook('refund', 'payments', $params, false);
+					if (!$refunded) {
+						$subject = elgg_echo('campaigns:refund:failed:notify:subject');
+						$body = elgg_echo('campaigns:refund:failed:notify:body', [
+							$entity->getDisplayName(),
+							$transaction->getAmount()->format(),
+							$transaction->getCustomer()->name,
+							$transaction->getURL(),
+							$entity->getURL(),
+						]);
+						foreach ($admins as $admin) {
+							notify_user($admin->guid, $site->guid, $subject, $body, [
+								'campaign' => $entity,
+								'transaction' => $transaction,
+								'refunded' => $refunded,
+							], 'email');
+						}
+					} else if ($transaction->getStatus() == TransactionInterface::STATUS_REFUND_PENDING) {
+						$subject = elgg_echo('campaigns:refund:pending:notify:subject');
+						$body = elgg_echo('campaigns:refund:pending:notify:body', [
+							$entity->getDisplayName(),
+							$transaction->getAmount()->format(),
+							$transaction->getCustomer()->name,
+							$transaction->getURL(),
+							$entity->getURL(),
+						]);
+						foreach ($admins as $admin) {
+							notify_user($admin->guid, $site->guid, $subject, $body, [
+								'campaign' => $entity,
+								'transaction' => $transaction,
+								'refunded' => $refunded,
+							], 'email');
+						}
+					}
 				}
 
 				elgg_set_ignore_access($ia);
@@ -449,9 +518,9 @@ class Payments {
 		}
 
 		$ia = elgg_set_ignore_access(true);
-		$donations = new ElggBatch('elgg_get_entities', [
+		$transactions = new ElggBatch('elgg_get_entities_from_relationship', [
 			'types' => 'object',
-			'subtypes' => Donation::SUBTYPE,
+			'subtypes' => Transaction::SUBTYPE,
 			'container_guids' => $entity->guid,
 			'limit' => 0,
 		]);
@@ -463,16 +532,23 @@ class Payments {
 		$order->setCustomer($site);
 		$order->setMerchant($entity);
 
-		foreach ($donations as $donation) {
-			/* @var $donation Donation */
-			$item = new Contribution();
-			$item->setPrice($donation->getNetAmount());
-			$item->title = elgg_echo('campaigns:contribution:from', [$donation->name]);
-			$order->add($item);
+		$transaction_fees = 0;
+		foreach ($transactions as $transaction) {
+			/* @var $donation Transaction */
+			if ($transaction->getStatus() == TransactionInterface::STATUS_PAID) {
+				$item = new Contribution();
+				$item->setPrice($transaction->getAmount());
+				$item->title = elgg_echo('campaigns:contribution:from', [$transaction->getCustomer()->name]);
+				$order->add($item);
+
+				$transaction_fees += $transaction->getProcessorFee()->getAmount();
+			}
 		}
 
 		$commission = new Commission('site_commission', -$fee);
-		$order->setCharges([$commission]);
+		$processor_fee = new ProcessingFee('processor_fee', 0, new Amount(-$transaction_fees, $entity->currency));
+
+		$order->setCharges([$commission, $processor_fee]);
 
 		$balance = new Balance();
 		$balance->setOrder($order);

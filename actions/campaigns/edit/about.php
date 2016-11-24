@@ -98,7 +98,7 @@ if (!$entity->guid || !$entity->started) {
 	}
 }
 
-$access_id = get_input('access_id', '');
+$access_id = (int) get_input('access_id', get_default_access());
 $tags = get_input('tags', '');
 $video_url = get_input('video_url', '');
 $website = get_input('website', '');
@@ -114,6 +114,7 @@ $entity->website = $website;
 $entity->location = $location;
 $entity->{'terms:campaigner'} = $terms;
 $entity->access_id = $access_id;
+$entity->future_access_id = $access_id;
 
 if (!$entity->guid || !$entity->started) {
 	$entity->model = $model;

@@ -1,9 +1,12 @@
 <?php
 
+use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Menus;
+
 $entity_guid = elgg_extract('guid', $vars);
 $entity = get_entity($entity_guid);
 
-if (!$entity instanceof SBW\Campaigns\Campaign) {
+if (!$entity instanceof Campaign) {
 	forward('', '404');
 }
 
@@ -39,6 +42,12 @@ if (elgg_language_key_exists("campaigns:view:{$vars['filter_context']}")) {
 	$title = elgg_echo("campaigns:view:{$vars['filter_context']}", [$entity->getDisplayName()]);
 } else {
 	$title = $entity->getDisplayName();
+}
+
+$items = Menus::getProfileMenuItems($entity);
+foreach ($items as &$item) {
+	$item->addLinkClass('elgg-button elgg-button-action');
+	elgg_register_menu_item('title', $item);
 }
 
 if (elgg_is_xhr()) {

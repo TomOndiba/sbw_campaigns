@@ -11,17 +11,6 @@ $body = elgg_format_element('div', [
 	'class' => 'campaigns-full-listing',
 		], $content);
 
-//$menu = elgg()->menus->getMenu('entity', [
-//	'entity' => $entity,
-//	'handler' => 'campaigns',
-//]);
-//
-//foreach ($menu->getSections() as $section => $items) {
-//	foreach ($items as $item) {
-//		elgg_register_menu_item('title', $item);
-//	}
-//}
-
 echo elgg_view('object/elements/full', [
 	'entity' => $entity,
 	'summary' => '',

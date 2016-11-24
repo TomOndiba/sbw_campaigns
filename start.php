@@ -56,7 +56,12 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_action('campaigns/start', __DIR__ . '/actions/campaigns/start.php', 'admin');
 	elgg_register_action('campaigns/end', __DIR__ . '/actions/campaigns/end.php', 'admin');
 
+	elgg_register_action('campaigns/follow', __DIR__ . '/actions/campaigns/follow.php');
+	elgg_register_action('campaigns/unfollow', __DIR__ . '/actions/campaigns/unfollow.php');
+
 	elgg_register_action('campaigns/checkout', __DIR__ . '/actions/campaigns/checkout.php', 'public');
+
+	elgg_register_action('campaigns/is_registered', __DIR__ . '/actions/campaigns/is_registered.php', 'public');
 	
 	// Menus
 	elgg_register_menu_item('site', [

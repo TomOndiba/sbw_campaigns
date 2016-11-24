@@ -59,6 +59,7 @@ return [
 
 	'campaigns:news:no_results' => 'This campaign hasn\'t published any news yet',
 	'campaigns:rewards:no_results' => 'This campaign does not offer any rewards',
+	'campaigns:transactions:no_results' => 'There are no transactions to display yet',
 
 	'campaigns:terms:campaigner' => 'Campaigner Terms and Conditions',
 	'campaigns:terms:donor' => 'Donor Terms and Conditions',
@@ -102,6 +103,12 @@ return [
 	'campaigns:payments:stripe_percentile_fee:help' => 'Enter percentile amount of the Stripe processing as percentage of the total amount of the donation (e.g. 3.9)',
 	'campaigns:payments:stripe_flat_fee' => 'Stripe processing fee',
 	'campaigns:payments:stripe_flat_fee:help' => 'Enter flat amount of the Stripe processing fee in the currency of the donation (e.g. 0.35)',
+	'campaigns:payments:enable_sofort' => 'Enable Sofort payments',
+	'campaigns:payments:enable_sofort:help' => 'Allow donors to pledge and donate funds via Sofort',
+	'campaigns:payments:sofort_percentile_fee' => 'Sofort processing fee',
+	'campaigns:payments:sofort_percentile_fee:help' => 'Enter percentile amount of the Sofort processing as percentage of the total amount of the donation (e.g. 3.9)',
+	'campaigns:payments:sofort_flat_fee' => 'Sofort processing fee',
+	'campaigns:payments:sofort_flat_fee:help' => 'Enter flat amount of the Sofort processing fee in the currency of the donation (e.g. 0.35)',
 
 	'campaigns:payments:tipping_point_fee' => 'Tipping Point Campaign Fee',
 	'campaigns:payments:tipping_point_fee:help' => 'Enter amount (in percentage) of the donation amount to be withheld by the site',
@@ -220,7 +227,33 @@ return [
 		You can view the campaign details here:
 		%s
 	',
-	
+
+	'campaigns:refund:failed:notify:subject' => 'Automatic refund has failed',
+	'campaigns:refund:failed:notify:body' => '
+		Automatic refund for a tipping point campaign contribution to %s has failed.
+
+		The refund in the amount of %s to %s could not be completed.
+
+		Please refund this transaction manually here:
+		%s
+
+		To view the campaign, please visit:
+		%s
+	',
+
+	'campaigns:refund:pending:notify:subject' => 'Manual refund is required',
+	'campaigns:refund:pending:notify:body' => '
+		Refund for a tipping point campaign contribution to %s must be made manually.
+
+		The refund in the amount of %s to %s is pending.
+
+		Please manually refund the payment and log the transaction here:
+		%s
+
+		To view the campaign, please visit:
+		%s
+	',
+
 	'campaigns:edit:news' => 'News',
 	'campaigns:news' => 'Campaign news',
 	'campaigns:news:add' => 'Add news',
@@ -267,6 +300,10 @@ return [
 
 	'campaigns:checkout:email' => 'Email',
 	'campaigns:checkout:name' => 'Name',
+	'campaigns:checkout:first_name' => 'First Name',
+	'campaigns:checkout:last_name' => 'Last Name',
+	'campaigns:checkout:company_name' => 'Company Name',
+	'campaigns:checkout:tax_id' => 'Tax ID',
 	'campaigns:postal_address:street_address' => 'Street Address',
 	'campaigns:postal_address:extended_address' => 'Street Address 2',
 	'campaigns:postal_address:locality' => 'City/Town',
@@ -290,6 +327,7 @@ return [
 	'campaigns:funded_percentage' => '%s funded',
 	'campaigns:funded' => '%s funded',
 	'campaigns:backers' => '%s backers',
+	'campaigns:avg_donation' => '%s avg donation',
 
 	'campaigns:manual_start' => 'Start campaign',
 	'campaigns:manual_start:confirm' => 'Are you sure you want to start this campaign outside of its normal schedule?',
@@ -318,4 +356,18 @@ return [
 	'campaigns:payout:account' => 'Bank account',
 	'campaigns:payout:account:help' => 'Enter your IBAN account number, BIC and recipient information',
 	'campaigns:payout:no_information' => 'Payout information has not been provided yet',
+
+	'payments:charges:processor_fee' => 'Processor Fees',
+
+	'campaigns:edit' => 'Manage',
+	'campaigns:transactions:view' => 'View Transactions',
+	
+	'campaigns:follow' => 'Follow',
+	'campaigns:follow:success' => 'You are now subscribed to notifications about %s',
+	
+	'campaigns:unfollow' => 'Unfollow',
+	'campaigns:unfollow:success' => 'You are now longer subscribed to notifications about %s',
+
+	'campaigns:checkout:register' => 'Create a new user account',
+	
 ];

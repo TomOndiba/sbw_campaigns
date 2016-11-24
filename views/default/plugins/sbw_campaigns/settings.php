@@ -150,3 +150,34 @@ if (elgg_is_active_plugin('payments_stripe')) {
 		'value' => (float) $entity->stripe_flat_fee,
 	]);
 }
+
+if (elgg_is_active_plugin('payments_sofort')) {
+
+	echo elgg_view_field([
+		'#type' => 'select',
+		'#label' => elgg_echo('campaigns:payments:enable_sofort'),
+		'#help' => elgg_echo('campaigns:payments:enable_sofort:help'),
+		'name' => 'params[enable_sofort]',
+		'value' => $entity->enable_sofort,
+		'options_values' => [
+			0 => elgg_echo('option:no'),
+			1 => elgg_echo('option:yes'),
+		],
+	]);
+
+	echo elgg_view_field([
+		'#type' => 'text',
+		'#label' => elgg_echo('campaigns:payments:sofort_percentile_fee'),
+		'#help' => elgg_echo('campaigns:payments:sofort_percentile_fee:help'),
+		'name' => 'params[sofort_percentile_fee]',
+		'value' => (float) $entity->sofort_percentile_fee,
+	]);
+
+	echo elgg_view_field([
+		'#type' => 'text',
+		'#label' => elgg_echo('campaigns:payments:sofort_flat_fee'),
+		'#help' => elgg_echo('campaigns:payments:sofort_flat_fee:help'),
+		'name' => 'params[sofort_flat_fee]',
+		'value' => (float) $entity->sofort_flat_fee,
+	]);
+}

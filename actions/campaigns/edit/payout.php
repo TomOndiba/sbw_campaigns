@@ -15,6 +15,13 @@ if (!$entity->canEdit()) {
 
 $entity->payout_instructions = get_input('payout_instructions');
 
+$entity->email = get_input('email');
+$entity->first_name = get_input('first_name');
+$entity->last_name = get_input('last_name');
+$entity->company_name = get_input('compnay_name');
+$entity->tax_id = get_input('tax_id');
+$entity->phone = get_input('phone');
+
 $data = [
 	'entity' => $entity,
 	'action' => 'payout',
