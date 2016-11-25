@@ -31,7 +31,7 @@ $company_name = get_input('compnay_name');
 $tax_id = get_input('tax_id');
 $phone = get_input('phone');
 
-if (!$first_name || $last_name || !$phone || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!$first_name || !$last_name || !$phone || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	$error = elgg_echo('campaigns:error:required');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
