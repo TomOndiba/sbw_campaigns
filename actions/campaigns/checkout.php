@@ -113,6 +113,13 @@ $user->campaigns_company_name = $company_name;
 $user->campaigns_tax_id = $tax_id;
 $user->campaigns_phone = $phone;
 
+if (!$user->first_name) {
+	$user->first_name = $first_name;
+}
+if (!$user->last_name) {
+	$user->last_name = $last_name;
+}
+
 $subscribe = (bool) get_input('subscribe');
 if ($subscribe) {
 	$methods = elgg_get_notification_methods();
