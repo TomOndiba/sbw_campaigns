@@ -62,7 +62,7 @@ foreach ($donations as $donation) {
 }
 $avg_donation = 0;
 if ($count_donation) {
-	$avg_donation = $sum_donation / $count_donation;
+	$avg_donation = (int) round($sum_donation / $count_donation);
 }
 
 $count = elgg_format_element('span', [
