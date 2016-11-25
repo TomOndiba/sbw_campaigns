@@ -165,8 +165,10 @@ span.campaigns-give-item-stock {
 	margin-bottom: 2%;
 }
 
-.campaigns-sidebar > .campaigns-rewards > li {
-	background: #fff;
+.campaigns-sidebar .campaigns-rewards > li {
+	background: white;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);
+	margin-bottom: 2%;
 }
 
 .campaigns-data-item {
