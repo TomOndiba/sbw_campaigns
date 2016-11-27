@@ -357,6 +357,7 @@ return [
 	'campaigns:payout:account' => 'Bank account',
 	'campaigns:payout:account:help' => 'Enter your IBAN account number, BIC and recipient information',
 	'campaigns:payout:no_information' => 'Payout information has not been provided yet',
+	'campaigns:payout:recipient' => 'Recipient Details',
 
 	'payments:charges:processor_fee' => 'Processor Fees',
 

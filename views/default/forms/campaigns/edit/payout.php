@@ -13,6 +13,7 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'fieldset',
+	'legend' => elgg_echo('campaigns:payout:recipient'),
 	'align' => 'horizontal',
 	'fields' => [
 			[
