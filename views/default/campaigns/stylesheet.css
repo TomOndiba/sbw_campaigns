@@ -206,6 +206,11 @@ span.campaigns-give-item-stock {
     vertical-align: middle;
 }
 
+.campaigns-cover-image img {
+    width: 100%;
+    margin-bottom: 2%;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;
