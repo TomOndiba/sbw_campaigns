@@ -47,7 +47,16 @@ return [
 	'campaigns:status:ended' => 'Ended',
 
 	'campaigns:model:tipping_point' => 'Tipping Point',
+	'campaigns:model:tipping_point:help' => '
+		This campaign has a set target, which must be reached before campaign\'s end.
+		If the target is not reached, all donations will be refunded.
+		Suitable for campaigns that will only be able to achieve their goals at 100% funding.
+	',
 	'campaigns:model:pot' => 'Money Pot',
+	'campaigns:model:pot:help' => '
+		All donations made to the campaign will be received by the organizer when the campaign ends.
+		Suitable for campaigns that use the funding towards their day-to-day operations and do not require 100% funding to achieve their goals.
+	',
 	'campaigns:model:relief' => 'Relief',
 
 	'campaigns:no_results' => 'There are no campaigns yet',
