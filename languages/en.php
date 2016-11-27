@@ -299,6 +299,7 @@ return [
 	'campaigns:checkout' => 'Checkout',
 	'campaigns:checkout:charges:paypal_fee' => 'PayPal Fee',
 
+	'campaigns:checkout:donor' => 'Donor Details',
 	'campaigns:checkout:email' => 'Email',
 	'campaigns:checkout:name' => 'Name',
 	'campaigns:checkout:first_name' => 'First Name',

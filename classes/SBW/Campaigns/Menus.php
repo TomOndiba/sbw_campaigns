@@ -249,6 +249,27 @@ class Menus {
 			}
 		}
 
+		if (elgg_is_active_plugin('hypeDiscovery')) {
+			if (\hypeJunction\Discovery\is_discoverable($entity)) {
+				$text = elgg_echo('discovery:entity:share');
+				$return[] = ElggMenuItem::factory(array(
+							'name' => 'discovery:share',
+							'text' => $text,
+							'href' => "opengraph/share/$entity->guid",
+							'title' => elgg_echo('discovery:entity:share'),
+							'link_class' => 'elgg-lightbox',
+							'data-colorbox-opts' => json_encode([
+								'maxWidth' => '600px',
+							]),
+							'data' => [
+								'icon' => 'share',
+							],
+							'priority' => 700,
+							'deps' => ['elgg/lightbox'],
+				));
+			}
+		}
+
 		return $return;
 	}
 
@@ -372,7 +393,7 @@ class Menus {
 
 				$return[] = ElggMenuItem::factory([
 							'name' => 'unfollow',
-							'text' => elgg_view_icon('hand-o-right') .elgg_echo('campaigns:unfollow'),
+							'text' => elgg_view_icon('hand-o-right') . elgg_echo('campaigns:unfollow'),
 							'href' => "action/campaigns/unfollow?guid=$entity->guid",
 							'is_action' => true,
 							'item_class' => $subscribed ? '' : 'hidden',
@@ -385,7 +406,7 @@ class Menus {
 		if ($entity->canEdit() && $entity->started) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'campaigns:transaction:view',
-						'text' => elgg_view_icon('usd') .elgg_echo('campaigns:transactions:view'),
+						'text' => elgg_view_icon('usd') . elgg_echo('campaigns:transactions:view'),
 						'href' => "campaigns/edit/$entity->guid/transactions",
 						'section' => 'owner',
 			]);

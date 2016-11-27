@@ -29,6 +29,7 @@ $user = elgg_get_logged_in_user_entity();
 
 echo elgg_view_field([
 	'#type' => 'fieldset',
+	'legend' => elgg_echo('campaigns:checkout:donor'),
 	'align' => 'horizontal',
 	'fields' => [
 			[

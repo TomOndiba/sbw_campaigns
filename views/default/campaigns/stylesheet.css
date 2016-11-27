@@ -238,6 +238,10 @@ span.campaigns-give-item-stock {
 	background: #f2f2f2;
 }
 
+.campaigns-profile-layout {
+    margin-top: 55px;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;
