@@ -37,6 +37,7 @@ if (!elgg_in_context('metadata')) {
 
 $summary = elgg_view('object/elements/summary', [
 	'entity' => $entity,
+	'title' => $entity->getDisplayName(),
 	'subtitle' => implode('<br />', $subtitle),
 	'content' => $content,
 	'metadata' => $metadata,
