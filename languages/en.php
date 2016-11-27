@@ -293,7 +293,8 @@ return [
 	'campaigns:payment_method:fee' => ' (%s)',
 
 	'campaigns:contribution' => 'Campaign contribution',
-	'campaigns:contribution:from' => 'Campaigns contribution from %s',
+	'campaigns:contribution:from' => 'Campaign contribution from %s',
+	'campaigns:contribution:target' => 'Campaign contribution to %s',
 
 	'campaigns:checkout' => 'Checkout',
 	'campaigns:checkout:charges:paypal_fee' => 'PayPal Fee',
