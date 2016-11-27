@@ -54,7 +54,8 @@ $entity->access_id = $container->access_id;
 if ($entity->save()) {
 
 	elgg_clear_sticky_form('campaigns/edit/news_item');
-	$entity->saveIconFromUploadedFile('icon');
+	//$entity->saveIconFromUploadedFile('icon');
+
 	$data = [
 		'entity' => $entity,
 		'action' => $action,

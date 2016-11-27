@@ -395,12 +395,12 @@ class Forms {
 				'required' => true,
 				'value' => elgg_extract('description', $params, $entity->description),
 			],
-				[
-				'#type' => 'file',
-				'#label' => elgg_echo('campaigns:field:icon'),
-				'name' => 'icon',
-				'value' => $entity->guid && $entity->hasIcon('small'),
-			],
+//				[
+//				'#type' => 'file',
+//				'#label' => elgg_echo('campaigns:field:icon'),
+//				'name' => 'icon',
+//				'value' => $entity->guid && $entity->hasIcon('small'),
+//			],
 		];
 
 		return $fields;
