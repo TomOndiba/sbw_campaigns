@@ -37,9 +37,11 @@ if ($campaign->model != 'relief') {
 if ($reward) {
 	$minimum = $reward->donation_minimum;
 	$diff = $amount - $minimum;
+	$extra = $diff;
 } else {
 	$minimum = $campaign->donation_minimum;
 	$diff = $amount - $minimum;
+	$extra = $amount;
 }
 
 if ($diff < 0) {
@@ -65,8 +67,8 @@ $order->setCurrency($currency);
 if ($reward) {
 	$order->add($reward, 1);
 }
-if ($diff) {
-	$price = new Amount($diff, $currency);
+if ($extra) {
+	$price = new Amount($extra, $currency);
 
 	$contribution = new Contribution();
 	$contribution->setPrice($price);
