@@ -62,6 +62,11 @@ if ($donations) {
 }
 
 $comments = elgg_view_comments($entity);
+if ($comments) {
+	$comments = elgg_view_module('aside', elgg_echo('comments'), $comments, [
+		'class' => 'campaigns-module',
+	]);
+}
 
 $rewards = elgg_view('campaigns/modules/rewards', $vars);
 
