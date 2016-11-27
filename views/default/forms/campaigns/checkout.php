@@ -78,6 +78,7 @@ echo elgg_view_field([
 $contact = elgg_extract('contact', $vars);
 echo elgg_view_field([
 	'#type' => 'fieldset',
+	'legend' => elgg_echo('campaigns:postal_address'),
 	'#class' => 'campaigns-postal-address',
 	'align' => 'horizontal',
 	'fields' => [
@@ -91,7 +92,7 @@ echo elgg_view_field([
 			[
 			'#type' => 'text',
 			'#label' => elgg_echo('campaigns:postal_address:extended_address'),
-			'name' => "{$prefix}[extended_address]",
+			'name' => "contact[extended_address]",
 			'value' => elgg_extract('extended_address', $contact, $user->campaigns_extended_address),
 		],
 			[

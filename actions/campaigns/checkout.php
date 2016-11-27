@@ -137,16 +137,20 @@ if (!$order) {
 $order->setCustomer($user);
 $order->setShippingAddress($address);
 
-$billing = (array) get_input('billing', []);
-if ($billing) {
-	$billing_address = new Address();
-	$billing_address->street_address = elgg_extract('street_address', $billing);
-	$billing_address->extended_address = elgg_extract('extended_address', $billing);
-	$billing_address->locality = elgg_extract('locality', $billing);
-	$billing_address->region = elgg_extract('region', $billing);
-	$billing_address->postal_code = elgg_extract('postal_code', $billing);
-	$billing_address->country_code = elgg_extract('country_code', $billing);
-	$order->setBillingAddress($billing_address);
+if (get_input('billing_as_shipping')) {
+	$order->setBillingAddress($address);
+} else {
+	$billing = (array) get_input('billing', []);
+	if ($billing) {
+		$billing_address = new Address();
+		$billing_address->street_address = elgg_extract('street_address', $billing);
+		$billing_address->extended_address = elgg_extract('extended_address', $billing);
+		$billing_address->locality = elgg_extract('locality', $billing);
+		$billing_address->region = elgg_extract('region', $billing);
+		$billing_address->postal_code = elgg_extract('postal_code', $billing);
+		$billing_address->country_code = elgg_extract('country_code', $billing);
+		$order->setBillingAddress($billing_address);
+	}
 }
 
 $payment_method = $order->payment_method;
