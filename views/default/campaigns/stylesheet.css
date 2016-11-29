@@ -242,6 +242,24 @@ span.campaigns-give-item-stock {
     margin-top: 55px;
 }
 
+.campaigns-payment-methods .elgg-input-radios label {
+    font-weight: normal;
+    margin: 10px 0 0 10px;
+    display: block;
+    font-size: 18px;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.campaigns-payment-methods .elgg-input-radios img {
+    max-height: 20px;
+    margin-right: 10px;
+}
+
+.campaigns-payment-methods .elgg-input-radios input {
+    margin-right: 15px;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;
