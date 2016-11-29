@@ -440,7 +440,7 @@ class Payments {
 	}
 
 	/**
-	 * Refund transactions when tipping point campaign is ended without reaching
+	 * Refund transactions when all or nothing campaign is ended without reaching its
 	 * target
 	 *
 	 * @param string     $event  "end"
@@ -456,8 +456,8 @@ class Payments {
 
 		$site = elgg_get_site_entity();
 		$admins = elgg_get_admins();
-		if ($entity->model == 'tipping_point') {
-			$fee = (float) elgg_get_plugin_setting('tipping_point_fee', 'sbw_campaigns', 0);
+		if ($entity->model == Campaign::MODEL_ALL_OR_NOTHING) {
+			$fee = (float) elgg_get_plugin_setting('all_or_nothing_fee', 'sbw_campaigns', 0);
 			if ($entity->funded_percentage < 100) {
 				$ia = elgg_set_ignore_access(true);
 

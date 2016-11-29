@@ -200,7 +200,7 @@ class Menus {
 		$return = [];
 
 		if ($entity->isActive()) {
-			if ($entity->model == 'tipping_point') {
+			if ($entity->model == Campaign::MODEL_ALL_OR_NOTHING) {
 				$text = elgg_echo('campaigns:pledge');
 			} else {
 				$text = elgg_echo('campaigns:donate');

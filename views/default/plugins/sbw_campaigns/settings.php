@@ -44,10 +44,10 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'text',
-	'#label' => elgg_echo('campaigns:payments:tipping_point_fee'),
-	'#help' => elgg_echo('campaigns:payments:tipping_point_fee:help'),
-	'name' => 'params[tipping_point_fee]',
-	'value' => (float) $entity->tipping_point_fee,
+	'#label' => elgg_echo('campaigns:payments:all_or_nothing_fee'),
+	'#help' => elgg_echo('campaigns:payments:all_or_nothing_fee:help'),
+	'name' => 'params[all_or_nothing_fee]',
+	'value' => (float) $entity->all_or_nothing_fee,
 ]);
 
 echo elgg_view_field([

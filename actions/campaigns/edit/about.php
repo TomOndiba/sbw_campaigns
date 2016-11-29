@@ -82,7 +82,7 @@ if (!$entity->guid || !$entity->started) {
 	}
 
 	$model = get_input('model');
-	if (!in_array($model, ['tipping_point', 'pot', 'relief'])) {
+	if (!in_array($model, [Campaign::MODEL_ALL_OR_NOTHING, Campaign::MODEL_MONEY_POT, Campaign::MODEL_RELIEF])) {
 		$error = elgg_echo('campaigns:error:invalid');
 		return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 	}

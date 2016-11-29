@@ -24,7 +24,7 @@ if ($container instanceof ElggUser) {
 
 elgg_push_breadcrumb($entity->getDisplayName(), $entity->getURL());
 
-if ($entity->model == 'tipping_point') {
+if ($entity->model == \SBW\Campaigns\Campaign::MODEL_ALL_OR_NOTHING) {
 	$title = elgg_echo('campaigns:give:pledge', [$entity->getDisplayName()]);
 } else {
 	$title = elgg_echo('campaigns:give:donate', [$entity->getDisplayName()]);

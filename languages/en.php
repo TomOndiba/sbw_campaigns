@@ -47,14 +47,14 @@ return [
 	'campaigns:status:ongoing' => 'Ongoing',
 	'campaigns:status:ended' => 'Ended',
 
-	'campaigns:model:tipping_point' => 'Tipping Point',
-	'campaigns:model:tipping_point:help' => '
+	'campaigns:model:all_or_nothing' => 'All-or-Nothing',
+	'campaigns:model:all_or_nothing:help' => '
 		This campaign has a set target, which must be reached before campaign\'s end.
 		If the target is not reached, all donations will be refunded.
 		Suitable for campaigns that will only be able to achieve their goals at 100% funding.
 	',
-	'campaigns:model:pot' => 'Money Pot',
-	'campaigns:model:pot:help' => '
+	'campaigns:model:money_pot' => 'Money Pot',
+	'campaigns:model:money_pot:help' => '
 		All donations made to the campaign will be received by the organizer when the campaign ends.
 		Suitable for campaigns that use the funding towards their day-to-day operations and do not require 100% funding to achieve their goals.
 	',
@@ -120,8 +120,8 @@ return [
 	'campaigns:payments:sofort_flat_fee' => 'Sofort processing fee',
 	'campaigns:payments:sofort_flat_fee:help' => 'Enter flat amount of the Sofort processing fee in the currency of the donation (e.g. 0.35)',
 
-	'campaigns:payments:tipping_point_fee' => 'Tipping Point Campaign Fee',
-	'campaigns:payments:tipping_point_fee:help' => 'Enter amount (in percentage) of the donation amount to be withheld by the site',
+	'campaigns:payments:all_or_nothing_fee' => 'All-or-nothing Point Campaign Fee',
+	'campaigns:payments:all_or_nothing_fee:help' => 'Enter amount (in percentage) of the donation amount to be withheld by the site',
 	'campaigns:payments:money_pot_fee' => 'Money Pot Campaign Fee',
 	'campaigns:payments:money_pot_fee:help' => 'Enter amount (in percentage) of the donation amount to be withheld by the site',
 
@@ -240,7 +240,7 @@ return [
 
 	'campaigns:refund:failed:notify:subject' => 'Automatic refund has failed',
 	'campaigns:refund:failed:notify:body' => '
-		Automatic refund for a tipping point campaign contribution to %s has failed.
+		Automatic refund for all-or-nothing campaign contribution to %s has failed.
 
 		The refund in the amount of %s to %s could not be completed.
 
@@ -253,7 +253,7 @@ return [
 
 	'campaigns:refund:pending:notify:subject' => 'Manual refund is required',
 	'campaigns:refund:pending:notify:body' => '
-		Refund for a tipping point campaign contribution to %s must be made manually.
+		Refund for all-or-nothing campaign contribution to %s must be made manually.
 
 		The refund in the amount of %s to %s is pending.
 

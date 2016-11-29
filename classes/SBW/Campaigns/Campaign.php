@@ -35,9 +35,9 @@ class Campaign extends Merchant {
 	const SUBTYPE = 'campaign';
 	const BASE_CURRENCY = 'EUR';
 
-	const MODEL_TIPPING_POINT = 'tipping_point';
+	const MODEL_ALL_OR_NOTHING = 'all_or_nothing';
 	const MODEL_MONEY_POT = 'money_pot';
-	const MODEL_RELIEF = 'model_relief';
+	const MODEL_RELIEF = 'relief';
 
 	/**
 	 * {@inheritdoc}

@@ -158,22 +158,22 @@ class Forms {
 					'fields' => [
 							[
 							'#type' => 'radio',
-							'#help' => elgg_echo('campaigns:model:tipping_point:help'),
+							'#help' => elgg_echo('campaigns:model:all_or_nothing:help'),
 							'name' => 'model',
 							'value' => elgg_extract('model', $params, $entity->model),
 							'options' => array_flip([
-								'tipping_point' => elgg_echo('campaigns:model:tipping_point'),
+								Campaign::MODEL_ALL_OR_NOTHING => elgg_echo('campaigns:model:all_or_nothing'),
 							]),
 							'required' => true,
 						],
-						[
+							[
 							'#type' => 'radio',
-							'#help' => elgg_echo('campaigns:model:pot:help'),
+							'#help' => elgg_echo('campaigns:model:money_pot:help'),
 							'name' => 'model',
 							'class' => 'campaigns-field-model',
 							'value' => elgg_extract('model', $params, $entity->model),
 							'options' => array_flip([
-								'pot' => elgg_echo('campaigns:model:pot'),
+								Campaign::MODEL_MONEY_POT => elgg_echo('campaigns:model:money_pot'),
 							]),
 							'required' => true,
 						],
