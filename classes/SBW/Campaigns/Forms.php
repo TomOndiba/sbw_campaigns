@@ -151,17 +151,32 @@ class Forms {
 //					'required' => true,
 //				],
 					[
-					'#type' => 'radio',
+					'#type' => 'fieldset',
 					'#label' => elgg_echo('campaigns:field:model'),
-					'name' => 'model',
 					'class' => 'campaigns-field-model',
-					'value' => elgg_extract('model', $params, $entity->model),
-					'options' => array_flip([
-						'tipping_point' => elgg_echo('campaigns:model:tipping_point'),
-						'pot' => elgg_echo('campaigns:model:pot'),
-							//'relief' => elgg_echo('campaigns:model:relief'),
-					]),
-					'required' => true,
+					'fields' => [
+							[
+							'#type' => 'radio',
+							'#help' => elgg_echo('campaigns:model:tipping_point:help'),
+							'name' => 'model',
+							'value' => elgg_extract('model', $params, $entity->model),
+							'options' => array_flip([
+								'tipping_point' => elgg_echo('campaigns:model:tipping_point'),
+							]),
+							'required' => true,
+						],
+						[
+							'#type' => 'radio',
+							'#help' => elgg_echo('campaigns:model:pot:help'),
+							'name' => 'model',
+							'class' => 'campaigns-field-model',
+							'value' => elgg_extract('model', $params, $entity->model),
+							'options' => array_flip([
+								'pot' => elgg_echo('campaigns:model:pot'),
+							]),
+							'required' => true,
+						],
+					]
 				],
 					[
 					'#type' => 'fieldset',
@@ -395,12 +410,12 @@ class Forms {
 				'required' => true,
 				'value' => elgg_extract('description', $params, $entity->description),
 			],
-				[
-				'#type' => 'file',
-				'#label' => elgg_echo('campaigns:field:icon'),
-				'name' => 'icon',
-				'value' => $entity->guid && $entity->hasIcon('small'),
-			],
+//				[
+//				'#type' => 'file',
+//				'#label' => elgg_echo('campaigns:field:icon'),
+//				'name' => 'icon',
+//				'value' => $entity->guid && $entity->hasIcon('small'),
+//			],
 		];
 
 		return $fields;

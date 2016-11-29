@@ -47,7 +47,16 @@ return [
 	'campaigns:status:ended' => 'Ended',
 
 	'campaigns:model:tipping_point' => 'Tipping Point',
+	'campaigns:model:tipping_point:help' => '
+		This campaign has a set target, which must be reached before campaign\'s end.
+		If the target is not reached, all donations will be refunded.
+		Suitable for campaigns that will only be able to achieve their goals at 100% funding.
+	',
 	'campaigns:model:pot' => 'Money Pot',
+	'campaigns:model:pot:help' => '
+		All donations made to the campaign will be received by the organizer when the campaign ends.
+		Suitable for campaigns that use the funding towards their day-to-day operations and do not require 100% funding to achieve their goals.
+	',
 	'campaigns:model:relief' => 'Relief',
 
 	'campaigns:no_results' => 'There are no campaigns yet',
@@ -73,7 +82,7 @@ return [
 	'campaigns:error:dates' => 'The end date can not precede the start date',
 	'campaigns:error:terms' => 'You must agree to terms and conditions before proceeding',
 	'campaigns:error:general' => 'An unknown error during this action',
-	'campaigns:error:reward_minimum_too_low' => 'Minimum donation amount can not be lower than the donation amount of %s set for the campaign',
+	'campaigns:error:reward_minimum_too_low' => 'Minimum donation amount can not be lower than the donation amount of %s %s set for the campaign',
 	'campaigns:error:quantity_too_low' => 'Quantity should be 1 or more',
 	'campaigns:error:publish_without_rewards' => 'Campaigns must have at least one reward to be eligible for publishing',
 	'campaigns:error:already_published' => 'Campaign has already been published',
@@ -293,17 +302,23 @@ return [
 	'campaigns:payment_method:fee' => ' (%s)',
 
 	'campaigns:contribution' => 'Campaign contribution',
-	'campaigns:contribution:from' => 'Campaigns contribution from %s',
+	'campaigns:contribution:from' => 'Campaign contribution from %s',
+	'campaigns:contribution:target' => 'Campaign contribution to %s',
 
 	'campaigns:checkout' => 'Checkout',
 	'campaigns:checkout:charges:paypal_fee' => 'PayPal Fee',
 
+	'campaigns:checkout:donor' => 'Donor Details',
 	'campaigns:checkout:email' => 'Email',
 	'campaigns:checkout:name' => 'Name',
 	'campaigns:checkout:first_name' => 'First Name',
 	'campaigns:checkout:last_name' => 'Last Name',
 	'campaigns:checkout:company_name' => 'Company Name',
 	'campaigns:checkout:tax_id' => 'Tax ID',
+	'campaigns:checkout:phone' => 'Phone',
+	'campaigns::billing_address' => 'Billing Address',
+	'campaigns:billing_addres:same_as_shipping' => 'Same as postal address',
+	'campaigns:postal_address' => 'Postal Address',
 	'campaigns:postal_address:street_address' => 'Street Address',
 	'campaigns:postal_address:extended_address' => 'Street Address 2',
 	'campaigns:postal_address:locality' => 'City/Town',
@@ -356,6 +371,7 @@ return [
 	'campaigns:payout:account' => 'Bank account',
 	'campaigns:payout:account:help' => 'Enter your IBAN account number, BIC and recipient information',
 	'campaigns:payout:no_information' => 'Payout information has not been provided yet',
+	'campaigns:payout:recipient' => 'Recipient Details',
 
 	'payments:charges:processor_fee' => 'Processor Fees',
 

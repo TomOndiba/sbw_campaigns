@@ -14,6 +14,16 @@ define(function (require) {
 			$('[name="password"]').prop('required', false);
 		}
 	});
+
+	$(document).on('change', '.campaigns-billing-as-shipping [type="checkbox"]', function (e) {
+		var $field = $(this).closest('.elgg-field');
+		if ($(this).prop('checked')) {
+			$field.siblings('.elgg-field').hide().find('[required]').prop('required', false);
+		} else {
+			$field.siblings('.elgg-field').show().filter('.elgg-field-required').find('input[type="text"],select').prop('required', true);
+		}
+	});
+
 	$(document).on('blur', '[name="email"]', function (e) {
 
 		if (elgg.is_logged_in()) {

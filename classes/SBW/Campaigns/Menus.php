@@ -249,6 +249,27 @@ class Menus {
 			}
 		}
 
+		if (elgg_is_active_plugin('hypeDiscovery')) {
+			if (\hypeJunction\Discovery\is_discoverable($entity)) {
+				$text = elgg_echo('discovery:entity:share');
+				$return[] = ElggMenuItem::factory(array(
+							'name' => 'discovery:share',
+							'text' => $text,
+							'href' => "opengraph/share/$entity->guid",
+							'title' => elgg_echo('discovery:entity:share'),
+							'link_class' => 'elgg-lightbox',
+							'data-colorbox-opts' => json_encode([
+								'maxWidth' => '600px',
+							]),
+							'data' => [
+								'icon' => 'share',
+							],
+							'priority' => 700,
+							'deps' => ['elgg/lightbox'],
+				));
+			}
+		}
+
 		return $return;
 	}
 
@@ -267,7 +288,7 @@ class Menus {
 		if ($entity->canEdit()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'edit',
-						'text' => elgg_echo('campaigns:edit'),
+						'text' => elgg_view_icon('pencil') . elgg_echo('campaigns:edit'),
 						'icon' => 'pencil',
 						'href' => "campaigns/edit/$entity->guid",
 						'priority' => 600,
@@ -278,7 +299,7 @@ class Menus {
 		if ($entity->canDelete()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'delete',
-						'text' => elgg_echo('delete'),
+						'text' => elgg_view_icon('trash') . elgg_echo('delete'),
 						'icon' => 'delete',
 						'href' => "action/entity/delete?guid=$entity->guid",
 						'confirm' => true,
@@ -293,7 +314,7 @@ class Menus {
 			if (!$entity->isVerified()) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'verify',
-							'text' => elgg_echo('campaigns:verify'),
+							'text' => elgg_view_icon('checkmark') . elgg_echo('campaigns:verify'),
 							'href' => "action/campaigns/verify?guid=$entity->guid",
 							'is_action' => true,
 							'confirm' => true,
@@ -304,7 +325,7 @@ class Menus {
 			if (!$entity->started) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'manual_start',
-							'text' => elgg_echo('campaigns:manual_start'),
+							'text' => elgg_view_icon('play') . elgg_echo('campaigns:manual_start'),
 							'href' => "action/campaigns/start?guid=$entity->guid",
 							'confirm' => elgg_echo('campaigns:manual_start:confirm'),
 							'section' => 'admin',
@@ -312,7 +333,7 @@ class Menus {
 			} else if (!$entity->ended) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'manual_end',
-							'text' => elgg_echo('campaigns:manual_end'),
+							'text' => elgg_view_icon('stop') . elgg_echo('campaigns:manual_end'),
 							'href' => "action/campaigns/end?guid=$entity->guid",
 							'confirm' => elgg_echo('campaigns:manual_end:confirm'),
 							'section' => 'admin',
@@ -323,7 +344,7 @@ class Menus {
 		if (!$entity->isPublished() && $entity->canEdit()) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'publish',
-						'text' => elgg_echo('campaigns:publish'),
+						'text' => elgg_view_icon('eye') . elgg_echo('campaigns:publish'),
 						'href' => "action/campaigns/publish?guid=$entity->guid",
 						'is_action' => true,
 						'confirm' => true,
@@ -334,7 +355,7 @@ class Menus {
 		if ($entity->canWriteToContainer(0, 'object', NewsItem::SUBTYPE)) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'news:add',
-						'text' => elgg_echo('campaigns:news:add'),
+						'text' => elgg_view_icon('newspaper-o') . elgg_echo('campaigns:news:add'),
 						'href' => "campaigns/edit/$entity->guid/news#campaigns-news-form",
 						'section' => 'owner',
 			]);
@@ -343,7 +364,7 @@ class Menus {
 		if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && !$entity->started) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'rewards:add',
-						'text' => elgg_echo('campaigns:rewards:add'),
+						'text' => elgg_view_icon('gift') . elgg_echo('campaigns:rewards:add'),
 						'href' => "campaigns/edit/$entity->guid/rewards#campaigns-reward-form",
 						'section' => 'owner',
 			]);
@@ -362,7 +383,7 @@ class Menus {
 			if ($subscribed) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'follow',
-							'text' => elgg_echo('campaigns:follow'),
+							'text' => elgg_view_icon('hand-o-right') . elgg_echo('campaigns:follow'),
 							'href' => "action/campaigns/follow?guid=$entity->guid",
 							'is_action' => true,
 							'item_class' => $subscribed ? 'hidden' : '',
@@ -372,7 +393,7 @@ class Menus {
 
 				$return[] = ElggMenuItem::factory([
 							'name' => 'unfollow',
-							'text' => elgg_echo('campaigns:unfollow'),
+							'text' => elgg_view_icon('hand-o-right') . elgg_echo('campaigns:unfollow'),
 							'href' => "action/campaigns/unfollow?guid=$entity->guid",
 							'is_action' => true,
 							'item_class' => $subscribed ? '' : 'hidden',
@@ -385,7 +406,7 @@ class Menus {
 		if ($entity->canEdit() && $entity->started) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'campaigns:transaction:view',
-						'text' => elgg_echo('campaigns:transactions:view'),
+						'text' => elgg_view_icon('usd') . elgg_echo('campaigns:transactions:view'),
 						'href' => "campaigns/edit/$entity->guid/transactions",
 						'section' => 'owner',
 			]);

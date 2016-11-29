@@ -37,13 +37,20 @@ if ($campaign->model != 'relief') {
 if ($reward) {
 	$minimum = $reward->donation_minimum;
 	$diff = $amount - $minimum;
+	$extra = $diff;
 } else {
 	$minimum = $campaign->donation_minimum;
-	$diff = $amount;
+	$diff = $amount - $minimum;
+	$extra = $amount;
 }
 
 if ($diff < 0) {
-	$error = elgg_echo('campaigns:error:donation_amount_too_low', [$minimum, $unit]);
+	if ($campaign->model != 'relief') {
+		$minimum_str = (new Amount($minimum, $unit))->getConvertedAmount();
+		$error = elgg_echo('campaigns:error:donation_amount_too_low', [$minimum_str, $unit]);
+	} else {
+		$error = elgg_echo('campaigns:error:donation_amount_too_low', [$minimum, $unit]);
+	}
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
 
@@ -60,8 +67,8 @@ $order->setCurrency($currency);
 if ($reward) {
 	$order->add($reward, 1);
 }
-if ($diff) {
-	$price = new Amount($diff, $currency);
+if ($extra) {
+	$price = new Amount($extra, $currency);
 
 	$contribution = new Contribution();
 	$contribution->setPrice($price);

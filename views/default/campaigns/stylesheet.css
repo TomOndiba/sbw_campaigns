@@ -206,6 +206,42 @@ span.campaigns-give-item-stock {
     vertical-align: middle;
 }
 
+.campaigns-cover-image img {
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.campaigns-module .elgg-menu-page .elgg-icon {
+    color: #333;
+    width: 30px;
+    text-align: center;
+    float: right;
+    vertical-align: middle;
+    line-height: 20px;
+}
+
+.campaigns-module .elgg-menu-page a {
+    padding: 5px 15px;
+    margin: 0;
+}
+
+.campaigns-module .elgg-menu-page a:hover {
+    background: #f2f2f2;
+    color: #333;
+}
+
+.campaigns-table td,
+.campaigns-table th {
+	padding: 5px 10px;
+}
+.campaigns-table tr:hover {
+	background: #f2f2f2;
+}
+
+.campaigns-profile-layout {
+    margin-top: 55px;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;

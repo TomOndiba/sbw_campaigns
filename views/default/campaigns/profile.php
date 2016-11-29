@@ -23,13 +23,21 @@ if ($data) {
 	]);
 }
 
+$media = '';
 $video = elgg_view('output/player', [
 	'href' => $entity->video_url,
 		]);
 if ($video) {
-	$video = elgg_format_element('div', [
+	$media = elgg_format_element('div', [
 		'class' => 'campaigns-cover-video scraper-card-flex',
 			], $video);
+} else if ($entity->getIconURL('master')) {
+	$image = elgg_view('output/img', [
+		'src' => $entity->getIconURL('master'),
+	]);
+	$media = elgg_format_element('div', [
+		'class' => 'campaigns-cover-image',
+			], $image);
 }
 
 $news = elgg_view('campaigns/modules/news', $vars);
@@ -54,8 +62,32 @@ if ($donations) {
 }
 
 $comments = elgg_view_comments($entity);
+if ($comments) {
+	$comments = elgg_view_module('aside', elgg_echo('comments'), $comments, [
+		'class' => 'campaigns-module',
+	]);
+}
 
 $rewards = elgg_view('campaigns/modules/rewards', $vars);
+
+$skip = ['access', 'give', 'follow', 'unfollow', 'likes', 'unlike', 'likes_count', 'discovery:share'];
+
+$sections = elgg()->menus->getMenu('entity', [
+			'entity' => $entity,
+		])->getSections();
+foreach ($sections as $section => $items) {
+	foreach ($items as $item) {
+		if (in_array($item->getName(), $skip)) {
+			continue;
+		}
+		if (in_array($item->getName(), ['discovery:edit'])) {
+			$text = $item->getText();
+			$text .= $item->getTooltip();
+			$item->setText($text);
+		}
+		elgg_register_menu_item('page', $item);
+	}
+}
 
 $items = Menus::getPageMenuItems($entity);
 foreach ($items as $item) {
@@ -74,7 +106,7 @@ if ($menu) {
 ?>
 <div class="elgg-module campaigns-profile">
 	<div class="campaigns-main">
-		<?= $video ?>
+		<?= $media ?>
 		<?= $about ?>
 		<?= $news ?>
 		<?= $donations ?>

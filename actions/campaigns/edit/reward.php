@@ -73,6 +73,7 @@ $entity->target_unit = $container->target_unit;
 $entity->donation_minimum = (int) $donation_minimum;
 $entity->setPrice($price);
 
+$forward_url = "campaigns/edit/$container->guid/rewards";
 if ($entity->save()) {
 
 	$stock = $entity->getStock();
@@ -87,9 +88,8 @@ if ($entity->save()) {
 		'action' => $action,
 	];
 	$message = elgg_echo('campaigns:success', [$entity->getDisplayName()]);
-	$forward_url = "campaigns/edit/$container->guid/rewards";
 	return elgg_ok_response($data, $message, $forward_url);
 }
 
 $error = elgg_echo('campaigns:error:general');
-return elgg_error_response($error, REFERRER, ELGG_HTTP_UNPROCESSABLE_ENTITY);
+return elgg_error_response($error, $forward_url, ELGG_HTTP_UNPROCESSABLE_ENTITY);
