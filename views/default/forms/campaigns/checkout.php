@@ -81,6 +81,7 @@ echo elgg_view_field([
 	'legend' => elgg_echo('campaigns:postal_address'),
 	'#class' => 'campaigns-postal-address',
 	'align' => 'horizontal',
+	'data-address' => 'shipping',
 	'fields' => [
 			[
 			'#type' => 'text',
@@ -88,40 +89,46 @@ echo elgg_view_field([
 			'name' => "contact[street_address]",
 			'value' => elgg_extract('street_address', $contact, $user->campaigns_street_address),
 			'required' => true,
+			'data-part' => 'street_address',
 		],
 			[
 			'#type' => 'text',
 			'#label' => elgg_echo('campaigns:postal_address:extended_address'),
 			'name' => "contact[extended_address]",
 			'value' => elgg_extract('extended_address', $contact, $user->campaigns_extended_address),
+			'data-part' => 'extended_address',
 		],
 			[
 			'#type' => 'text',
 			'#label' => elgg_echo('campaigns:postal_address:locality'),
 			'name' => "contact[locality]",
 			'value' => elgg_extract('locality', $contact, $user->campaigns_locality),
-			'required' => true
+			'required' => true,
+			'data-part' => 'locality',
 		],
 			[
 			'#type' => 'text',
 			'#label' => elgg_echo('campaigns:postal_address:region'),
 			'name' => "contact[region]",
 			'value' => elgg_extract('region', $contact, $user->campaigns_region),
-			'required' => true
+			'required' => true,
+			'data-part' => 'region',
 		],
 			[
 			'#type' => 'text',
 			'#label' => elgg_echo('campaigns:postal_address:postal_code'),
 			'name' => "contact[postal_code]",
 			'value' => elgg_extract('postal_code', $contact, $user->campaigns_postal_code),
-			'required' => true
+			'required' => true,
+			'data-part' => 'postal_code',
 		],
 			[
 			'#type' => 'country',
 			'#label' => elgg_echo('campaigns:postal_address:country'),
 			'name' => "contact[country_code]",
 			'value' => elgg_extract('country_code', $contact, $user->campaigns_country_code),
-			'required' => true
+			'required' => true,
+			'data-part' => 'country_code',
 		],
 	]
 ]);
@@ -154,13 +161,13 @@ if (!elgg_is_logged_in()) {
 		'#class' => 'campaigns-checkout-register',
 		'align' => 'horizontal',
 		'fields' => [
-			[
+				[
 				'#type' => 'text',
 				'#label' => elgg_echo('username'),
 				'required' => true,
 				'name' => 'username',
 			],
-			[
+				[
 				'#type' => 'password',
 				'#label' => elgg_echo('password'),
 				'required' => true,

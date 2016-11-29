@@ -19,13 +19,17 @@ define(function (require) {
 		var $field = $(this).closest('.elgg-field');
 		if ($(this).prop('checked')) {
 			$field.siblings('.elgg-field').hide().find('[required]').prop('required', false);
+			$field.siblings('.elgg-field').find('input,select,textarea').each(function() {
+				var part = $(this).data('part');
+				var value = $('[data-address="shipping"] [data-part="' + part + '"]').val();
+				$(this).val(value);
+			});
 		} else {
 			$field.siblings('.elgg-field').show().filter('.elgg-field-required').find('input[type="text"],select').prop('required', true);
 		}
 	});
 
 	$(document).on('blur', '[name="email"]', function (e) {
-
 		if (elgg.is_logged_in()) {
 			return;
 		}
@@ -44,6 +48,17 @@ define(function (require) {
 				$('.campaigns-checkbox-register').show();
 			}
 		});
+	});
+
+	$(document).on('change', '[data-address] [data-part]', function() {
+		var $form = $(this).closest('form');
+		var sync = $('.campaigns-billing-as-shipping [type="checkbox"]', $form).prop('checked');
+		if (!sync) {
+			return;
+		}
+		
+		var part = $(this).data('part');
+		$('[data-address] [data-part="' + part + '"]').not($(this)).val($(this).val());
 	});
 });
 
