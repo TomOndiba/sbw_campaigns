@@ -1,7 +1,5 @@
 <?php
 
-var_dump($vars);
-
 if (!elgg_is_active_plugin('hypeDiscovery')) {
 	return;
 }
