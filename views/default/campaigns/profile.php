@@ -16,6 +16,13 @@ if ($stats) {
 	]);
 }
 
+$share = elgg_view('campaigns/modules/share', $vars);
+if ($share) {
+	$share = elgg_view_module('aside', false, $share, [
+		'class' => 'campaigns-module',
+	]);
+}
+
 $data = elgg_view('campaigns/modules/data', $vars);
 if ($data) {
 	$data = elgg_view_module('aside', false, $data, [
@@ -114,6 +121,7 @@ if ($menu) {
 	</div>
 	<div class="campaigns-sidebar">
 		<?= $stats ?>
+		<?= $share ?>
 		<?= $menu ?>
 		<?= $data ?>
 		<?= $rewards ?>
