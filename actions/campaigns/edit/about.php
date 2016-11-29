@@ -161,7 +161,7 @@ if ($entity->save()) {
 				$user->getDisplayName(),
 				$entity->getDisplayName(),
 			]);
-			notify_user($manager_guid, $user->guid, $subject, $message, [
+			notify_user($manager_guid, $user->guid, $subject, $body, [
 				'action' => 'remove_manager',
 				'object' => $entity,
 			]);
@@ -186,7 +186,7 @@ if ($entity->save()) {
 					$entity->getDisplayName(),
 					$entity->getURL(),
 				]);
-				notify_user($manager_guid, $user->guid, $subject, $message, [
+				notify_user($manager_guid, $user->guid, $subject, $body, [
 					'action' => 'add_manager',
 					'object' => $entity,
 				]);
