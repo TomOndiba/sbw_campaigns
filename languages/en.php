@@ -345,9 +345,9 @@ return [
 	'campaigns:avg_donation' => '%s avg donation',
 
 	'campaigns:manual_start' => 'Start campaign',
-	'campaigns:manual_start:confirm' => 'Are you sure you want to start this campaign outside of its normal schedule?',
+	'campaigns:manual_start:confirm' => 'Are you sure you want to manually start this campaign?',
 	'campaigns:manual_end' => 'End campaign',
-	'campaigns:manual_end:confirm' => 'Are you sure you want to end this campaign outside of its normal schedule? Campaigns that have not reached their targets will be terminated and, if applicable, refunds will be made',
+	'campaigns:manual_end:confirm' => 'Are you sure you want to end this campaign now? Campaigns that have not reached their targets will be terminated and, if applicable, refunds will be made',
 	'campaigns:start:success' => '%s has been started',
 	'campaigns:end:success' => '%s has been ended',
 
