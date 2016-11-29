@@ -8,12 +8,12 @@ $vars['filter_context'] = 'all';
 
 $title = elgg_echo('campaigns:all');
 $content = elgg_view('campaigns/listing/all', $vars);
-$sidebar = elgg_view('campaigns/sidebar', $vars);
+$filter = elgg_view('campaigns/filter', $vars);
 
-$layout = elgg_view_layout('content', $vars + [
+$layout = elgg_view_layout('campaign_main', $vars + [
 	'title' => $title,
 	'content' => $content,
-	'sidebar' => $sidebar,
+	'filter' => $filter,
 ]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

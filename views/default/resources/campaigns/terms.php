@@ -42,12 +42,9 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-$sidebar = elgg_view('campaigns/sidebar', $vars);
-
-$layout = elgg_view_layout('content', $vars + [
+$layout = elgg_view_layout('campaign_main', $vars + [
 	'title' => $title,
 	'content' => $content,
-	'sidebar' => $sidebar,
 ]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

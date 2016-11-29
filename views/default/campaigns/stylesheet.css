@@ -4,9 +4,10 @@
 .campaigns-gallery {
     display: flex;
     flex-wrap: wrap;
+	justify-content: space-between;
 }
 .campaigns-gallery > li {
-    flex: 0 1 50%;
+    flex: 0 1 33%;
     padding: 10px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -49,8 +50,26 @@
 	justify-content: space-between;
 }
 
-.campaigns-main {
+.campaigns-profile-layout .campaigns-main {
     flex: 0 0 64%;
+}
+
+.campaigns-main-layout .campaigns-main {
+    flex: 1 1 100%;
+}
+
+.campaigns-main-content {
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    padding: 15px;
+}
+
+.campaigns-main-layout .campaigns-main >.elgg-menu-filter {
+    margin: 0;
+}
+
+.campaigns-main-layout .campaigns-main >.elgg-menu-filter + .campaigns-main-content {
+    border-top: 0;
 }
 
 .campaigns-sidebar {
@@ -238,7 +257,8 @@ span.campaigns-give-item-stock {
 	background: #f2f2f2;
 }
 
-.campaigns-profile-layout {
+.campaigns-profile-layout,
+.campaigns-main-layout {
     margin-top: 55px;
 }
 
@@ -275,5 +295,10 @@ span.campaigns-give-item-stock {
 
 	.campaigns-gallery > li {
 		flex: 1 1 100%;
+	}
+
+	.campaigns-main-layout .elgg-main,
+	.campaigns-profile-layout .elgg-main {
+		max-width: calc(100vw - 55px);
 	}
 }
