@@ -94,6 +94,8 @@ class Permissions {
 		$campaign = elgg_get_config('current_campaign');
 		if ($campaign instanceof Campaign) {
 			$campaign_where = "AND ac.owner_guid = $campaign->guid";
+		} else if (isset($campaign)) {
+			return;
 		}
 
 		$dbprefix = elgg_get_config('dbprefix');

@@ -12,6 +12,8 @@ elgg_group_gatekeeper(true, $container->guid);
 
 elgg_set_page_owner_guid($container->guid);
 
+elgg_set_config('current_campaign', false); // prevent campaign ACLs from showing up in the picker
+
 elgg_push_breadcrumb(elgg_echo('campaigns'), '/campaigns');
 if ($container instanceof ElggUser) {
 	elgg_push_breadcrumb($container->getDisplayName(), "/campaigns/owner/$container->username");
