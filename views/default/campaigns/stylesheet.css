@@ -280,6 +280,19 @@ span.campaigns-give-item-stock {
     margin-right: 15px;
 }
 
+.campaigns-river-card {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.campaigns-river-media {
+    flex: 1 1 65%;
+}
+
+.campaigns-river-data {
+    flex: 1 1 35%;
+}
+
 @media screen and (max-width: 768px) {
 	.campaigns-profile {
 		flex-wrap: wrap;

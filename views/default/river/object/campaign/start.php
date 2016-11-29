@@ -7,9 +7,12 @@ if (!$object) {
 	return;
 }
 
-$vars['message'] = elgg_get_excerpt($object->description);
-$vars['attachments'] = elgg_view('campaigns/modules/stats', [
+$vars['message'] = elgg_view('output/longtext', [
+	'value' => $object->briefdescription,
+		]);
+
+$vars['attachments'] = elgg_view('campaigns/modules/river', [
 	'entity' => $object,
-]);
+		]);
 
 echo elgg_view('river/elements/layout', $vars);
