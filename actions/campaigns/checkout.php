@@ -51,13 +51,13 @@ if (!$street_address || !$locality || !$region || !$postal_code || !$country_cod
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
 
-$address = new Address();
-$address->street_address = $street_address;
-$address->extended_address = $extended_address;
-$address->locality = $locality;
-$address->region = $region;
-$address->postal_code = $postal_code;
-$address->country_code = $country_code;
+$shipping_address = new Address();
+$shipping_address->street_address = $street_address;
+$shipping_address->extended_address = $extended_address;
+$shipping_address->locality = $locality;
+$shipping_address->region = $region;
+$shipping_address->postal_code = $postal_code;
+$shipping_address->country_code = $country_code;
 
 $ha = access_get_show_hidden_status();
 access_show_hidden_entities(true);
@@ -134,11 +134,8 @@ if (!$order) {
 	forward("campaigns/give/$campaign->guid");
 }
 
-$order->setCustomer($user);
-$order->setShippingAddress($address);
-
 if (get_input('billing_as_shipping')) {
-	$order->setBillingAddress($address);
+	$billing_address = clone $shipping_address;
 } else {
 	$billing = (array) get_input('billing', []);
 	if ($billing) {
@@ -152,6 +149,10 @@ if (get_input('billing_as_shipping')) {
 		$order->setBillingAddress($billing_address);
 	}
 }
+
+$order->setCustomer($user);
+$order->setShippingAddress($shipping_address);
+$order->setBillingAddress($billing_address);
 
 $payment_method = $order->payment_method;
 
