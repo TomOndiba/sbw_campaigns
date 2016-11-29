@@ -81,6 +81,7 @@ class Forms {
 				[
 				'#type' => 'file',
 				'#label' => elgg_echo('campaigns:field:icon'),
+				'#help' => elgg_echo('campaigns:field:icon:help'),
 				'name' => 'icon',
 				'value' => $entity->guid && $entity->hasIcon('small'),
 			],
@@ -332,6 +333,7 @@ class Forms {
 				[
 				'#type' => 'file',
 				'#label' => elgg_echo('campaigns:field:icon'),
+				'#help' => elgg_echo('campaigns:field:icon:help'),
 				'name' => 'icon',
 				'value' => $entity->guid && $entity->hasIcon('small'),
 			],

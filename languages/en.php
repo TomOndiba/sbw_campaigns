@@ -19,6 +19,7 @@ return [
 	'campaigns:field:tags' => 'Tags',
 	'campaigns:field:access' => 'Access',
 	'campaigns:field:icon' => 'Icon',
+	'campaigns:field:icon:help' => 'For best results, upload an image at least 550px wide and dimensions as close to 16x9 ratio as possible',
 	'campaigns:field:model' => 'Model',
 	'campaigns:field:calendar_start' => 'Start date',
 	'campaigns:field:calendar_end' => 'End date',
