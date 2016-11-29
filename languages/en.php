@@ -316,7 +316,7 @@ return [
 	'campaigns:checkout:company_name' => 'Company Name',
 	'campaigns:checkout:tax_id' => 'Tax ID',
 	'campaigns:checkout:phone' => 'Phone',
-	'campaigns::billing_address' => 'Billing Address',
+	'campaigns:billing_address' => 'Billing Address',
 	'campaigns:billing_addres:same_as_shipping' => 'Same as postal address',
 	'campaigns:postal_address' => 'Postal Address',
 	'campaigns:postal_address:street_address' => 'Street Address',

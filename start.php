@@ -74,6 +74,7 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupCampaignEntityMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupRewardEntityMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupNewsEntityMenu']);
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', [Menus::class, 'setupOwnerBlockMenu']);
 
 	// Assets
 	elgg_extend_view('elgg.css', 'campaigns/stylesheet.css');

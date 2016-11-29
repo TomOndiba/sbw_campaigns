@@ -34,13 +34,11 @@ if ($entity->guid == elgg_get_logged_in_user_guid()) {
 $vars['entity'] = $entity;
 
 $content = elgg_view('campaigns/listing/owner', $vars);
-$sidebar = elgg_view('campaigns/sidebar', $vars);
 $filter = elgg_view('campaigns/filter', $vars);
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
-	'sidebar' => $sidebar,
 	'filter' => $filter,
 	'filter_context' => $entity->guid == elgg_get_logged_in_user_guid() ? 'mine' : '',
 		]);

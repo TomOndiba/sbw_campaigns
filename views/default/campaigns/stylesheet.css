@@ -50,12 +50,30 @@
 	justify-content: space-between;
 }
 
-.campaigns-profile-layout .campaigns-main {
+.campaigns-main {
+	flex: 1 1 100%;
+}
+.campaigns-profile-layout-has-sidebar .campaigns-main {
     flex: 0 0 64%;
 }
 
-.campaigns-main-layout .campaigns-main {
-    flex: 1 1 100%;
+.campaigns-sidebar {
+    flex: 0 0 35%;
+}
+
+.campaigns-profile-layout-has-filter .campaigns-sidebar {
+	margin-top: 30px;
+}
+.campaigns-main >.elgg-menu-filter {
+    margin: 0;
+}
+
+.campaigns-main > .elgg-menu-filter + .campaigns-main-content {
+    border-top: 0;
+}
+
+.campaigns-sidebar .elgg-image-block {
+    padding: 0;
 }
 
 .campaigns-main-content {
@@ -64,16 +82,14 @@
     padding: 15px;
 }
 
-.campaigns-main-layout .campaigns-main >.elgg-menu-filter {
-    margin: 0;
+.campaigns-profile-layout-modular .campaigns-main-content {
+    padding: 0;
+    background: none;
+    border: none;
 }
 
-.campaigns-main-layout .campaigns-main >.elgg-menu-filter + .campaigns-main-content {
-    border-top: 0;
-}
-
-.campaigns-sidebar {
-    flex: 0 0 35%;
+.campaigns-main-content > .elgg-listing-full > .elgg-image-block {
+    padding: 0;
 }
 
 .campaigns-cover-video iframe {
@@ -257,8 +273,7 @@ span.campaigns-give-item-stock {
 	background: #f2f2f2;
 }
 
-.campaigns-profile-layout,
-.campaigns-main-layout {
+.campaigns-profile-layout {
     margin-top: 55px;
 }
 

@@ -29,7 +29,7 @@ $title = elgg_echo('campaigns:add');
 $content = elgg_view('campaigns/edit/about', $vars);
 $filter = elgg_view('campaigns/filters/edit', $vars);
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
 	'filter' => $filter,

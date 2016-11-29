@@ -441,4 +441,29 @@ class Menus {
 		return $return;
 	}
 
+	/**
+	 * Setup owner block menu
+	 *
+	 * @param string         $hook   "register"
+	 * @param string         $type   "menu:owner_block"
+	 * @param ElggMenuItem[] $return Menu items
+	 * @param array          $params Hook params
+	 * @return ElggMenuItem[]
+	 */
+	public static function setupOwnerBlockMenu($hook, $type, $return, $params) {
+		$entity = elgg_extract('entity', $params);
+
+		if (!$entity instanceof \ElggUser) {
+			return;
+		}
+
+		$return[] = ElggMenuItem::factory([
+			'name' => 'campaigns',
+			'text' => elgg_echo('campaigns'),
+			'href' => "campaigns/owner/$entity->username",
+			'section' => ''
+		]);
+
+		return $return;
+	}
 }

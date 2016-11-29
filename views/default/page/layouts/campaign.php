@@ -3,7 +3,18 @@ $class = 'elgg-layout campaigns-profile-layout clearfix';
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
+
+$sidebar = elgg_extract('sidebar', $vars);
+$filter = elgg_extract('filter', $vars, '');
+
+if ($sidebar) {
+	$class .= ' campaigns-profile-layout-has-sidebar';
+}
+if ($filter) {
+	$class .= ' campaigns-profile-layout-has-filter';
+}
 ?>
+
 
 <div class="<?php echo $class; ?>">
 	<?php
@@ -12,11 +23,27 @@ if (isset($vars['class'])) {
 	echo elgg_view('page/layouts/elements/header', $vars);
 	?>
 	<div class="elgg-main elgg-body">
-		<?php
-		if (isset($vars['content'])) {
-			echo $vars['content'];
-		}
-		?>
+		<div class="elgg-module campaigns-profile">
+			<div class="campaigns-main">
+				<?php
+				echo $filter;
+				?>
+				<div class="campaigns-main-content">
+					<?php
+					echo elgg_extract('content', $vars, '');
+					?>
+				</div>
+			</div>
+			<?php
+			if ($sidebar) {
+				?>
+				<div class="campaigns-sidebar">
+					<?= $sidebar ?>
+				</div>
+				<?php
+			}
+			?>
+		</div>
 	</div>
 	<?php
 	echo elgg_view('page/layouts/elements/footer', $vars);

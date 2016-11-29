@@ -55,14 +55,15 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-$sidebar = elgg_view('campaigns/sidebar', $vars);
 $filter = elgg_view('campaigns/filters/view', $vars);
+$sidebar = elgg_view('campaigns/sidebars/profile', $vars);
 
 $layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'filter' => $filter,
+	'class' => 'campaigns-profile-layout-modular',
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

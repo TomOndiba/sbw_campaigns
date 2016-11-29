@@ -1,6 +1,5 @@
 <?php
 
-use SBW\Campaigns\Menus;
 use SBW\Campaigns\NewsItem;
 
 $entity_guid = elgg_extract('guid', $vars);
@@ -38,12 +37,14 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-$filter = elgg_view('campaigns/filters/news', $vars);
+$params = $vars;
+$params['entity'] = $entity->getContainerEntity();
+$sidebar = elgg_view('campaigns/sidebars/owner_block', $params);
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
-	'filter' => $filter,
+	'sidebar' => $sidebar,
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

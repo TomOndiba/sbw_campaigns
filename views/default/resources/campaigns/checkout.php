@@ -37,9 +37,12 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$sidebar = elgg_view('campaigns/sidebars/owner_block', $vars);
+
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
+	'sidebar' => $sidebar,
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

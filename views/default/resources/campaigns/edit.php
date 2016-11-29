@@ -49,12 +49,14 @@ if (elgg_is_xhr()) {
 	return;
 }
 
+$sidebar = elgg_view('campaigns/sidebars/owner_block', $vars);
 $filter = elgg_view('campaigns/filters/edit', $vars);
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
 	'filter' => $filter,
+	'sidebar' => $sidebar,
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

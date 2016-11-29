@@ -26,6 +26,7 @@ switch ($subject) {
 		if (!$campaign instanceof SBW\Campaigns\Campaign) {
 			forweard('', '404');
 		}
+		$sidebar = elgg_view('campaigns/sidebars/owner_block', $vars);
 		$title = elgg_echo('campaigns:terms:campaign', [$campaign->getDisplayName()]);
 		$content = elgg_view('output/longtext', [
 			'value' => $campaign->rules,
@@ -42,7 +43,7 @@ if (elgg_is_xhr()) {
 	return;
 }
 
-$layout = elgg_view_layout('campaign_main', $vars + [
+$layout = elgg_view_layout('campaign', $vars + [
 	'title' => $title,
 	'content' => $content,
 ]);
