@@ -13,7 +13,6 @@ use SBW\Campaigns\Reward;
  * @property int    $target_amount
  * @property int    $donation_minimum
  * @property string $currency
- * @property string $target_unit
  * @property string $website
  * @property string $video_url
  * @property int   $started

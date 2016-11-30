@@ -511,7 +511,7 @@ class Payments {
 				elgg_set_ignore_access($ia);
 				return;
 			}
-		} else if ($entity->model == 'pot') {
+		} else if ($entity->model == Campaign::MODEL_MONEY_POT) {
 			$fee = (float) elgg_get_plugin_setting('money_pot_fee', 'sbw_campaigns', 0);
 		} else {
 			return;

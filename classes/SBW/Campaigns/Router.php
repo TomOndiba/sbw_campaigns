@@ -71,6 +71,12 @@ class Router {
 				]);
 				break;
 
+			case 'thankyou' :
+				$resource = elgg_view_resource('campaigns/thankyou', [
+					'guid' => array_shift($segments),
+				]);
+				break;
+
 			case 'terms' :
 				$resource = elgg_view_resource('campaigns/terms', [
 					'subject' => array_shift($segments) ?: 'campaigner',

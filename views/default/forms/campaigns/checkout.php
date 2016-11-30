@@ -25,6 +25,12 @@ echo elgg_view('payments/order', [
 	'order' => $order,
 ]);
 
+if ($entity->model == Campaign::MODEL_RELIEF) {
+	$submit_label = elgg_echo('campaigns:checkout:commit');
+} else {
+	$submit_label = elgg_echo('campaigns:checkout:pay');
+}
+
 $user = elgg_get_logged_in_user_entity();
 
 echo elgg_view_field([
@@ -227,7 +233,7 @@ $footer = elgg_view_field([
 	'fields' => [
 			[
 			'#type' => 'submit',
-			'value' => elgg_echo('campaigns:checkout:pay'),
+			'value' => $submit_label,
 		],
 			[
 			'#type' => 'campaigns/cancel',

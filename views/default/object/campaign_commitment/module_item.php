@@ -1,9 +1,9 @@
 <?php
 
-use SBW\Campaigns\Donation;
+use SBW\Campaigns\Commitment;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof Donation) {
+if (!$entity instanceof Commitment) {
 	return;
 }
 
@@ -29,10 +29,13 @@ $title = elgg_format_element('h3', [
 	'class' => 'campaigns-donation-name',
 		], $title);
 
-$amount = elgg_format_element('div', [
-	'class' => 'campaigns-donation-amount',
-		], $entity->getNetAmount()->format());
+
+$item_list = [];
+$order = $entity->getOrder();
+foreach ($order->all() as $item) {
+	$item_list[] = strtolower("{$item->getQuantity()} $item->title");
+}
 
 echo elgg_view_image_block($icon, $title, [
-	'image_alt' => $amount,
+	'image_alt' => implode('<br />', $item_list),
 ]);

@@ -151,6 +151,7 @@ class Permissions {
 				Donor::SUBTYPE,
 				Reward::SUBTYPE,
 				NewsItem::SUBTYPE,
+				ReliefItem::SUBTYPE,
 			],
 			'container_guid' => $entity->guid,
 			'wheres' => array(

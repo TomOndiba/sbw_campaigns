@@ -128,29 +128,18 @@ class Forms {
 			];
 		}
 
-		if ($entity->model !== 'relief' && $entity->guid) {
+		if ($entity->guid) {
 			$target_amount = (new Money($entity->target_amount, $entity->currency))->getConvertedAmount();
 			$donation_minimum = (new Money($entity->donation_minimum, $entity->currency))->getConvertedAmount();
 		} else {
-			$target_amount = $entity->target_amount;
-			$donation_minimum = $entity->donation_minimum;
+			$target_amount = 0;
+			$donation_minimum = 0;
 		}
 
 		$non_editable = [];
 		if (!$entity->started) {
 			// Details that can not be changed after the campaign start
 			$non_editable = [
-//					[
-//					'#type' => 'select',
-//					'#label' => elgg_echo('campaigns:field:status'),
-//					'name' => 'status',
-//					'value' => elgg_extract('status', $params, $default_status),
-//					'options_values' => [
-//						'draft' => elgg_echo('campaigns:status:draft'),
-//						'published' => elgg_echo('campaigns:status:published'),
-//					],
-//					'required' => true,
-//				],
 					[
 					'#type' => 'fieldset',
 					'#label' => elgg_echo('campaigns:field:model'),
@@ -174,6 +163,17 @@ class Forms {
 							'value' => elgg_extract('model', $params, $entity->model),
 							'options' => array_flip([
 								Campaign::MODEL_MONEY_POT => elgg_echo('campaigns:model:money_pot'),
+							]),
+							'required' => true,
+						],
+							[
+							'#type' => 'radio',
+							'#help' => elgg_echo('campaigns:model:relief:help'),
+							'name' => 'model',
+							'class' => 'campaigns-field-model',
+							'value' => elgg_extract('model', $params, $entity->model),
+							'options' => array_flip([
+								Campaign::MODEL_RELIEF => elgg_echo('campaigns:model:relief'),
 							]),
 							'required' => true,
 						],
@@ -211,6 +211,10 @@ class Forms {
 				],
 					[
 					'#type' => 'fieldset',
+					'#class' => [
+						'campaigns-field-monetary',
+						$entity->model !== Campaign::MODEL_RELIEF ? '' : 'hidden',
+					],
 					'align' => 'horizontal',
 					'fields' => [
 							[
@@ -230,24 +234,9 @@ class Forms {
 							[
 							'#type' => 'payments/currency',
 							'#label' => elgg_echo('campaigns:field:currency'),
-							'#class' => [
-								'campaigns-field-currency',
-								$entity->model !== 'relief' ? '' : 'hidden',
-							],
 							'value' => elgg_extract('currency', $params, $entity->currency),
 							'name' => 'currency',
-							'required' => $entity->model !== 'relief',
-						],
-							[
-							'#type' => 'text',
-							'#label' => elgg_echo('campaigns:field:target_unit'),
-							'#class' => [
-								'campaigns-field-target-unit',
-								$entity->model == 'relief' ? '' : 'hidden',
-							],
-							'value' => elgg_extract('target_unit', $params, $entity->target_unit),
-							'name' => 'target_unit',
-							'required' => $entity->model == 'relief',
+							'required' => true,
 						],
 					],
 				],
@@ -255,6 +244,19 @@ class Forms {
 		}
 
 		$fields = array_merge($fields, $non_editable);
+
+		$fields[] = [
+			'#type' => 'plaintext',
+			'#class' => [
+				'campaigns-field-relief',
+				$entity->model == Campaign::MODEL_RELIEF ? '' : 'hidden',
+			],
+			'#label' => elgg_echo('campaigns:field:relief_delivery'),
+			'#help' => elgg_echo('campaigns:field:relief_delivery:help'),
+			'name' => 'relief_delivery',
+			'value' => elgg_extract('relief_delivery', $params, $entity->currency),
+			'required' => true,
+		];
 
 		$terms = elgg_get_plugin_setting('terms:campaigner', 'sbw_campaigns');
 		if ($terms) {
@@ -295,14 +297,10 @@ class Forms {
 			$entity = new Reward();
 		}
 
-		if ($container->model !== 'relief') {
-			if ($entity->guid) {
-				$donation_minimum = (new Money($entity->donation_minimum, $entity->currency))->getConvertedAmount();
-			} else {
-				$donation_minimum = (new Money($container->donation_minimum, $container->currency))->getConvertedAmount();
-			}
+		if ($entity->guid) {
+			$donation_minimum = (new Money($entity->donation_minimum, $entity->currency))->getConvertedAmount();
 		} else {
-			$donation_minimum = $entity->donation_minimum;
+			$donation_minimum = (new Money($container->donation_minimum, $container->currency))->getConvertedAmount();
 		}
 
 		$fields = [
@@ -350,9 +348,9 @@ class Forms {
 					],
 						[
 						'#type' => 'text',
-						'#label' => elgg_echo('campaigns:field:target_unit'),
+						'#label' => elgg_echo('campaigns:field:currency'),
 						'disabled' => true,
-						'value' => $container->model == 'relief' ? $container->target_unit : $container->currency,
+						'value' => $container->currency,
 					],
 						[
 						'#type' => 'text',
@@ -362,6 +360,68 @@ class Forms {
 						'required' => true,
 					],
 				],
+			],
+		];
+
+		return $fields;
+	}
+
+	/**
+	 * Setup relief item form
+	 *
+	 * @param string $hook   "fields"
+	 * @param string $type   "campaigns/edit/relief_item"
+	 * @param array  $return Fields
+	 * @param array  $params Hook params
+	 * @return array
+	 */
+	public static function setupReliefItemForm($hook, $type, $return, $params) {
+		$entity = elgg_extract('entity', $params);
+		$container = elgg_extract('container', $params);
+		if (!$container instanceof Campaign) {
+			return;
+		}
+		if (!$entity) {
+			$entity = new Reward();
+		}
+
+		$fields = [
+				[
+				'#type' => 'hidden',
+				'name' => 'guid',
+				'value' => $entity->guid,
+			],
+				[
+				'#type' => 'hidden',
+				'name' => 'container_guid',
+				'value' => $container->guid,
+			],
+				[
+				'#type' => 'text',
+				'#label' => elgg_echo('campaigns:field:title'),
+				'name' => 'title',
+				'required' => true,
+				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
+			],
+				[
+				'#type' => 'longtext',
+				'#label' => elgg_echo('campaigns:field:description'),
+				'name' => 'description',
+				'required' => true,
+				'value' => elgg_extract('description', $params, $entity->description),
+			],
+				[
+				'#type' => 'file',
+				'#label' => elgg_echo('campaigns:field:icon'),
+				'name' => 'icon',
+				'value' => $entity->guid && $entity->hasIcon('small'),
+			],
+				[
+				'#type' => 'text',
+				'#label' => elgg_echo('campaigns:field:required_quantity'),
+				'value' => elgg_extract('required_quantity', $params, $entity->required_quantity),
+				'name' => 'required_quantity',
+				'required' => true,
 			],
 		];
 

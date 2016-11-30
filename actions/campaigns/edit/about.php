@@ -87,14 +87,18 @@ if (!$entity->guid || !$entity->started) {
 		return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 	}
 
-	$target_amount = (int) floor(get_input('target_amount'));
-	$donation_minimum = (int) floor(get_input('donation_minimum'));
-	$currency = get_input('currency');
-	$target_unit = get_input('target_unit');
-
-	if (empty($target_amount) || ($model == 'relief' && empty($target_unit)) || ($model != 'relief' && empty($currency))) {
-		$error = elgg_echo('campaigns:error:required');
-		return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
+	if ($model == Campaign::MODEL_RELIEF) {
+		$target_amount = 0;
+		$donation_minimum = 0;
+		$currency = 'EUR';
+	} else {
+		$target_amount = (int) floor(get_input('target_amount'));
+		$donation_minimum = (int) floor(get_input('donation_minimum'));
+		$currency = get_input('currency');
+		if (empty($target_amount) || empty($currency)) {
+			$error = elgg_echo('campaigns:error:required');
+			return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
+		}
 	}
 }
 
@@ -115,20 +119,15 @@ $entity->location = $location;
 $entity->{'terms:campaigner'} = $terms;
 $entity->access_id = $access_id;
 $entity->future_access_id = $access_id;
+$entity->relief_delivery = get_input('relief_delivery');
 
 if (!$entity->guid || !$entity->started) {
 	$entity->model = $model;
 	$entity->calendar_start = $calendar_start;
 	$entity->calendar_end = $calendar_end;
-	if ($entity->model !== 'relief') {
-		$entity->target_amount = \SebastianBergmann\Money\Money::fromString((string) $target_amount, $currency)->getAmount();
-		$entity->donation_minimum = \SebastianBergmann\Money\Money::fromString((string) $donation_minimum, $currency)->getAmount();
-	} else {
-		$entity->target_amount = $target_amount;
-		$entity->donation_minimum = $donation_minimum;
-	}
+	$entity->target_amount = \SebastianBergmann\Money\Money::fromString((string) $target_amount, $currency)->getAmount();
+	$entity->donation_minimum = \SebastianBergmann\Money\Money::fromString((string) $donation_minimum, $currency)->getAmount();
 	$entity->currency = $currency;
-	$entity->target_unit = $target_unit;
 }
 
 if ($entity->save()) {
@@ -204,8 +203,14 @@ if ($entity->save()) {
 		'action' => $action,
 	];
 
+	if ($model == Campaign::MODEL_RELIEF) {
+		$forward_url = "campaigns/edit/$entity->guid/relief_items";
+	} else {
+		$forward_url = $entity->getURL();
+	}
+
 	$message = elgg_echo('campaigns:success', [$entity->getDisplayName()]);
-	return elgg_ok_response($data, $message, $entity->getURL());
+	return elgg_ok_response($data, $message, $forward_url);
 }
 
 $error = elgg_echo('campaigns:error:general');

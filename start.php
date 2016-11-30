@@ -11,6 +11,7 @@ require_once __DIR__ . '/autoloader.php';
 
 use Elgg\Values;
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Commitments;
 use SBW\Campaigns\Cron;
 use SBW\Campaigns\Forms;
 use SBW\Campaigns\Icons;
@@ -41,6 +42,9 @@ elgg_register_event_handler('init', 'system', function() {
 
 	elgg_register_plugin_hook_handler('fields', 'campaigns/edit/reward', [Forms::class, 'setupRewardForm']);
 	elgg_register_action('campaigns/edit/reward', __DIR__ . '/actions/campaigns/edit/reward.php');
+
+	elgg_register_plugin_hook_handler('fields', 'campaigns/edit/relief_item', [Forms::class, 'setupReliefItemForm']);
+	elgg_register_action('campaigns/edit/relief_item', __DIR__ . '/actions/campaigns/edit/relief_item.php');
 
 	elgg_register_plugin_hook_handler('fields', 'campaigns/edit/news_item', [Forms::class, 'setupNewsItemForm']);
 	elgg_register_action('campaigns/edit/news_item', __DIR__ . '/actions/campaigns/edit/news_item.php');
@@ -73,6 +77,7 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('register', 'menu:filter', [Menus::class, 'setupEditFilterMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupCampaignEntityMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupRewardEntityMenu']);
+	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupReliefItemEntityMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', [Menus::class, 'setupNewsEntityMenu']);
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', [Menus::class, 'setupOwnerBlockMenu']);
 
@@ -92,6 +97,10 @@ elgg_register_event_handler('init', 'system', function() {
 
 	// @todo: add a hook handler
 	elgg_register_plugin_hook_handler('transaction:partially_refunded', 'payments', [Payments::class, 'processPartiallyRefundedTransaction']);
+
+	// Relief commitments
+	elgg_register_plugin_hook_handler('transaction:committed', 'payments', [Commitments::class, 'processCommitment']);
+	elgg_register_plugin_hook_handler('transaction:delivered', 'payments', [Commitments::class, 'processDelivery']);
 
 	// Notifications
 	elgg_register_notification_event('object', $subtype, ['start', 'milestone', 'end']);
@@ -116,4 +125,8 @@ elgg_register_event_handler('init', 'system', function() {
 
 	elgg_register_admin_menu_item('administer', 'campaign_balances', 'payments');
 
+});
+
+elgg_register_event_handler('upgrade', 'system', function() {
+	require_once __DIR__ . '/activate.php';
 });

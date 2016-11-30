@@ -27,7 +27,6 @@ return [
 	'campaigns:field:donation_minimum' => 'Minimum donation amount',
 	'campaigns:field:funding_period' => 'Funding period',
 	'campaigns:field:currency' => 'Currency',
-	'campaigns:field:target_unit' => 'Unit type',
 	'campaigns:field:terms' => 'I agree to %s',
 	'campaigns:field:video_url' => 'Cover video URL',
 	'campaigns:field:website' => 'Website',
@@ -37,8 +36,11 @@ return [
 	'campaigns:field:rules' => 'Rules',
 	'campaigns:field:rules:help' => 'Specify terms and conditions that apply to individual donations',
 	'campaigns:field:quantity' => 'Available quantity',
+	'campaigns:field:required_quantity' => 'Required quantity',
 	'campaigns:field:location' => 'Location',
 	'campaigns:field:briefdescription' => 'Brief description',
+	'campaigns:field:relief_delivery' => 'Delivery instructions',
+	'campaigns:field:relief_delivery:help' => 'Please provide any instructions that should be sent to donors with regards to delivery, packaging and other noteworthy details',
 
 	'campaigns:status:published' => 'Published',
 	'campaigns:status:draft' => 'Draft',
@@ -59,17 +61,24 @@ return [
 		Suitable for campaigns that use the funding towards their day-to-day operations and do not require 100% funding to achieve their goals.
 	',
 	'campaigns:model:relief' => 'Relief',
+	'campaigns:model:relief:help' => '
+		Relief campaigns allow you to solicit in-kind donation for emergency and other relief causes.
+		You will need to provide an itemized list of needs - donors will be able to choose what items they are able to commit and deliver to you.
+	',
 
 	'campaigns:no_results' => 'There are no campaigns yet',
 
 	'campaigns:edit:about' => 'About',
 	'campaigns:edit:rewards' => 'Rewards',
+	'campaigns:edit:relief_items' => 'Campaign Needs',
 	'campaigns:edit:transactions' => 'Transactions',
+	'campaigns:edit:commitments' => 'Commitments',
 	'campaigns:edit:balance' => 'Pay-Out',
 
 	'campaigns:news:no_results' => 'This campaign hasn\'t published any news yet',
 	'campaigns:rewards:no_results' => 'This campaign does not offer any rewards',
 	'campaigns:transactions:no_results' => 'There are no transactions to display yet',
+	'campaigns:relief_items:no_results' => 'Campaign needs have not been defined yet',
 
 	'campaigns:terms:campaigner' => 'Campaigner Terms and Conditions',
 	'campaigns:terms:donor' => 'Donor Terms and Conditions',
@@ -94,6 +103,7 @@ return [
 	'campaigns:error:payment_gateway' => 'There was an error contacting the payment gateway. Please try again later.',
 	'campaigns:error:already_started' => 'Campaign has already started',
 	'campaigns:error:already_ended' => 'Campaign has already ended',
+	'campaigns:error:commitment_amount_too_low' => 'Please specify one or more items you would like to donate by changing the quantity',
 	
 	'campaigns:require_verification' => 'Require verification',
 	'campaigns:require_verification:help' => 'If enabled, campaigns will have to be verified by the administrator before starting',
@@ -332,6 +342,7 @@ return [
 
 	'campaigns:cancel' => 'Cancel',
 	'campaigns:checkout:pay' => 'Pay Now',
+	'campaigns:checkout:commit' => 'Commit Now',
 
 	'campaigns:payment:paypal:help' => '
 		After submitting this form, you will be redirected to the PayPal website to complete your payment.
@@ -339,11 +350,18 @@ return [
 
 	'campaigns:anonymous' => 'Anonymous',
 	'campaigns:donations' => 'Donations',
+	'campaigns:commitments' => 'Commitments',
 	'campaigns:donations:no_results' => 'There are no donations to this campaign yet',
-	'campaigns:funded_percentage' => '%s funded',
+	'campaigns:commitments:no_results' => 'There are no commitments to this campaign yet',
+	'campaigns:funded_percentage' => '%s of the target',
 	'campaigns:funded' => '%s funded',
+	'campaigns:funded:total' => '%s received',
+	'campaigns:committed' => '%s reached',
+	'campaigns:committed:items' => '%s donated',
+	'campaigns:required' => '%s required',
 	'campaigns:backers' => '%s backers',
 	'campaigns:avg_donation' => '%s avg donation',
+	'campaigns:donations:total' => '%s donations',
 
 	'campaigns:manual_start' => 'Start campaign',
 	'campaigns:manual_start:confirm' => 'Are you sure you want to manually start this campaign?',
@@ -354,7 +372,7 @@ return [
 
 	'river:end:object:default' => 'Campaign %2$s has ended',
 	'river:give:object:default' => '%s donated to %s campaign',
-	'river:publish:object:default' => '%s create a new campaign %s',
+	'river:publish:object:default' => '%s created a new campaign %s',
 	'river:start:object:default' => 'Campaign %2$s has started',
 	'river:milestone:object:default' => 'Campaign %2$s has reached a new milestone',
 
@@ -386,5 +404,31 @@ return [
 	'campaigns:unfollow:success' => 'You are now longer subscribed to notifications about %s',
 
 	'campaigns:checkout:register' => 'Create a new user account',
+
+	'campaigns:field:relief_item' => 'Campaign needs',
+	'campaigns:relief_items' => 'Campaign needs',
+	'campaigns:relief_items:edit' => 'Edit relief item',
+	'campaigns:relief_items:add' => 'Add a relief item',
+	'campaigns:relief_items:required' =>  '%s of %s still required',
+	'campaigns:give:relief_items' => 'Specify the quantity of items you would like to donate',
+	'campaigns:give:relief_item' => 'Item',
+	'campaigns:give:quantity' => 'Quantity',
+
+	'campaigns:commitment:notify:subject' => 'Thank you for your committment to %s',
+	'campaigns:commitment:notify:body' => '
+		Thank you for your commitment to the %s campaign:
+
+		%s
+
+		Campaign organizers have provided the following information for the donors:
+		%s
+
+		To view campaign progress, please visit:
+		%s
+	',
+
+	'campaigns:thankyou' => 'Thank you',
+	'campaigns:thankyou:relief_delivery' => 'Thank you for your commitment. Please read this information from campaign organizers:',
+	
 	
 ];

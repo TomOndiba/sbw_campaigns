@@ -24,11 +24,20 @@ if ($about) {
 	]);
 }
 
-$donations = elgg_view('campaigns/modules/donations', $vars);
-if ($donations) {
-	$donations = elgg_view_module('aside', elgg_echo('campaigns:donations'), $donations, [
-		'class' => 'campaigns-module',
-	]);
+if ($entity->model == Campaign::MODEL_RELIEF) {
+	$commitments = elgg_view('campaigns/modules/commitments', $vars);
+	if ($commitments) {
+		$commitments = elgg_view_module('aside', elgg_echo('campaigns:commitments'), $commitments, [
+			'class' => 'campaigns-module',
+		]);
+	}
+} else {
+	$donations = elgg_view('campaigns/modules/donations', $vars);
+	if ($donations) {
+		$donations = elgg_view_module('aside', elgg_echo('campaigns:donations'), $donations, [
+			'class' => 'campaigns-module',
+		]);
+	}
 }
 
 $comments = elgg_view_comments($entity);
@@ -41,5 +50,6 @@ if ($comments) {
 echo $media;
 echo $about;
 echo $news;
+echo $commitments;
 echo $donations;
 echo $comments;

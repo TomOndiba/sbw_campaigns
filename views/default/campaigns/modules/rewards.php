@@ -1,11 +1,14 @@
 <?php
 
 use SBW\Campaigns\Campaign;
-use SBW\Campaigns\Reward;
 
 $entity = elgg_extract('entity', $vars);
 
 if (!$entity instanceof Campaign) {
+	return;
+}
+
+if ($entity->model == Campaign::MODEL_RELIEF) {
 	return;
 }
 

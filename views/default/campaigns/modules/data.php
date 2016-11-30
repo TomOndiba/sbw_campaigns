@@ -2,6 +2,7 @@
 
 use hypeJunction\Payments\Amount;
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\ReliefItem;
 
 $entity = elgg_extract('entity', $vars);
 
@@ -17,33 +18,41 @@ $data['model'] = [
 	'value' => elgg_echo("campaigns:model:$entity->model"),
 ];
 
-if ($entity->model !== 'relief') {
+if ($entity->model == Campaign::MODEL_RELIEF) {
+	$items = elgg_get_entities([
+		'types' => 'object',
+		'subtypes' => ReliefItem::SUBTYPE,
+		'container_guids' => (int) $entity->guid,
+		'limit' => 0,
+		'batch' => true,
+	]);
+
+	foreach ($items as $item) {
+		$data[$item->title] = [
+			'icon' => 'life-ring',
+			'label' => elgg_echo('campaigns:field:relief_item'),
+			'value' => strtolower("$item->required_quantity $item->title"),
+		];
+	}
+} else {
 	$minimum = (new Amount($entity->donation_minimum, $entity->currency))->getConvertedAmount();
 	$unit = $entity->currency;
-} else {
-	$minimum = $entity->donation_minimum;
-	$unit = $entity->target_unit;
-}
 
-$data['minimum_donation'] = [
-	'icon' => 'usd',
-	'label' => elgg_echo('campaigns:field:donation_minimum'),
-	'value' => "$minimum $unit",
-];
+	$data['minimum_donation'] = [
+		'icon' => 'usd',
+		'label' => elgg_echo('campaigns:field:donation_minimum'),
+		'value' => "$minimum $unit",
+	];
 
-if ($entity->model !== 'relief') {
 	$minimum = (new Amount($entity->target_amount, $entity->currency))->getConvertedAmount();
 	$unit = $entity->currency;
-} else {
-	$minimum = $entity->target_amount;
-	$unit = $entity->target_unit;
-}
 
-$data['target_amount'] = [
-	'icon' => 'bullseye',
-	'label' => elgg_echo('campaigns:field:target_amount'),
-	'value' => "$minimum $unit",
-];
+	$data['target_amount'] = [
+		'icon' => 'bullseye',
+		'label' => elgg_echo('campaigns:field:target_amount'),
+		'value' => "$minimum $unit",
+	];
+}
 
 if (date('Y', $entity->calendar_start) == date('Y', $entity->calendar_end)) {
 	$start_format = 'F j';
@@ -79,7 +88,7 @@ if ($entity->website) {
 		]),
 	];
 }
-	
+
 if (elgg_extract('full_view', $vars, false)) {
 	$data['tags'] = [
 		'icon' => 'tag',

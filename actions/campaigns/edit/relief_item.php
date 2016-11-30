@@ -1,10 +1,9 @@
 <?php
 
-use hypeJunction\Payments\Amount;
 use SBW\Campaigns\Campaign;
-use SBW\Campaigns\Reward;
+use SBW\Campaigns\ReliefItem;
 
-elgg_make_sticky_form('campaigns/edit/reward');
+elgg_make_sticky_form('campaigns/edit/relief_item');
 
 $user = elgg_get_logged_in_user_entity();
 
@@ -27,12 +26,12 @@ if ($guid) {
 } else {
 	$container_guid = get_input('container_guid');
 	$container = get_entity($container_guid);
-	if (!$container instanceof Campaign || !$container->canWriteToContainer(0, 'object', Reward::SUBTYPE)) {
+	if (!$container instanceof Campaign || !$container->canWriteToContainer(0, 'object', ReliefItem::SUBTYPE)) {
 		$error = elgg_echo('campaigns:error:container_permissions');
 		return elgg_error_response($error, REFERRER, ELGG_HTTP_FORBIDDEN);
 	}
 
-	$entity = new Reward();
+	$entity = new ReliefItem();
 	$entity->owner_guid = $user->guid;
 	$entity->container_guid = $container->guid;
 
@@ -41,24 +40,14 @@ if ($guid) {
 
 $title = get_input('title', '');
 $description = get_input('description', '');
-$donation_minimum = get_input('donation_minimum');
-$quantity = (int) get_input('quantity');
+$required_quantity = (int) get_input('required_quantity');
 
 if (empty($title) || empty($description)) {
 	$error = elgg_echo('campaigns:error:required');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
 
-
-$price = Amount::fromString($donation_minimum, $container->currency);
-$donation_minimum = $price->getAmount();
-
-if ($donation_minimum < $container->donation_minimum) {
-	$error = elgg_echo('campaigns:error:reward_minimum_too_low', [$price->getConvertedAmount()]);
-	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
-}
-
-if (!$quantity) {
+if (!$required_quantity) {
 	$error = elgg_echo('campaigns:error:quantity_too_low');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_BAD_REQUEST);
 }
@@ -66,18 +55,11 @@ if (!$quantity) {
 $entity->title = htmlentities($title, ENT_QUOTES, 'UTF-8');
 $entity->description = $description;
 $entity->access_id = $container->access_id;
-$entity->donation_minimum = (int) $donation_minimum;
-$entity->setPrice($price);
+$entity->required_quantity = (int) $required_quantity;
 
-$forward_url = "campaigns/edit/$container->guid/rewards";
+$forward_url = "campaigns/edit/$container->guid/relief_items";
 if ($entity->save()) {
-
-	$stock = $entity->getStock();
-	if ($diff = $quantity - $stock) {
-		$entity->addStock($diff);
-	}
-
-	elgg_clear_sticky_form('campaigns/edit/reward');
+	elgg_clear_sticky_form('campaigns/edit/relief_item');
 	$entity->saveIconFromUploadedFile('icon');
 	$data = [
 		'entity' => $entity,

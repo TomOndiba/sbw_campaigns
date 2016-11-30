@@ -9,6 +9,8 @@ if (!$entity instanceof Campaign) {
 	return;
 }
 
+echo elgg_view('campaigns/modules/donation_stats', $vars);
+
 echo elgg_list_entities([
 	'types' => 'object',
 	'subtypes' => Donation::SUBTYPE,
@@ -16,4 +18,5 @@ echo elgg_list_entities([
 	'limit' => 20,
 	'offset_key' => 'donations',
 	'no_results' => elgg_echo('campaigns:donations:no_results'),
-		]);
+]);
+

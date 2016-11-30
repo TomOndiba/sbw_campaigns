@@ -36,14 +36,10 @@ $rewards = $entity->getRewards();
 					'class' => 'campaigns-give-item-title',
 						], elgg_echo('campaigns:give:no_reward'));
 
-				if ($entity->model !== 'relief') {
-					$currency = new Currency($entity->currency);
-					$minimum = (new Money($entity->donation_minimum, $currency))->getConvertedAmount();
-					$unit = $currency->getCurrencyCode();
-				} else {
-					$minimum = $entity->donation_minimum;
-					$unit = $entity->target_unit;
-				}
+				$currency = new Currency($entity->currency);
+				$minimum = (new Money($entity->donation_minimum, $currency))->getConvertedAmount();
+				$unit = $currency->getCurrencyCode();
+
 				echo elgg_format_element('span', [
 					'class' => 'campaigns-give-item-minimimum-donation',
 						], "$minimum $unit");
@@ -89,14 +85,9 @@ $rewards = $entity->getRewards();
 						'class' => 'campaigns-give-item-title',
 							], $reward->getDisplayName());
 
-					if ($entity->model !== 'relief') {
-						$currency = new Currency($entity->currency);
-						$minimum = (new Money($reward->donation_minimum, $currency))->getConvertedAmount();
-						$unit = $currency->getCurrencyCode();
-					} else {
-						$minimum = $reward->donation_minimum;
-						$unit = $reward->target_unit;
-					}
+					$currency = new Currency($entity->currency);
+					$minimum = (new Money($reward->donation_minimum, $currency))->getConvertedAmount();
+					$unit = $currency->getCurrencyCode();
 
 					$title .= elgg_format_element('span', [
 						'class' => 'campaigns-give-item-minimimum-donation',

@@ -4,6 +4,7 @@ use hypeJunction\Payments\Address;
 use hypeJunction\Payments\SessionStorage;
 use hypeJunction\Payments\Transaction;
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Commitment;
 use SBW\Campaigns\Donor;
 
 elgg_make_sticky_form('campaigns/checkout');
@@ -14,6 +15,12 @@ $campaign = get_entity($guid);
 if (!$campaign instanceof Campaign) {
 	$error = elgg_echo('campaigns:error:not_found');
 	return elgg_error_response($error, REFERRER, ELGG_HTTP_NOT_FOUND);
+}
+
+$storage = new SessionStorage();
+$order = $storage->get($campaign->guid);
+if (!$order) {
+	forward("campaigns/give/$campaign->guid");
 }
 
 $donor_terms = (bool) get_input('donor_terms') || !elgg_get_plugin_setting('terms:donor', 'sbw_campaigns');
@@ -128,13 +135,7 @@ if ($subscribe) {
 	}
 }
 
-$storage = new SessionStorage();
-$order = $storage->get($campaign->guid);
-if (!$order) {
-	forward("campaigns/give/$campaign->guid");
-}
-
-if (get_input('billing_as_shipping')) {
+if (get_input('billing_as_shipping') || $campaign->model == Campaign::MODEL_RELIEF) {
 	$billing_address = clone $shipping_address;
 } else {
 	$billing = (array) get_input('billing', []);
@@ -146,46 +147,75 @@ if (get_input('billing_as_shipping')) {
 		$billing_address->region = elgg_extract('region', $billing);
 		$billing_address->postal_code = elgg_extract('postal_code', $billing);
 		$billing_address->country_code = elgg_extract('country_code', $billing);
-		$order->setBillingAddress($billing_address);
 	}
 }
 
 $order->setCustomer($user);
-$order->setShippingAddress($shipping_address);
-$order->setBillingAddress($billing_address);
+	$order->setShippingAddress($shipping_address);
+	$order->setBillingAddress($billing_address);
 
-$payment_method = $order->payment_method;
+if ($campaign->model == Campaign::MODEL_RELIEF) {
 
-$transaction = new Transaction();
-$transaction->setOrder($order);
-$transaction->setPaymentMethod($payment_method);
-$transaction->origin = 'campaigns';
-$transaction->email = $email;
-$transaction->first_name = $first_name;
-$transaction->last_name = $last_name;
-$transaction->company_name = $company_name;
-$transaction->tax_id = $tax_id;
-$transaction->phone = $phone;
-$transaction->name = $name;
-$transaction->anonymous = (bool) get_input('anonymize');
-$transaction->owner_guid = $user->guid;
-$transaction->container_guid = $campaign->guid;
-$transaction->access_id = $campaign->write_access_id;
+	$transaction = new Commitment();
+	$transaction->setOrder($order);
+	$transaction->origin = 'campaigns';
+	$transaction->email = $email;
+	$transaction->first_name = $first_name;
+	$transaction->last_name = $last_name;
+	$transaction->company_name = $company_name;
+	$transaction->tax_id = $tax_id;
+	$transaction->phone = $phone;
+	$transaction->name = $name;
+	$transaction->anonymous = (bool) get_input('anonymize');
+	$transaction->owner_guid = $user->guid;
+	$transaction->container_guid = $campaign->guid;
+	$transaction->access_id = $campaign->write_access_id;
 
-$transaction->save();
+	$transaction->save();
 
-elgg_clear_sticky_form('campaigns/checkout');
+	$transaction->setStatus(Commitment::STATUS_COMMITTED);
+	
+	elgg_clear_sticky_form('campaigns/checkout');
 
-$storage->invalidate($campaign->guid);
+	$storage->invalidate($campaign->guid);
 
-$query = $_REQUEST;
-$query['transaction_id'] = $transaction->transaction_id;
-$query['__elgg_uri'] = null;
+	$forward_url = "campaigns/thankyou/$campaign->guid";
+	return elgg_redirect_response($forward_url);
+} else {
 
-$forward_url = elgg_http_add_url_query_elements("action/payments/checkout/$payment_method", $query);
-$forward_url = elgg_add_action_tokens_to_url($forward_url);
+	$payment_method = $order->payment_method;
 
-access_show_hidden_entities($ha);
-elgg_set_ignore_access($ia);
+	$transaction = new Transaction();
+	$transaction->setOrder($order);
+	$transaction->setPaymentMethod($payment_method);
+	$transaction->origin = 'campaigns';
+	$transaction->email = $email;
+	$transaction->first_name = $first_name;
+	$transaction->last_name = $last_name;
+	$transaction->company_name = $company_name;
+	$transaction->tax_id = $tax_id;
+	$transaction->phone = $phone;
+	$transaction->name = $name;
+	$transaction->anonymous = (bool) get_input('anonymize');
+	$transaction->owner_guid = $user->guid;
+	$transaction->container_guid = $campaign->guid;
+	$transaction->access_id = $campaign->write_access_id;
 
-return elgg_redirect_response($forward_url);
+	$transaction->save();
+
+	elgg_clear_sticky_form('campaigns/checkout');
+
+	$storage->invalidate($campaign->guid);
+
+	$query = $_REQUEST;
+	$query['transaction_id'] = $transaction->transaction_id;
+	$query['__elgg_uri'] = null;
+
+	$forward_url = elgg_http_add_url_query_elements("action/payments/checkout/$payment_method", $query);
+	$forward_url = elgg_add_action_tokens_to_url($forward_url);
+
+	access_show_hidden_entities($ha);
+	elgg_set_ignore_access($ia);
+
+	return elgg_redirect_response($forward_url);
+}

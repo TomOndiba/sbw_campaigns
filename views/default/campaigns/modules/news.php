@@ -17,5 +17,5 @@ echo elgg_list_entities([
 	'offset_key' => 'news',
 	'pagination' => true,
 	'pagination_type' => 'infinite',
-	//'no_results' => elgg_echo('campaigns:news:no_results'),
+	'no_results' => elgg_echo('campaigns:news:no_results'),
 		]);

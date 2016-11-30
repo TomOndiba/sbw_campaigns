@@ -37,9 +37,11 @@ if ($menu) {
 }
 
 $rewards = elgg_view('campaigns/modules/rewards', $vars);
+$relief_items = elgg_view('campaigns/modules/relief_items', $vars);
 
 echo $stats;
 echo $share;
 echo $menu;
 echo $data;
 echo $rewards;
+echo $relief_items;

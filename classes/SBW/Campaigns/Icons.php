@@ -17,7 +17,7 @@ class Icons {
 
 		$subtype = elgg_extract('entity_subtype', $params);
 
-		if (!in_array($subtype, [Campaign::SUBTYPE, Reward::SUBTYPE])) {
+		if (!in_array($subtype, [Campaign::SUBTYPE, Reward::SUBTYPE, ReliefItem::SUBTYPE])) {
 			return;
 		}
 

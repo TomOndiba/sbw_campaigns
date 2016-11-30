@@ -38,11 +38,11 @@ define(function (require) {
 	$(document).on('change', 'input[name="model"]', function() {
 		var $form = $(this).closest('form');
 		if ($(this).val() === 'relief') {
-			$('.campaigns-field-currency', $form).addClass('hidden').find('input').prop('required', false);
-			$('.campaigns-field-target-unit', $form).removeClass('hidden').find('input').prop('required', true);
+			$('.campaigns-field-monetary', $form).addClass('hidden').find('.elgg-field-required').find('input').prop('required', false);
+			$('.campaigns-field-relief', $form).removeClass('hidden').find('.elgg-field-requied').find('input').prop('required', true);
 		} else {
-			$('.campaigns-field-currency', $form).removeClass('hidden').find('input').prop('required', true);
-			$('.campaigns-field-target-unit', $form).addClass('hidden').find('input').prop('required', false);
+			$('.campaigns-field-monetary', $form).removeClass('hidden').find('.elgg-field-required').find('input').prop('required', true);
+			$('.campaigns-field-relief', $form).addClass('hidden').find('.elgg-field-required').find('input').prop('required', false);
 		}
 	});
 

@@ -1,11 +1,9 @@
 <?php
 
-use SBW\Campaigns\Reward;
-use SebastianBergmann\Money\Currency;
-use SebastianBergmann\Money\Money;
+use SBW\Campaigns\ReliefItem;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof Reward) {
+if (!$entity instanceof ReliefItem) {
 	return;
 }
 
@@ -19,11 +17,9 @@ $content = elgg_view('output/longtext', [
 $subtitle = [];
 $campaign = $entity->getContainerEntity();
 
-$currency = new Currency($entity->currency);
-$donation_minimum = (new Money($entity->donation_minimum, $currency))->getConvertedAmount();
-$subtitle[] = elgg_echo('campaigns:rewards:donation_minimum', [$donation_minimum, $currency]);
+$quantity = $entity->required_quantity;
 
-$subtitle[] = elgg_echo('campaigns:rewards:in_stock', [$entity->getStock()]);
+$subtitle[] = elgg_echo('campaigns:relief_items:required', [abs($quantity - $donated), $entity->getCommitted()]);
 
 $metadata = '';
 if (!elgg_in_context('metadata')) {

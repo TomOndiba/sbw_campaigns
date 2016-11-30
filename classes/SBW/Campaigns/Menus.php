@@ -34,14 +34,48 @@ class Menus {
 					'selected' => $filter_context == 'about',
 		]);
 
-		$return[] = ElggMenuItem::factory([
-					'name' => 'rewards',
-					'href' => $entity ? "campaigns/edit/$entity->guid/rewards" : '#',
-					'text' => elgg_echo('campaigns:edit:rewards'),
-					'priority' => 200,
-					'selected' => $filter_context == 'rewards',
-					'item_class' => !$entity ? 'elgg-state-disabled' : '',
-		]);
+		if ($entity->model == Campaign::MODEL_RELIEF) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'relief_items',
+						'href' => $entity ? "campaigns/edit/$entity->guid/relief_items" : '#',
+						'text' => elgg_echo('campaigns:edit:relief_items'),
+						'priority' => 200,
+						'selected' => $filter_context == 'relief_items',
+			]);
+			$return[] = ElggMenuItem::factory([
+						'name' => 'commitments',
+						'href' => $entity ? "campaigns/edit/$entity->guid/commitments" : '#',
+						'text' => elgg_echo('campaigns:edit:commitments'),
+						'priority' => 200,
+						'selected' => $filter_context == 'commitments',
+						'item_class' => !$entity ? 'elgg-state-disabled' : '',
+			]);
+		} else {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'rewards',
+						'href' => $entity ? "campaigns/edit/$entity->guid/rewards" : '#',
+						'text' => elgg_echo('campaigns:edit:rewards'),
+						'priority' => 200,
+						'selected' => $filter_context == 'rewards',
+						'item_class' => !$entity ? 'elgg-state-disabled' : '',
+			]);
+			$return[] = ElggMenuItem::factory([
+						'name' => 'transactions',
+						'href' => $entity ? "campaigns/edit/$entity->guid/transactions" : '#',
+						'text' => elgg_echo('campaigns:edit:transactions'),
+						'priority' => 200,
+						'selected' => $filter_context == 'transactions',
+						'item_class' => !$entity ? 'elgg-state-disabled' : '',
+			]);
+			$return[] = ElggMenuItem::factory([
+						'name' => 'balance',
+						'href' => $entity ? "campaigns/edit/$entity->guid/balance" : '#',
+						'text' => elgg_echo('campaigns:edit:balance'),
+						'priority' => 200,
+						'selected' => $filter_context == 'balance',
+						'item_class' => !$entity ? 'elgg-state-disabled' : '',
+			]);
+		}
 
 		$return[] = ElggMenuItem::factory([
 					'name' => 'news',
@@ -49,24 +83,6 @@ class Menus {
 					'text' => elgg_echo('campaigns:edit:news'),
 					'priority' => 200,
 					'selected' => $filter_context == 'news',
-					'item_class' => !$entity ? 'elgg-state-disabled' : '',
-		]);
-
-		$return[] = ElggMenuItem::factory([
-					'name' => 'transactions',
-					'href' => $entity ? "campaigns/edit/$entity->guid/transactions" : '#',
-					'text' => elgg_echo('campaigns:edit:transactions'),
-					'priority' => 200,
-					'selected' => $filter_context == 'transactions',
-					'item_class' => !$entity ? 'elgg-state-disabled' : '',
-		]);
-
-		$return[] = ElggMenuItem::factory([
-					'name' => 'balance',
-					'href' => $entity ? "campaigns/edit/$entity->guid/balance" : '#',
-					'text' => elgg_echo('campaigns:edit:balance'),
-					'priority' => 200,
-					'selected' => $filter_context == 'balance',
 					'item_class' => !$entity ? 'elgg-state-disabled' : '',
 		]);
 
@@ -125,6 +141,49 @@ class Menus {
 						'text' => elgg_echo('edit'),
 						'icon' => 'pencil',
 						'href' => "campaigns/edit/$campaign->guid/rewards?guid=$entity->guid#campaigns-reward-form",
+						'priority' => 600,
+			]);
+		}
+
+		if ($entity->canDelete()) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'delete',
+						'text' => elgg_echo('delete'),
+						'icon' => 'delete',
+						'href' => "action/entity/delete?guid=$entity->guid",
+						'confirm' => true,
+						'is_action' => true,
+						'priority' => 700,
+			]);
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Setup relief item menu
+	 *
+	 * @param string         $hook   "register"
+	 * @param string         $type   "menu:entity"
+	 * @param ElggMenuItem[] $return Menu items
+	 * @param array          $params Hook params
+	 * @return ElggMenuItem[]
+	 */
+	public static function setupReliefItemEntityMenu($hook, $type, $return, $params) {
+
+		$entity = elgg_extract('entity', $params);
+		if (!$entity instanceof ReliefItem) {
+			return;
+		}
+
+		$campaign = $entity->getContainerEntity();
+
+		if ($entity->canEdit()) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'edit',
+						'text' => elgg_echo('edit'),
+						'icon' => 'pencil',
+						'href' => "campaigns/edit/$campaign->guid/relief_items?guid=$entity->guid#campaigns-relief-item-form",
 						'priority' => 600,
 			]);
 		}
@@ -361,13 +420,25 @@ class Menus {
 			]);
 		}
 
-		if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && !$entity->started) {
-			$return[] = ElggMenuItem::factory([
-						'name' => 'rewards:add',
-						'text' => elgg_view_icon('gift') . elgg_echo('campaigns:rewards:add'),
-						'href' => "campaigns/edit/$entity->guid/rewards#campaigns-reward-form",
-						'section' => 'owner',
-			]);
+		if ($entity->model == Campaign::MODEL_RELIEF) {
+
+		} else {
+			if ($entity->canEdit() && $entity->started) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'campaigns:transaction:view',
+							'text' => elgg_view_icon('usd') . elgg_echo('campaigns:transactions:view'),
+							'href' => "campaigns/edit/$entity->guid/transactions",
+							'section' => 'owner',
+				]);
+			}
+			if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && !$entity->started) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'rewards:add',
+							'text' => elgg_view_icon('gift') . elgg_echo('campaigns:rewards:add'),
+							'href' => "campaigns/edit/$entity->guid/rewards#campaigns-reward-form",
+							'section' => 'owner',
+				]);
+			}
 		}
 
 		if ($user) {
@@ -403,15 +474,6 @@ class Menus {
 			}
 		}
 
-		if ($entity->canEdit() && $entity->started) {
-			$return[] = ElggMenuItem::factory([
-						'name' => 'campaigns:transaction:view',
-						'text' => elgg_view_icon('usd') . elgg_echo('campaigns:transactions:view'),
-						'href' => "campaigns/edit/$entity->guid/transactions",
-						'section' => 'owner',
-			]);
-		}
-
 		return $return;
 	}
 
@@ -442,6 +504,30 @@ class Menus {
 	}
 
 	/**
+	 * Returns campaign relief item menu items
+	 *
+	 * @param ReliefItem $entity Relief item entity
+	 * @return ElggMenuItem[]
+	 */
+	public static function getReliefItemMenuItems(ReliefItem $entity) {
+
+		$campaign = $entity->getContainerEntity();
+		if (!$campaign instanceof Campaign) {
+			return;
+		}
+
+		if ($campaign->isActive() && ($entity->required_quantity > $entity->getCommitments())) {
+			$return[] = ElggMenuItem::factory([
+						'name' => 'give',
+						'text' => elgg_echo('campaigns:donate'),
+						'href' => "campaigns/give/$campaign->guid",
+			]);
+		}
+
+		return $return;
+	}
+
+	/**
 	 * Setup owner block menu
 	 *
 	 * @param string         $hook   "register"
@@ -458,12 +544,13 @@ class Menus {
 		}
 
 		$return[] = ElggMenuItem::factory([
-			'name' => 'campaigns',
-			'text' => elgg_echo('campaigns'),
-			'href' => "campaigns/owner/$entity->username",
-			'section' => ''
+					'name' => 'campaigns',
+					'text' => elgg_echo('campaigns'),
+					'href' => "campaigns/owner/$entity->username",
+					'section' => ''
 		]);
 
 		return $return;
 	}
+
 }
