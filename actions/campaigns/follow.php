@@ -14,7 +14,7 @@ $user = elgg_get_logged_in_user_entity();
 $methods = elgg_get_notification_methods();
 
 foreach ($methods as $method) {
-	elgg_add_subscription($user->guid, $method, $campaign->guid);
+	elgg_add_subscription($user->guid, $method, $entity->guid);
 }
 
 $data = [
