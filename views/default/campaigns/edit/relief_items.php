@@ -22,7 +22,9 @@ echo elgg_list_entities([
 $relief_item_guid = get_input('guid');
 $relief_item = get_entity($relief_item_guid);
 
-echo elgg_view('campaigns/edit/relief_item', [
-	'container' => $campaign,
-	'entity' => $relief_item,
-]);
+if (!$campaign->started) {
+	echo elgg_view('campaigns/edit/relief_item', [
+		'container' => $campaign,
+		'entity' => $relief_item,
+	]);
+}
