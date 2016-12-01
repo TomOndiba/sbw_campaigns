@@ -396,6 +396,7 @@ return [
 
 	'campaigns:edit' => 'Manage',
 	'campaigns:transactions:view' => 'View Transactions',
+	'campaigns:commitments:view' => 'View Commitments',
 	
 	'campaigns:follow' => 'Follow',
 	'campaigns:follow:success' => 'You are now subscribed to notifications about %s',

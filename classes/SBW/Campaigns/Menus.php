@@ -3,6 +3,7 @@
 namespace SBW\Campaigns;
 
 use ElggMenuItem;
+use ElggUser;
 
 class Menus {
 
@@ -309,7 +310,7 @@ class Menus {
 		}
 
 		if (elgg_is_active_plugin('hypeDiscovery')) {
-			if (\hypeJunction\Discovery\is_discoverable($entity)) {
+			if (is_discoverable($entity)) {
 				$text = elgg_echo('discovery:entity:share');
 				$return[] = ElggMenuItem::factory(array(
 							'name' => 'discovery:share',
@@ -421,7 +422,22 @@ class Menus {
 		}
 
 		if ($entity->model == Campaign::MODEL_RELIEF) {
-
+			if ($entity->canEdit() && $entity->started) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'campaigns:commitments:view',
+							'text' => elgg_view_icon('gift') . elgg_echo('campaigns:commitments:view'),
+							'href' => "campaigns/edit/$entity->guid/commitments",
+							'section' => 'owner',
+				]);
+			}
+			if ($entity->canWriteToContainer(0, 'object', ReliefItem::SUBTYPE) && !$entity->started) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'rewards:add',
+							'text' => elgg_view_icon('life-ring') . elgg_echo('campaigns:relief_items:add'),
+							'href' => "campaigns/edit/$entity->guid/relief_items#campaigns-relief-item-form",
+							'section' => 'owner',
+				]);
+			}
 		} else {
 			if ($entity->canEdit() && $entity->started) {
 				$return[] = ElggMenuItem::factory([
@@ -539,7 +555,7 @@ class Menus {
 	public static function setupOwnerBlockMenu($hook, $type, $return, $params) {
 		$entity = elgg_extract('entity', $params);
 
-		if (!$entity instanceof \ElggUser) {
+		if (!$entity instanceof ElggUser) {
 			return;
 		}
 
