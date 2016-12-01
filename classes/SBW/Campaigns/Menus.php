@@ -310,7 +310,7 @@ class Menus {
 		}
 
 		if (elgg_is_active_plugin('hypeDiscovery')) {
-			if (is_discoverable($entity)) {
+			if (\hypeJunction\Discovery\is_discoverable($entity)) {
 				$text = elgg_echo('discovery:entity:share');
 				$return[] = ElggMenuItem::factory(array(
 							'name' => 'discovery:share',
@@ -425,7 +425,7 @@ class Menus {
 			if ($entity->canEdit() && $entity->started) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'campaigns:commitments:view',
-							'text' => elgg_view_icon('gift') . elgg_echo('campaigns:commitments:view'),
+							'text' => elgg_view_icon('fire') . elgg_echo('campaigns:commitments:view'),
 							'href' => "campaigns/edit/$entity->guid/commitments",
 							'section' => 'owner',
 				]);
