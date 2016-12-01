@@ -94,6 +94,7 @@ class Router {
 				$report = array_shift($segments);
 				switch ($report) {
 					case 'transactions':
+					case 'commitments' :
 						$resource = elgg_view_resource("campaigns/download/$report", [
 							'guid' => $guid,
 						]);

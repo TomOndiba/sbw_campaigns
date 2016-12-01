@@ -1,8 +1,9 @@
 <?php
 
-use hypeJunction\Payments\Transaction;
 use hypeJunction\Payments\TransactionInterface;
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Commitment;
+use SBW\Campaigns\ReliefItem;
 use SBW\Campaigns\Reward;
 
 $guid = elgg_extract('guid', $vars);
@@ -17,12 +18,10 @@ $filename = "transactions-{$campaign->guid}-{$ts}.csv";
 elgg_set_http_header("Content-type: text/csv");
 elgg_set_http_header("Content-Disposition: attachment; filename={$filename}");
 
-$transactions = new ElggBatch('elgg_get_entities_from_relationship', [
+$transactions = new ElggBatch('elgg_get_entities', [
 	'types' => 'object',
-	'subtypes' => Transaction::SUBTYPE,
-	'relationship' => 'merchant',
-	'relationship_guid' => (int) $campaign->guid,
-	'inverse_relationship' => false,
+	'subtypes' => Commitment::SUBTYPE,
+	'container_guids' => (int) $campaign->guid,
 	'limit' => 0,
 		]);
 
@@ -102,6 +101,25 @@ $headers = [
 	'billing_postal_code' => $billing_part,
 	'billing_country_code' => $billing_part,
 ];
+
+$relief_items = elgg_get_entities([
+	'types' => 'object',
+	'subtypes' => ReliefItem::SUBTYPE,
+	'container_guids' => (int) $campaign->guid,
+	'limit' => 0,
+	'batch' => true,
+]);
+
+foreach ($relief_items as $relief_item) {
+	$headers[$relief_item->title] = function(TransactionInterface $transaction) use ($relief_item) {
+		$order = $transaction->getOrder();
+		foreach ($order->all() as $item) {
+			if ($item->getId() == $relief_item->guid) {
+				return $item->getQuantity();
+			}
+		}
+	};
+}
 
 $fh = @fopen('php://output', 'w');
 $headerDisplayed = false;

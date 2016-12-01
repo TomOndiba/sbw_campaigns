@@ -431,5 +431,5 @@ return [
 	'campaigns:thankyou' => 'Thank you',
 	'campaigns:thankyou:relief_delivery' => 'Thank you for your commitment. Please read this information from campaign organizers:',
 	
-	
+	'table_columns:fromView:relief_items' => 'Committed items',
 ];
