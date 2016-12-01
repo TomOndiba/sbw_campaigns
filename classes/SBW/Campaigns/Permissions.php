@@ -33,6 +33,13 @@ class Permissions {
 			}
 		}
 
+		if ($entity instanceof Reward || $entity instanceof ReliefItem) {
+			$container = $entity->getContainerEntity();
+			if ($container && $container->started) {
+				return false;
+			}
+		}
+
 		if ($entity instanceof Transaction) {
 			$merchant = $entity->getMerchant();
 			if ($merchant instanceof Campaign) {
