@@ -1,5 +1,6 @@
 <?php
 
+use hypeJunction\Payments\Amount;
 use SBW\Campaigns\Campaign;
 use SBW\Campaigns\Donation;
 
