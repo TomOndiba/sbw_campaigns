@@ -58,9 +58,12 @@ if ($entity->model == Campaign::MODEL_RELIEF) {
 			], "{$funded_percentage}%");
 	$funded = elgg_echo('campaigns:funded', [$count]);
 
+	$amount = (new Amount((int) $entity->net_amount, $entity->currency))->getConvertedAmount();
+	$amount = round($amount);
+	
 	$count = elgg_format_element('span', [
 		'class' => 'campaigns-stats-counter',
-			], (new Amount((int) $entity->net_amount, $entity->currency))->format());
+			], "$amount $entity->currency");
 	$total = elgg_echo('campaigns:funded:total', [$count]);
 }
 ?>
