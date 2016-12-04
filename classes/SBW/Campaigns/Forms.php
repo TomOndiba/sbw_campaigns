@@ -254,7 +254,7 @@ class Forms {
 			'#label' => elgg_echo('campaigns:field:relief_delivery'),
 			'#help' => elgg_echo('campaigns:field:relief_delivery:help'),
 			'name' => 'relief_delivery',
-			'value' => elgg_extract('relief_delivery', $params, $entity->currency),
+			'value' => elgg_extract('relief_delivery', $params, $entity->relief_delivery),
 			'required' => true,
 		];
 
