@@ -46,4 +46,6 @@ define(function (require) {
 		}
 	});
 
+	// make required hidden fields not required
+	$('input,textarea').not(':visible').prop('required', false);
 });
