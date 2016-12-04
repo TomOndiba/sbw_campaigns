@@ -297,7 +297,12 @@ span.campaigns-give-item-stock {
 
 .campaigns-river-card {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+}
+@media screen and (max-width: 820px) {
+	.campaigns-river-card {
+		flex-wrap: wrap;
+	}
 }
 
 .campaigns-river-media {
