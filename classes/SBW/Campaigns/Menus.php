@@ -266,14 +266,37 @@ class Menus {
 				$text = elgg_echo('campaigns:donate');
 			}
 
-			$return[] = ElggMenuItem::factory([
-						'name' => 'give',
-						'text' => $text,
-						'href' => elgg_http_add_url_query_elements("campaigns/give/$entity->guid", [
-							'reward' => 'no_reward',
-						]),
-						'priority' => 300,
-			]);
+			$show = false;
+			if ($entity->model != Campaign::MODEL_RELIEF) {
+				$show = true;
+			} else {
+				$relief_items = elgg_get_entities([
+					'types' => 'object',
+					'subtypes' => ReliefItem::SUBTYPE,
+					'container_guids' => (int) $entity->guid,
+					'limit' => 0,
+					'batch' => true,
+				]);
+
+				foreach ($relief_items as $item) {
+					/* @var $item ReliefItem */
+					if ($item->required_quantity > $item->getCommitments()) {
+						$show = true;
+						break;
+					}
+				}
+			}
+
+			if ($show) {
+				$return[] = ElggMenuItem::factory([
+							'name' => 'give',
+							'text' => $text,
+							'href' => elgg_http_add_url_query_elements("campaigns/give/$entity->guid", [
+								'reward' => 'no_reward',
+							]),
+							'priority' => 300,
+				]);
+			}
 		}
 
 		if ($user) {

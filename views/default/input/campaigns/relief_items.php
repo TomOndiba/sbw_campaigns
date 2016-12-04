@@ -36,6 +36,15 @@ $items = elgg_get_entities([
 						'class' => 'campaigns-give-item-title',
 							], $item->getDisplayName());
 
+					$quantity = $item->required_quantity;
+					$donated = $item->getCommitments();
+
+					$title .= elgg_format_element('span', [
+					'class' => 'campaigns-give-item-stock mll',
+					],
+					elgg_echo('campaigns:relief_items:required', [max(0, $quantity - $donated), $quantity])
+					);
+
 					$description = elgg_view('output/longtext', [
 						'value' => elgg_get_excerpt($item->description),
 						'class' => 'elgg-text-help',

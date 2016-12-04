@@ -18,8 +18,9 @@ $subtitle = [];
 $campaign = $entity->getContainerEntity();
 
 $quantity = $entity->required_quantity;
+$donated = $entity->getCommitments();
 
-$subtitle[] = elgg_echo('campaigns:relief_items:required', [abs($quantity - $donated), $entity->getCommitments()]);
+$subtitle[] = elgg_echo('campaigns:relief_items:required', [max(0, $quantity - $donated), $quantity]);
 
 $metadata = '';
 if (!elgg_in_context('metadata')) {

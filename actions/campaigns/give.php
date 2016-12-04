@@ -30,6 +30,13 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 			if (!$item) {
 				continue;
 			}
+			$donated = $item->getCommitments();
+			$required = $item->required_quantity;
+
+			$quantity = min($quantity, $required - $donated);
+			if ($quantity <= 0) {
+				continue;
+			}
 			$order->add($item, $quantity);
 		}
 	}
