@@ -169,7 +169,7 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->anonymous = (bool) get_input('anonymize');
 	$transaction->owner_guid = $user->guid;
 	$transaction->container_guid = $campaign->guid;
-	$transaction->access_id = $campaign->write_access_id;
+	$transaction->access_id = $campaign->access_id;
 
 	$transaction->save();
 
