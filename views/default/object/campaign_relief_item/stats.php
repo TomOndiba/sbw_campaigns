@@ -24,13 +24,8 @@ $funded = elgg_echo('campaigns:committed', [$count]);
 
 $count = elgg_format_element('span', [
 	'class' => 'campaigns-stats-counter',
-		], "{$committed}");
+		], "{$committed} / {$required}");
 $total = elgg_echo('campaigns:committed:items', [$count]);
-
-$count = elgg_format_element('span', [
-	'class' => 'campaigns-stats-counter',
-		], "{$required}");
-$required = elgg_echo('campaigns:required', [$count]);
 
 $count = elgg_format_element('span', [
 	'class' => 'campaigns-stats-counter',
@@ -47,7 +42,6 @@ $backers = elgg_echo('campaigns:backers', [$count]);
 	<div class="campaigns-stats-counters">
 		<div><?= $funded ?></div>
 		<div><?= $total ?></div>
-		<div><?= $required ?></div>
 		<div><?= $backers ?></div>
 	</div>
 </div>
