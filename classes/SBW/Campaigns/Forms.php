@@ -32,7 +32,7 @@ class Forms {
 		if ($entity->guid) {
 			$default_managers = get_members_of_access_collection($entity->write_access_id, true);
 		} else {
-			$default_managers = [];
+			$default_managers = [elgg_get_logged_in_user_guid()];
 		}
 
 		$default_status = $entity->isPublished() ? 'published' : 'draft';
