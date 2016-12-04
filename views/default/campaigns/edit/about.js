@@ -38,11 +38,11 @@ define(function (require) {
 	$(document).on('change', 'input[name="model"]', function() {
 		var $form = $(this).closest('form');
 		if ($(this).val() === 'relief') {
-			$('.campaigns-field-monetary', $form).addClass('hidden').find('.elgg-field-required').find('input').prop('required', false);
-			$('.campaigns-field-relief', $form).removeClass('hidden').find('.elgg-field-requied').find('input').prop('required', true);
+			$('.campaigns-field-monetary', $form).addClass('hidden').find('.elgg-field-required').find('input,textarea').prop('required', false);
+			$('.campaigns-field-relief', $form).removeClass('hidden').find('.elgg-field-requied').find('input,textarea').prop('required', true);
 		} else {
-			$('.campaigns-field-monetary', $form).removeClass('hidden').find('.elgg-field-required').find('input').prop('required', true);
-			$('.campaigns-field-relief', $form).addClass('hidden').find('.elgg-field-required').find('input').prop('required', false);
+			$('.campaigns-field-monetary', $form).removeClass('hidden').find('.elgg-field-required').find('input,textarea').prop('required', true);
+			$('.campaigns-field-relief', $form).addClass('hidden').find('.elgg-field-required').find('input,textarea').prop('required', false);
 		}
 	});
 

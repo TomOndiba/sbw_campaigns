@@ -83,9 +83,6 @@ class Commitments {
 		}
 
 		$committer = $commitment->getCustomer();
-		if (!$committer->email) {
-			return;
-		}
 
 		if (!$commitment->anonymous && $committer->guid && $committer instanceof \ElggUser) {
 			elgg_create_river_item([
@@ -116,8 +113,7 @@ class Commitments {
 		foreach ($managers as $manager) {
 			elgg_send_email($from, $manager->email, $subject, $body, [
 				'campaign' => $campaign,
-				'donation' => $donation,
-				'transaction' => $transaction,
+				'commitment' => $commitment,
 			]);
 		}
 	}
