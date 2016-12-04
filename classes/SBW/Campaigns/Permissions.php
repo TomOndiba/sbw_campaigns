@@ -33,7 +33,7 @@ class Permissions {
 			}
 		}
 
-		if ($entity instanceof Reward || $entity instanceof ReliefItem) {
+		if ($entity instanceof Reward) {
 			$container = $entity->getContainerEntity();
 			if ($container && $container->started) {
 				return false;
