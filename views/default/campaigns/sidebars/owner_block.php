@@ -29,7 +29,10 @@ if ($share) {
 	]);
 }
 
-$data = elgg_view('campaigns/modules/data', $vars);
+
+$params = $vars;
+$params['full_view'] = true;
+$data = elgg_view('campaigns/modules/data', $params);
 if ($data) {
 	$data = elgg_view_module('aside', false, $data, [
 		'class' => 'campaigns-module',
