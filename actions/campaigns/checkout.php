@@ -34,7 +34,7 @@ if (!$donor_terms || !$campaign_rules) {
 $email = get_input('email');
 $first_name = get_input('first_name');
 $last_name = get_input('last_name');
-$company_name = get_input('compnay_name');
+$company_name = get_input('company_name');
 $tax_id = get_input('tax_id');
 $phone = get_input('phone');
 
