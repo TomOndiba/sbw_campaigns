@@ -61,7 +61,7 @@ if (date('Y', $entity->calendar_start) == date('Y', $entity->calendar_end)) {
 }
 $period = elgg_echo('campaigns:funding_period', [
 	date($start_format, $entity->calendar_start),
-	date('F j, Y', $entity->calendar_end)
+	date('M j, Y', $entity->calendar_end)
 		]);
 
 $data['funding_period'] = [
