@@ -14,6 +14,8 @@ $icon = '';
 if ($entity->hasIcon($icon_size)) {
 	$icon = elgg_view_entity_icon($entity, $icon_size, [
 		'class' => 'center',
+		'href' => false,
+		'use_link' => false,
 	]);
 }
 

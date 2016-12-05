@@ -31,7 +31,10 @@ $items = elgg_get_entities([
 			<tr>
 				<td class="campaigns-give-item-reward">
 					<?php
-					$icon = elgg_view_entity_icon($item, 'small');
+					$icon = elgg_view_entity_icon($item, 'small', [
+						'href' => false,
+						'use_link' => false,
+					]);
 					$title = elgg_format_element('span', [
 						'class' => 'campaigns-give-item-title',
 							], $item->getDisplayName());

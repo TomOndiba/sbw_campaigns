@@ -8,7 +8,10 @@ if (!$entity instanceof ReliefItem) {
 }
 
 $icon_size = elgg_extract('size', $vars, 'small');
-$icon = elgg_view_entity_icon($entity, $icon_size);
+$icon = elgg_view_entity_icon($entity, $icon_size, [
+	'href' => false,
+	'use_link' => false,
+		]);
 
 $content = elgg_view('output/longtext', [
 	'value' => $entity->description,

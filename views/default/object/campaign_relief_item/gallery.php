@@ -13,6 +13,7 @@ $icon_size = elgg_extract('size', $vars, 'card');
 if ($entity->hasIcon($icon_size)) {
 	$icon = elgg_view_entity_icon($entity, $icon_size, [
 		'href' => false,
+		'use_link' => false,
 	]);
 }
 
