@@ -5,6 +5,7 @@ $entity = elgg_extract('entity', $vars);
 $media = '';
 $video = elgg_view('output/player', [
 	'href' => $entity->video_url,
+	'fallback' => false,
 		]);
 if ($video) {
 	$media = elgg_format_element('div', [

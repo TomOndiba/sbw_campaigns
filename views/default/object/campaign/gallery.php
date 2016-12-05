@@ -11,6 +11,7 @@ if (!$entity instanceof Campaign) {
 if ($entity->video_url) {
 	$player = elgg_view('output/player', [
 		'href' => $entity->video_url,
+		'fallback' => false,
 	]);
 }
 
