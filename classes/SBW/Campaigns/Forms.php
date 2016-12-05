@@ -94,6 +94,7 @@ class Forms {
 				[
 				'#type' => 'url',
 				'#label' => elgg_echo('campaigns:field:video_url'),
+				'#help' => elgg_echo('campaigns:field:video_url:help'),
 				'name' => 'video_url',
 				'value' => elgg_extract('video_url', $params, $entity->video_url),
 			],

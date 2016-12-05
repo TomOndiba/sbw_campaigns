@@ -29,6 +29,7 @@ return [
 	'campaigns:field:currency' => 'Currency',
 	'campaigns:field:terms' => 'I agree to %s',
 	'campaigns:field:video_url' => 'Cover video URL',
+	'campaigns:field:video_url:help' => 'Please use a YouTube or Vimeo URL',
 	'campaigns:field:website' => 'Website',
 	'campaigns:field:managers' => 'Managers',
 	'campaigns:field:managers:help' => 'Select users that will have managerial permissions for this campaign',
