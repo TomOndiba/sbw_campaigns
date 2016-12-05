@@ -93,7 +93,7 @@ return [
 	'campaigns:error:dates' => 'The end date can not precede the start date',
 	'campaigns:error:terms' => 'You must agree to terms and conditions before proceeding',
 	'campaigns:error:general' => 'An unknown error during this action',
-	'campaigns:error:reward_minimum_too_low' => 'Minimum donation amount can not be lower than the donation amount of %s %s set for the campaign',
+	'campaigns:error:reward_minimum_too_low' => 'Minimum donation amount can not be lower than the donation amount of %s set for the campaign',
 	'campaigns:error:quantity_too_low' => 'Quantity should be 1 or more',
 	'campaigns:error:publish_without_rewards' => 'Campaigns must have at least one reward to be eligible for publishing',
 	'campaigns:error:already_published' => 'Campaign has already been published',
