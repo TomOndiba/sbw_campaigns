@@ -334,8 +334,7 @@ span.campaigns-give-item-stock {
 		flex: 1 1 100%;
 	}
 
-	.campaigns-main-layout .elgg-main,
 	.campaigns-profile-layout .elgg-main {
-		max-width: calc(100vw - 35px);
+		padding: 10px;
 	}
 }
