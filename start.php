@@ -100,7 +100,12 @@ elgg_register_event_handler('init', 'system', function() {
 
 	// Relief commitments
 	elgg_register_plugin_hook_handler('transaction:committed', 'payments', [Commitments::class, 'processCommitment']);
-	elgg_register_plugin_hook_handler('transaction:delivered', 'payments', [Commitments::class, 'processDelivery']);
+	elgg_register_plugin_hook_handler('transaction:confirmed', 'payments', [Commitments::class, 'processConfirmation']);
+	elgg_register_plugin_hook_handler('transaction:received', 'payments', [Commitments::class, 'processDelivery']);
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', [Menus::class, 'setupCommittedAnnotationMenu']);
+	elgg_register_action('campaigns/commitment/change_status', __DIR__ . '/actions/campaigns/commitment/change_status.php');
+	elgg_register_action('campaigns/commitment/delete', __DIR__ . '/actions/campaigns/commitment/delete.php', 'admin');
+
 
 	// Notifications
 	elgg_register_notification_event('object', $subtype, ['start', 'milestone', 'end']);

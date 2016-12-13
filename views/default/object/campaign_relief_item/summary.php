@@ -41,4 +41,24 @@ $summary = elgg_view('object/elements/summary', [
 	'metadata' => $metadata,
 		]);
 
+if (elgg_is_admin_logged_in()) {
+	$summary .= elgg_list_entities([
+		'guids' => $entity->guid,
+		'annotation_names' => 'committed',
+		'limit' => 0,
+		'list_type' => 'table',
+		'columns' => [
+			elgg()->table_columns->commitment_id(),
+			elgg()->table_columns->time_created(null, [
+				'format' => 'M j, Y H:i',
+			]),
+			elgg()->table_columns->commitment_customer(),
+			elgg()->table_columns->commitment_quantity(),
+			elgg()->table_columns->commitment_menu(),
+		],
+		'pagination' => false,
+		'pagination_type' => false,
+	], 'elgg_get_annotations');
+}
+
 echo elgg_view_image_block($icon, $summary);

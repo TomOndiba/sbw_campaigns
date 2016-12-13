@@ -21,6 +21,7 @@ $list = elgg_list_entities_from_relationship([
 		elgg()->table_columns->customer(),
 		elgg()->table_columns->merchant(),
 		elgg()->table_columns->relief_items(),
+		elgg()->table_columns->payment_status(),
 	],
 	'item_class' => 'payments-transaction',
 		]);

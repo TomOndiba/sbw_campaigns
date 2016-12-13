@@ -4,6 +4,7 @@ return [
 
 	'campaigns' => 'Campaigns',
 	'ojbect:campaign' => 'Campaign',
+
 	'item:object:campaign' => 'Campaigns',
 
 	'campaigns:all' => 'All Campaigns',
@@ -429,8 +430,74 @@ return [
 		%s
 	',
 
+	'campaigns:commitment:confirmation_url:notify:subject' => 'Please confirm your donation to %s',
+	'campaigns:commitment:confirmation_url:notify:body' => '
+		Thank you for your commitment to the %s campaign:
+
+		%s
+
+		Please follow this link to confirm your intention to donate these items:
+		%s
+
+		To view campaign progress, please visit:
+		%s
+	',
+
+	'campaigns:commitment:delivered:notify:subject' => 'Your donation to %s has been received',
+	'campaigns:commitment:delivered:notify:body' => '
+		Thank you for your donation to the %s campaign. Campaign organizers have marked your commitment as delivered:
+
+		%s
+
+		To view campaign progress, please visit:
+		%s
+	',
+
+	'campaigns:commitment:notify_manager:subject' => 'New commitment to %s',
+	'campaigns:commitment:notify_manager:body' => '
+		%s (%s) has made a commitment to %s campaign:
+
+		%s
+
+		The following information has been sent to the donor:
+		%s
+
+		To view campaign progress, please visit:
+		%s
+	',
+
+	'campaigns:commitment:confirmation_url:notify_manager:subject' => 'New commitment to %s pending confirmation',
+	'campaigns:commitment:confirmation_url:notify_manager:body' => '
+		%s (%s) has made a commitment to %s campaign:
+
+		%s
+
+		An email with the confirmation link has been sent to the donor. The commitment is not confirmed
+		until the donor follows the link.
+
+		To view campaign progress, please visit:
+		%s
+	',
+
 	'campaigns:thankyou' => 'Thank you',
 	'campaigns:thankyou:relief_delivery' => 'Thank you for your commitment. Please read this information from campaign organizers:',
 	
 	'table_columns:fromView:relief_items' => 'Committed items',
+
+	'table_columns:fromView:commitment_id' => 'ID',
+	'table_columns:fromView:commitment_customer' => 'Customer',
+	'table_columns:fromView:commitment_quantity' => 'Quantity',
+	'table_columns:fromView:commitment_menu' => 'Actions',
+
+	'payments:status:committed' => 'Unconfirmed',
+	'payments:status:confirmed' => 'Confirmed',
+	'payments:status:received' => 'Received',
+
+	'campaigns:commitment' => 'Commitment',
+	'campaigns:commitment:change_status' => 'Update status',
+	'campaigns:commitment:change_status:success' => 'Commitment status has been changed',
+	'campaigns:commitment:confirm:success' => 'Thank you for confirming your commitment',
+	'campaigns:commitment:delete:success' => 'Item stats have been updated',
+	'campaigns:commitment:delete:error' => 'Item stats could not be updated',
+	
 ];

@@ -71,6 +71,13 @@ class Router {
 				]);
 				break;
 
+			case 'commitment' :
+				$resource = elgg_view_resource('campaigns/commitment', [
+					'guid' => array_shift($segments),
+					'filter_context' => array_shift($segments),
+				]);
+				break;
+
 			case 'thankyou' :
 				$resource = elgg_view_resource('campaigns/thankyou', [
 					'guid' => array_shift($segments),
@@ -100,6 +107,11 @@ class Router {
 						]);
 						break;
 				}
+				break;
+
+			case 'confirm' :
+				$resource = elgg_view_resource('campaigns/confirm');
+				break;
 		}
 
 		if ($resource) {
@@ -129,6 +141,10 @@ class Router {
 		if ($entity instanceof NewsItem) {
 			$friendly = elgg_get_friendly_title($entity->getDisplayName());
 			return elgg_normalize_url("campaigns/news/$entity->guid/$friendly");
+		}
+
+		if ($entity instanceof Commitment) {
+			return elgg_normalize_url("campaigns/commitment/$entity->guid");
 		}
 	}
 

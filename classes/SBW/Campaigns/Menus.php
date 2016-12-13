@@ -567,6 +567,31 @@ class Menus {
 	}
 
 	/**
+	 * Returns campaign commitment menu items
+	 *
+	 * @param Commitment $entity Commitment entity
+	 * @return ElggMenuItem[]
+	 */
+	public static function getCommitmentMenuItems(Commitment $entity) {
+
+		$campaign = $entity->getContainerEntity();
+		if (!$campaign instanceof Campaign) {
+			return;
+		}
+
+		$items = [];
+		if ($entity->status !== Commitment::STATUS_RECEIVED && $entity->canEdit()) {
+			$items[] = ElggMenuItem::factory([
+						'name' => 'status',
+						'text' => elgg_echo('campaigns:commitment:change_status'),
+						'href' => "campaigns/commitment/{$entity->guid}/status",
+			]);
+		}
+
+		return $items;
+	}
+
+	/**
 	 * Setup owner block menu
 	 *
 	 * @param string         $hook   "register"
@@ -592,4 +617,35 @@ class Menus {
 		return $return;
 	}
 
+	/**
+	 * Setup committed annotation menu
+	 *
+	 * @param string         $hook   "register"
+	 * @param string         $type   "menu:annotation"
+	 * @param ElggMenuItem[] $return Menu items
+	 * @param array          $params Hook params
+	 * @return ElggMenuItem[]
+	 */
+	public static function setupCommittedAnnotationMenu($hook, $type, $return, $params) {
+
+		$annotation = elgg_extract('annotation', $params);
+
+		if (!$annotation instanceof \ElggAnnotation) {
+			return;
+		}
+
+		if (!elgg_is_admin_logged_in()) {
+			return;
+		}
+
+		$return[] = ElggMenuItem::factory([
+			'name' => 'delete',
+			'text' => elgg_echo('delete'),
+			'href' => "action/campaigns/commitment/delete?id=$annotation->id",
+			'is_action' => true,
+			'confirm' => true,
+		]);
+
+		return $return;
+	}
 }

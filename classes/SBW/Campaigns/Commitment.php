@@ -9,6 +9,7 @@ class Commitment extends Transaction {
 	const SUBTYPE = 'campaign_commitment';
 
 	const STATUS_COMMITTED = 'committed';
+	const STATUS_CONFIRMED = 'confirmed';
 	const STATUS_RECEIVED = 'received';
 	
 	/**

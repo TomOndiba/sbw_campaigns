@@ -151,8 +151,8 @@ if (get_input('billing_as_shipping') || $campaign->model == Campaign::MODEL_RELI
 }
 
 $order->setCustomer($user);
-	$order->setShippingAddress($shipping_address);
-	$order->setBillingAddress($billing_address);
+$order->setShippingAddress($shipping_address);
+$order->setBillingAddress($billing_address);
 
 if ($campaign->model == Campaign::MODEL_RELIEF) {
 
@@ -174,7 +174,7 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->save();
 
 	$transaction->setStatus(Commitment::STATUS_COMMITTED);
-	
+
 	elgg_clear_sticky_form('campaigns/checkout');
 
 	$storage->invalidate($campaign->guid);

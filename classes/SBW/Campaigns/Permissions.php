@@ -40,7 +40,7 @@ class Permissions {
 			}
 		}
 
-		if ($entity instanceof Transaction) {
+		if ($entity instanceof Transaction && !$entity instanceof Commitment) {
 			$merchant = $entity->getMerchant();
 			if ($merchant instanceof Campaign) {
 				// Campaign contributions are received by the site,
