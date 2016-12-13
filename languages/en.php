@@ -480,7 +480,9 @@ return [
 	',
 
 	'campaigns:thankyou' => 'Thank you',
-	'campaigns:thankyou:relief_delivery' => 'Thank you for your commitment. Please read this information from campaign organizers:',
+	'campaigns:thankyou:relief_delivery' => 'Thank you for your commitment. We have sent you an email with a confirmation link. 
+		
+		Please read this information from campaign organizers (you will receive it by email once you confirm your donation):',
 	
 	'table_columns:fromView:relief_items' => 'Committed items',
 
