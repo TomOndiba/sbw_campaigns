@@ -303,7 +303,15 @@ class Campaign extends Merchant {
 				'view' => 'river/object/campaign/give',
 				'action_type' => 'give',
 				'subject_guid' => $user[0]->guid,
-				'object_guid' => $this->guid,
+				'object_guid' => $donation->guid,
+				'target_guid' => $this->container_guid,
+			]);
+		} else {
+			elgg_create_river_item([
+				'view' => 'river/object/campaign/receive',
+				'action_type' => 'receive',
+				'subject_guid' => $this->guid,
+				'object_guid' => $donation->guid,
 				'target_guid' => $this->container_guid,
 			]);
 		}

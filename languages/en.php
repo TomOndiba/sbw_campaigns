@@ -374,6 +374,9 @@ return [
 
 	'river:end:object:default' => 'Campaign %2$s has ended',
 	'river:give:object:default' => '%s donated to %s campaign',
+	'river:campaigns:give' => '%s donated %s to %s campaign',
+	'river:campaigns:receive:anonymous' => '%s campaign received an anonymous donation of %s',
+	'river:campaigns:receive:guest' => '%s campaign received an donation of %s from %s',
 	'river:publish:object:default' => '%s created a new campaign %s',
 	'river:start:object:default' => 'Campaign %2$s has started',
 	'river:milestone:object:default' => 'Campaign %2$s has reached a new milestone',
