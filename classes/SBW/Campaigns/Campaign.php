@@ -193,25 +193,29 @@ class Campaign extends Merchant {
 			return false;
 		}
 
-		$river = elgg_get_river([
-			'object_guids' => $this->guid,
-			'action_types' => 'publish',
-			'limit' => 0,
-		]);
-
-		if ($river) {
-			foreach ($river as $river_item) {
-				$river_item->delete();
-			}
-		}
-
-		elgg_create_river_item([
-			'view' => 'river/object/campaign/publish',
-			'action_type' => 'publish',
-			'subject_guid' => $this->owner_guid,
-			'object_guid' => $this->guid,
-			'target_guid' => $this->container_guid,
-		]);
+// Temporarily disabling these river entries, because they are not deleted as
+// expected when the campaign starts due to
+// https://github.com/Elgg/Elgg/issues/10653
+// 
+//		$river = elgg_get_river([
+//			'object_guids' => $this->guid,
+//			'action_types' => 'publish',
+//			'limit' => 0,
+//		]);
+//
+//		if ($river) {
+//			foreach ($river as $river_item) {
+//				$river_item->delete();
+//			}
+//		}
+//
+//		elgg_create_river_item([
+//			'view' => 'river/object/campaign/publish',
+//			'action_type' => 'publish',
+//			'subject_guid' => $this->owner_guid,
+//			'object_guid' => $this->guid,
+//			'target_guid' => $this->container_guid,
+//		]);
 
 		if (!$this->isVerified()) {
 			$user = elgg_get_logged_in_user_entity();
