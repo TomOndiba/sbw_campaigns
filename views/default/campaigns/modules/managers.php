@@ -14,8 +14,7 @@ if (!$managers) {
 }
 
 echo elgg_view_entity_list($managers, [
-	'list_type' => 'gallery',
-	'gallery_class' => 'elgg-gallery-users elgg-gallery-fluid',
+	'full_view' => false,
 	'pagination' => false,
 	'pagination_type' => false,
 ]);

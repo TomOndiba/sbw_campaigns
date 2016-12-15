@@ -31,6 +31,13 @@ if ($data) {
 	]);
 }
 
+$managers = elgg_view('campaigns/modules/managers', $params);
+if ($managers) {
+	$managers = elgg_view_module('aside', elgg_echo('campaigns:field:managers'), $managers, [
+		'class' => 'campaigns-module',
+	]);
+}
+
 $menu = elgg_view('campaigns/modules/menu', $vars);
 if ($menu) {
 	$menu = elgg_view_module('aside', '', $menu, [
@@ -45,5 +52,6 @@ echo $stats;
 echo $share;
 echo $menu;
 echo $data;
+echo $managers;
 echo $rewards;
 echo $relief_items;
