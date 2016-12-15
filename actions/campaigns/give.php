@@ -94,6 +94,7 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 		$price = new Amount($extra, $currency);
 
 		$contribution = new Contribution();
+		$contribution->container_guid = $campaign->guid;
 		$contribution->setPrice($price);
 		$order->add($contribution, 1);
 	}

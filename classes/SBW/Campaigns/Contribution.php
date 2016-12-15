@@ -34,7 +34,12 @@ class Contribution extends Product {
 		if (isset($this->title)) {
 			return $this->title;
 		}
-		return elgg_echo('campaigns:contribution');
+		$container = $this->getContainerEntity();
+		if (!$container) {
+			return elgg_echo('campaigns:contribution');
+		} else {
+			return elgg_echo('campaigns:contribution:target', [$container->getDisplayName()]);
+		}
 	}
 
 	/**
