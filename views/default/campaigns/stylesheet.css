@@ -343,3 +343,16 @@ span.campaigns-give-item-stock {
 		padding: 10px;
 	}
 }
+
+.campaigns-info-window {
+	text-align: center;
+}
+
+.campaigns-info-window h3 {
+    font-size: 16px;
+    margin: 5px auto;
+}
+
+.campaigns-info-window .elgg-gallery {
+    margin: 10px 0;
+}

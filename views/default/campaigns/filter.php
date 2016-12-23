@@ -27,6 +27,15 @@ if (elgg_is_logged_in()) {
 		),
 	);
 
+	if (elgg_is_active_plugin('amap_maps_api')) {
+		$tabs['map'] = array(
+			'text' => elgg_echo('campaigns:map'),
+			'href' => "$context/map",
+			'selected' => ($filter_context == 'map'),
+			'priority' => 250,
+		);
+	}
+
 	foreach ($tabs as $name => $tab) {
 		$tab['name'] = $name;
 		elgg_register_menu_item('filter', $tab);

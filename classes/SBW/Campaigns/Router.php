@@ -21,6 +21,10 @@ class Router {
 				$resource = elgg_view_resource('campaigns/all');
 				break;
 
+			case 'map' :
+				$resource = elgg_view_resource('campaigns/map');
+				break;
+
 			case 'owner' :
 				$resource = elgg_view_resource('campaigns/owner', [
 					'username' => array_shift($segments),

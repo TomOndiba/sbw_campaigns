@@ -504,5 +504,8 @@ return [
 	'campaigns:commitment:confirm:success' => 'Thank you for confirming your commitment',
 	'campaigns:commitment:delete:success' => 'Item stats have been updated',
 	'campaigns:commitment:delete:error' => 'Item stats could not be updated',
+
+	'campaigns:map' => 'Map',
+	'campaigns:map:nearby:search' => 'Nearby Campaigns',
 	
 ];
