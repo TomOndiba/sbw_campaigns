@@ -20,6 +20,25 @@ class ReliefItem extends Product {
 		$this->attributes['subtype'] = self::SUBTYPE;
 	}
 
+	public function save() {
+
+		$campaign = $this->getContainerEntity();
+		$result = parent::save();
+		if ($result) {
+			Commitments::updateStats($campaign);
+		}
+		return $result;
+	}
+
+	public function delete($recursive = true) {
+		$campaign = $this->getContainerEntity();
+		$result = parent::delete($recursive);
+		if ($result) {
+			Commitments::updateStats($campaign);
+		}
+		return $result;
+	}
+
 	public function addCommitment(ElggEntity $donor, $quantity) {
 		$this->annotate('committed', $quantity, ACCESS_PUBLIC, $donor->guid);
 	}
@@ -35,4 +54,5 @@ class ReliefItem extends Product {
 	public function getDeliveries() {
 		return $this->getAnnotationsSum('delivered');
 	}
+
 }

@@ -60,34 +60,6 @@ $entity->required_quantity = (int) $required_quantity;
 $forward_url = "campaigns/edit/$container->guid/relief_items";
 if ($entity->save()) {
 
-
-	$funded = $container->funded_percentage;
-
-	$relief_items = elgg_get_entities([
-		'types' => 'object',
-		'subtypes' => ReliefItem::SUBTYPE,
-		'container_guids' => (int) $container->guid,
-		'limit' => 0,
-		'batch' => true,
-	]);
-
-	$required = 0;
-	$committed = 0;
-	foreach ($relief_items as $item) {
-		/* @var $item ReliefItem */
-		$required += $item->required_quantity;
-		$committed += (int) $item->getCommitments();
-	}
-
-	if ($required) {
-		$funded_percentage = round($committed * 100 / $required);
-	} else {
-		$funded_percentage = 0;
-	}
-
-	$container->funded_percentage = $funded_percentage;
-	$container->committed_quantity = $committed;
-
 	elgg_clear_sticky_form('campaigns/edit/relief_item');
 	$entity->saveIconFromUploadedFile('icon');
 	$data = [

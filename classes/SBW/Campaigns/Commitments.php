@@ -47,7 +47,7 @@ class Commitments {
 			elgg_http_get_signed_url($confirmation_url),
 			$campaign->getURL(),
 		]);
-		
+
 		elgg_send_email($from, $committer->email, $subject, $body, [
 			'campaign' => $campaign,
 			'commitment' => $commitment,
@@ -70,7 +70,7 @@ class Commitments {
 			]);
 		}
 
-		self::updateStats($commitment);
+		self::updateStats($commitment->getMerchant());
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Commitments {
 
 		$funded = $campaign->funded_percentage;
 
-		self::updateStats($commitment);
+		self::updateStats($commitment->getMerchant());
 
 		$milestones = [25, 50, 75, 100];
 		foreach ($milestones as $milestone) {
@@ -202,8 +202,8 @@ class Commitments {
 			$relief_item->addDelivery($commitment->getCustomer(), $item->getQuantity());
 		}
 
-		self::updateStats($commitment);
-		
+		self::updateStats($commitment->getMerchant());
+
 		$committer = $commitment->getCustomer();
 		$campaign = $commitment->getMerchant();
 
@@ -229,44 +229,50 @@ class Commitments {
 	/**
 	 * Update commitment stats
 	 * 
-	 * @param Commitment $commitment Commitment
+	 * @param Campaign $campaign Campaign
 	 * @return void
 	 */
-	public static function updateStats(Commitment $commitment) {
-		$campaign = $commitment->getMerchant();
-		
-		$relief_items = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => ReliefItem::SUBTYPE,
-			'container_guids' => (int) $campaign->guid,
-			'limit' => 0,
-			'batch' => true,
-		]);
+	public static function updateStats(Campaign $campaign) {
 
-		$required = 0;
-		$committed = 0;
-		foreach ($relief_items as $item) {
-			/* @var $item ReliefItem */
-			$required += $item->required_quantity;
-			$committed += (int) $item->getCommitments();
+		if ($campaign->model == Campaign::MODEL_RELIEF) {
+			$ia = elgg_set_ignore_access(true);
+
+			$relief_items = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => ReliefItem::SUBTYPE,
+				'container_guids' => (int) $campaign->guid,
+				'limit' => 0,
+				'batch' => true,
+			]);
+
+			$required = 0;
+			$committed = 0;
+			foreach ($relief_items as $item) {
+				/* @var $item ReliefItem */
+				$required += $item->required_quantity;
+				$committed += (int) $item->getCommitments();
+			}
+
+			if ($required) {
+				$funded_percentage = round($committed * 100 / $required);
+			} else {
+				$funded_percentage = 0;
+			}
+
+			$campaign->backers = elgg_get_entities([
+				'types' => 'object',
+				'subtypes' => Commitment::SUBTYPE,
+				'container_guids' => $campaign->guid,
+				'count' => true,
+				'metadata_names' => 'status',
+				'metadata_values' => [Commitment::STATUS_CONFIRMED, Commitment::STATUS_RECEIVED],
+			]);
+
+			$campaign->funded_percentage = $funded_percentage;
+			$campaign->committed_quantity = $committed;
+
+			elgg_set_ignore_access($ia);
 		}
-
-		if ($required) {
-			$funded_percentage = round($committed * 100 / $required);
-		} else {
-			$funded_percentage = 0;
-		}
-
-		$campaign->backers = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => Commitment::SUBTYPE,
-			'container_guids' => $campaign->guid,
-			'count' => true,
-			'metadata_names' => 'status',
-			'metadata_values' => [Commitment::STATUS_CONFIRMED, Commitment::STATUS_RECEIVED],
-		]);
-
-		$campaign->funded_percentage = $funded_percentage;
-		$campaign->committed_quantity = $committed;
 	}
+
 }
