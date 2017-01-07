@@ -35,7 +35,7 @@ class Permissions {
 
 		if ($entity instanceof Reward) {
 			$container = $entity->getContainerEntity();
-			if ($container && $container->started) {
+			if ($container && $container->started && !elgg_is_admin_logged_in()) {
 				return false;
 			}
 		}
@@ -65,14 +65,14 @@ class Permissions {
 		$entity = elgg_extract('entity', $params);
 
 		if ($entity instanceof Campaign) {
-			if ($entity->started) {
+			if ($entity->started && !elgg_is_admin_logged_in()) {
 				return false;
 			}
 		}
 
 		if ($entity instanceof Reward) {
 			$container = $entity->getContainerEntity();
-			if ($container && $container->started) {
+			if ($container && $container->started && !elgg_is_admin_logged_in()) {
 				return false;
 			}
 		}

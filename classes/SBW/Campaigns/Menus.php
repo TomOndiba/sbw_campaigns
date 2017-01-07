@@ -453,7 +453,7 @@ class Menus {
 							'section' => 'owner',
 				]);
 			}
-			if ($entity->canWriteToContainer(0, 'object', ReliefItem::SUBTYPE) && !$entity->started) {
+			if ($entity->canWriteToContainer(0, 'object', ReliefItem::SUBTYPE) && (!$entity->started || elgg_is_admin_logged_in())) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'rewards:add',
 							'text' => elgg_view_icon('life-ring') . elgg_echo('campaigns:relief_items:add'),
@@ -470,7 +470,7 @@ class Menus {
 							'section' => 'owner',
 				]);
 			}
-			if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && !$entity->started) {
+			if ($entity->canWriteToContainer(0, 'object', Reward::SUBTYPE) && (!$entity->started || elgg_is_admin_logged_in())) {
 				$return[] = ElggMenuItem::factory([
 							'name' => 'rewards:add',
 							'text' => elgg_view_icon('gift') . elgg_echo('campaigns:rewards:add'),

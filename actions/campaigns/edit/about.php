@@ -53,7 +53,7 @@ if (empty($terms)) {
 }
 $terms = time();
 
-if (!$entity->guid || !$entity->started) {
+if (!$entity->guid || !$entity->started || elgg_is_adming_logged_in()) {
 	$calendar_start = (int) get_input('calendar_start', '');
 	$calendar_end = (int) get_input('calendar_end', '');
 	if (empty($calendar_start) || empty($calendar_end)) {
@@ -121,7 +121,7 @@ $entity->access_id = $access_id;
 $entity->future_access_id = $access_id;
 $entity->relief_delivery = get_input('relief_delivery');
 
-if (!$entity->guid || !$entity->started) {
+if (!$entity->guid || !$entity->started || elgg_is_admin_logged_in()) {
 	$entity->model = $model;
 	$entity->calendar_start = $calendar_start;
 	$entity->calendar_end = $calendar_end;

@@ -138,7 +138,7 @@ class Forms {
 		}
 
 		$non_editable = [];
-		if (!$entity->started) {
+		if (!$entity->started || elgg_is_admin_logged_in()) {
 			// Details that can not be changed after the campaign start
 			$non_editable = [
 					[
