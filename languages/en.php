@@ -507,5 +507,28 @@ return [
 
 	'campaigns:map' => 'Map',
 	'campaigns:map:nearby:search' => 'Nearby Campaigns',
+
+	'campaigns:donation:notify:subject' => '%s campaign received a donation',
+
+	'campaigns:donation:notify:anonymous:body' => '
+		Campaign %s has received an anonymous donation of %s.
+
+		Campaign has not reached %s of its goal.
+
+		See campaign details here:
+		%s
+	',
+	
+	'campaigns:donation:notify:body' => '
+		Campaign %s has received a donation of %s from %s.
+
+		Campaign has not reached %s of its goal.
+
+		See campaign details here:
+		%s
+
+		'
+
+
 	
 ];

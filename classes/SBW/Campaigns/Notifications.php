@@ -111,7 +111,7 @@ class Notifications {
 	public static function formatNewsNotification($hook, $type, $notification, $params) {
 
 		$entity = $params['event']->getObject();
-		
+
 		$campaign = $entity->getContainerEntity();
 
 		$language = $params['language'];
@@ -123,7 +123,46 @@ class Notifications {
 			$entity->description,
 			$entity->getURL()
 				), $language);
-		$notification->summary = elgg_echo('campaigns:end:notify:summary', array($entity->title, "{$entity->funded_percentage}%"), $language);
+
+		return $notification;
+	}
+
+	/**
+	 * Prepare a notification message about campaign news
+	 *
+	 * @param string       $hook         Hook name
+	 * @param string       $type         Hook type
+	 * @param Notification $notification The notification to prepare
+	 * @param array        $params       Hook parameters
+	 * @return Notification
+	 */
+	public static function formatDonationNotification($hook, $type, $notification, $params) {
+
+		$entity = $params['event']->getObject();
+		/* @var $entity Donation */
+
+		$campaign = $entity->getContainerEntity();
+
+		$language = $params['language'];
+
+		$notification->subject = elgg_echo('campaigns:donation:notify:subject', array($campaign->getDisplayName()), $language);
+
+		if ($entity->anonymous) {
+			$notification->body = elgg_echo('campaigns:donation:notify:anonymous:body', array(
+				$campaign->name,
+				$entity->getNetAmount()->format(),
+				"{$entity->funded_percentage}%",
+				$campaign->getURL(),
+					), $language);
+		} else {
+			$notification->body = elgg_echo('campaigns:donation:notify:body', array(
+				$campaign->name,
+				$entity->name,
+				$entity->getNetAmount()->format(),
+				"{$entity->funded_percentage}%",
+				$campaign->getURL(),
+					), $language);
+		}
 
 		return $notification;
 	}

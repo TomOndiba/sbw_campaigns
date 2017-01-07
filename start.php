@@ -13,6 +13,7 @@ use Elgg\Values;
 use SBW\Campaigns\Campaign;
 use SBW\Campaigns\Commitments;
 use SBW\Campaigns\Cron;
+use SBW\Campaigns\Donation;
 use SBW\Campaigns\Forms;
 use SBW\Campaigns\Icons;
 use SBW\Campaigns\Maps;
@@ -115,6 +116,9 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('format', 'notification:start:object:campaign', [Notifications::class, 'formatStartNotification']);
 	elgg_register_plugin_hook_handler('format', 'notification:milestone:object:campaign', [Notifications::class, 'formatMilestoneNotification']);
 	elgg_register_plugin_hook_handler('format', 'notification:end:object:campaign', [Notifications::class, 'formatEndNotification']);
+
+	elgg_register_notification_event('object', Donation::SUBTYPE, ['create']);
+	elgg_register_plugin_hook_handler('format', 'notification:create:object:donation', [Notifications::class, 'formatDonationNotification']);
 
 	elgg_register_notification_event('object', NewsItem::SUBTYPE, ['create']);
 	elgg_register_plugin_hook_handler('format', 'notification:end:object:campaign', [Notifications::class, 'formatNewsNotification']);
