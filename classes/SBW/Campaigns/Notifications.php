@@ -204,6 +204,20 @@ class Notifications {
 			$return[$record->guid] = substr_replace($deliveryMethods, '', 0, 6);
 		}
 
+		if (in_array($event->getAction(), ['start', 'end', 'milestone'])) {
+			// Always notify admins about campaign start and end
+			$admins = elgg_get_admins([
+				'limit' => 0,
+				'batch' => true,
+			]);
+
+			foreach ($admins as $admin) {
+				if (!array_key_exists($admin->guid, $return)) {
+					$return[$admin->guid] = ['email'];
+				}
+			}
+		}
+
 		return $return;
 	}
 

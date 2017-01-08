@@ -33,7 +33,6 @@ class Campaign extends Merchant {
 
 	const SUBTYPE = 'campaign';
 	const BASE_CURRENCY = 'EUR';
-
 	const MODEL_ALL_OR_NOTHING = 'all_or_nothing';
 	const MODEL_MONEY_POT = 'money_pot';
 	const MODEL_RELIEF = 'relief';
@@ -367,7 +366,7 @@ class Campaign extends Merchant {
 	 * @return \ElggUser[]
 	 */
 	public function getManagers() {
-		return get_members_of_access_collection($this->write_access_id) ? : [$this->getOwnerEntity()];
+		return get_members_of_access_collection($this->write_access_id) ?: [$this->getOwnerEntity()];
 	}
-}
 
+}
