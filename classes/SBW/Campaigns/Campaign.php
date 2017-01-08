@@ -104,6 +104,10 @@ class Campaign extends Merchant {
 	 * @return bool
 	 */
 	public function start() {
+		if ($this->started) {
+			return false;
+		}
+		
 		if (!elgg_trigger_event('start', 'object', $this)) {
 			return false;
 		}
@@ -143,6 +147,10 @@ class Campaign extends Merchant {
 	 */
 	public function end() {
 
+		if ($this->ended) {
+			return false;
+		}
+		
 		if (!elgg_trigger_event('end', 'object', $this)) {
 			return false;
 		}
