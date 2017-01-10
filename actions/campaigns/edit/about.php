@@ -53,7 +53,7 @@ if (empty($terms)) {
 }
 $terms = time();
 
-if (!$entity->guid || !$entity->started || elgg_is_adming_logged_in()) {
+if (!$entity->guid || !$entity->started || elgg_is_admin_logged_in()) {
 	$calendar_start = (int) get_input('calendar_start', '');
 	$calendar_end = (int) get_input('calendar_end', '');
 	if (empty($calendar_start) || empty($calendar_end)) {

@@ -48,6 +48,10 @@ return [
 	'campaigns:field:briefdescription' => 'Brief description',
 	'campaigns:field:relief_delivery' => 'Delivery instructions',
 	'campaigns:field:relief_delivery:help' => 'Please provide any instructions that should be sent to donors with regards to delivery, packaging and other noteworthy details',
+	'campaigns:field:firt_name' => 'First Name',
+	'campaigns:field:last_name' => 'Last Name',
+	'campaigns:field:email' => 'Email',
+	'campaigns:field:phone' => 'Phone',
 
 	'campaigns:status:published' => 'Published',
 	'campaigns:status:draft' => 'Draft',

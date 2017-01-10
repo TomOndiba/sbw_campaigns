@@ -1,8 +1,10 @@
 <?php
 
+use hypeJunction\Payments\Amount;
 use hypeJunction\Payments\Transaction;
 use hypeJunction\Payments\TransactionInterface;
 use SBW\Campaigns\Campaign;
+use SBW\Campaigns\Commission;
 use SBW\Campaigns\Reward;
 
 $guid = elgg_extract('guid', $vars);
@@ -46,7 +48,46 @@ $transaction_meta = function(TransactionInterface $transaction, $name) {
 	return $transaction->$name ?: '';
 };
 
+/**
+ * @return Amount
+ */
+$processor_fee = function(TransactionInterface $transaction) {
+	if ($transaction->getStatus() == TransactionInterface::STATUS_PAID) {
+		return $transaction->getProcessorFee();
+	}
+	return new Amount(0, $transaction->currency);
+};
+
+/**
+ * @return Amount
+ */
+$site_commission = function(TransactionInterface $transaction) use ($processor_fee) {
+	if ($transaction->getStatus() == TransactionInterface::STATUS_PAID) {
+		$campaign = $transaction->getContainerEntity();
+		if ($campaign->model == Campaign::MODEL_ALL_OR_NOTHING) {
+			$commission_rate = (float) elgg_get_plugin_setting('all_or_nothing_fee', 'sbw_campaigns', 0);
+		} else if ($campaign->model == Campaign::MODEL_MONEY_POT) {
+			$commission_rate = (float) elgg_get_plugin_setting('money_pot_fee', 'sbw_campaigns', 0);
+		} else {
+			$commission_rate = 0;
+		}
+
+		$gross = $transaction->getAmount();
+		$fee = $processor_fee($transaction);
+
+		$commission = new Commission('site_commission', $commission_rate);
+		$commission->setBaseAmount(new Amount($gross->getAmount() - $fee->getAmount(), $transaction->currency));
+
+		return $commission->getTotalAmount();
+	}
+
+	return new Amount(0, $transaction->currency);
+};
+
 $headers = [
+	'campaign' => function(TransactionInterface $transaction) {
+		return $transaction->getContainerEntity()->getDisplayName();
+	},
 	'invoice' => function(TransactionInterface $transaction) {
 		return $transaction->guid;
 	},
@@ -62,8 +103,22 @@ $headers = [
 	'anonymous' => function(TransactionInterface $transaction) {
 		return $transaction->anonymous ? 'yes' : 'no';
 	},
-	'amount' => function(TransactionInterface $transaction) {
+	'gross_amount' => function(TransactionInterface $transaction) {
 		return $transaction->getAmount()->format();
+	},
+	'processor_fee' => function(TransactionInterface $transaction) use ($processor_fee) {
+		return $processor_fee($transaction)->format();
+	},
+	'site_commission' => function(TransactionInterface $transaction) use ($site_commission) {
+		return $site_commission($transaction)->format();
+	},
+	'net_amount' => function(TransactionInterface $transaction) use ($processor_fee, $site_commission) {
+		$net = $transaction->getAmount();
+		$fee = $processor_fee($transaction);
+		$commission = $site_commission($transaction);
+
+		$gross = $net->getAmount() - $fee->getAmount() - $commission->getAmount();
+		return (new Amount($gross, $transaction->currency))->format();
 	},
 	'payee' => function(TransactionInterface $transaction) {
 		$customer = $transaction->getCustomer();
@@ -109,7 +164,7 @@ $headerDisplayed = false;
 foreach ($transactions as $transaction) {
 
 	if (!$headerDisplayed) {
-		// Use the keys from $data as the titles
+// Use the keys from $data as the titles
 		fputcsv($fh, array_keys($headers));
 		$headerDisplayed = true;
 	}
@@ -119,7 +174,7 @@ foreach ($transactions as $transaction) {
 		$data[$key] = call_user_func($callback, $transaction, $key);
 	}
 
-	// Put the data into the stream
+// Put the data into the stream
 	fputcsv($fh, $data);
 }
 
