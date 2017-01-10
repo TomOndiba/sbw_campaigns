@@ -1,25 +1,23 @@
 <?php
 
-if (!elgg_is_active_plugin('amap_maps_api')) {
+if (!elgg_get_plugin_setting('enable_maps', 'sbw_campaigns')) {
+	return;
+}
+
+if (!elgg_is_active_plugin('hypeMapsOpen')) {
 	return;
 }
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity->location) {
+
+$svc = new \hypeJunction\MapsOpen\MapsService();
+$marker = $svc->getMarker($entity);
+if (!$marker) {
 	return;
 }
 
-$google_api_key = trim(elgg_get_plugin_setting('google_api_key', AMAP_MA_PLUGIN_ID));
-if (!$google_api_key) {
-	return;
-}
-
-echo elgg_format_element('iframe', [
-	'width' => '100%',
-	'height' => '300',
-	'frameborder' => 0,
-	'src' => elgg_http_add_url_query_elements("https://www.google.com/maps/embed/v1/place", [
-		'key' => $google_api_key,
-		'q' => $entity->location,
-	]),
+echo elgg_view('page/components/map', [
+	'markers' => [$marker],
+	'center' => $marker,
+	'zoom' => 2,
 ]);

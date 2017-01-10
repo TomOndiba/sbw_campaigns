@@ -4,35 +4,17 @@ namespace SBW\Campaigns;
 
 class Maps {
 
-	/**
-	 * Event callback to geocode campaign location
-	 *
-	 * @param string     $event  "create"|"update"
-	 * @param string     $type   "object"
-	 * @para \ElggObject $object Campaign
-	 * @return void
-	 */
-	public static function geocodeLocation($event, $type, $object) {
+	public static function setCampaignMarker($hook, $type, $marker, $params) {
 
-		if (!elgg_is_active_plugin('amap_maps_api')) {
+		$entity = elgg_extract('entity', $params);
+
+		if (!$entity instanceof Campaign) {
 			return;
 		}
 
-		if (!$object instanceof Campaign) {
-			return;
-		}
+		$marker->color = 'darkpurple';
+		$marker->icon = 'handshake-o';
 
-		elgg_load_library('elgg:amap_maps_api');
-
-		$location = $object->location;
-
-		var_dump($location);
-		
-		if ($location) {
-			amap_ma_save_object_coords($location, $object, 'sbw_campaigns');
-		} else {
-			$object->setLatLong('', '');
-		}
+		return $marker;
 	}
-
 }

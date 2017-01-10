@@ -181,3 +181,15 @@ if (elgg_is_active_plugin('payments_sofort')) {
 		'value' => (float) $entity->sofort_flat_fee,
 	]);
 }
+
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('campaigns:enable_maps'),
+	'#help' => elgg_echo('campaigns:enable_maps:help'),
+	'name' => 'params[enable_maps]',
+	'value' => $entity->enable_maps,
+	'options_values' => [
+		0 => elgg_echo('option:no'),
+		1 => elgg_echo('option:yes'),
+	],
+]);

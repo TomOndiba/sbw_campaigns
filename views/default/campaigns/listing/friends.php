@@ -5,16 +5,9 @@ $entity = elgg_extract('entity', $vars);
 echo elgg_list_entities_from_relationship([
 	'types' => 'object',
 	'subtypes' => SBW\Campaigns\Campaign::SUBTYPE,
-	'metadata_name_value_pairs' => [
-			[
-			'name' => 'calendar_end',
-			'value' => time() - 24 * 60 * 60,
-			'operand' => '>='
-		],
-	],
 	'order_by_metadata' => [
-		'name' => 'calendar_start',
-		'direction' => 'ASC',
+		'name' => 'calendar_end',
+		'direction' => 'DESC',
 		'as' => 'integer',
 	],
 	'no_results' => elgg_echo('campaigns:no_results'),
@@ -23,7 +16,6 @@ echo elgg_list_entities_from_relationship([
 	'relationship' => 'friend',
 	'relationship_guid' => (int) $entity->guid,
 	'relationship_join_on' => 'owner_guid',
-	'list_type' => 'gallery',
-	'gallery_class' => 'campaigns-gallery',
+	'full_view' => false,
 ]);
 

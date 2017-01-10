@@ -68,8 +68,6 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_action('campaigns/checkout', __DIR__ . '/actions/campaigns/checkout.php', 'public');
 
 	elgg_register_action('campaigns/is_registered', __DIR__ . '/actions/campaigns/is_registered.php', 'public');
-
-	elgg_register_action('campaigns/nearby_search', __DIR__ . '/actions/campaigns/nearby_search.php', 'public');
 	
 	// Menus
 	elgg_register_menu_item('site', [
@@ -138,8 +136,7 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_admin_menu_item('administer', 'campaign_balances', 'payments');
 
 	// Maps
-	elgg_register_event_handler('create', 'object', [Maps::class, 'geocodeLocation']);
-	elgg_register_event_handler('update', 'object', [Maps::class, 'geocodeLocation']);
+	elgg_register_plugin_hook_handler('marker', 'object', [Maps::class, 'setCampaignMarker']);
 	
 });
 

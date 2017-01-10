@@ -8,12 +8,17 @@ return [
 	'item:object:campaign' => 'Campaigns',
 
 	'campaigns:all' => 'All Campaigns',
+	'campaigns:active' => 'Active Campaigns',
+	'campaigns:map' => 'Campaign Map',
 	'campaigns:mine' => 'My Campaigns',
 	'campaigns:owner' => '%s\'s Campaigns',
 	'campaigns:friends' => 'Friends\'s Campaigns',
 	'campaigns:group' => 'Group Campaigns',
 	'campaigns:add' => 'Start a Campaign',
 	'campaigns:edit' => 'Edit Campaign',
+
+	'campaigns:tabs:active' => 'Active',
+	'campaigns:tabs:map' => 'Map',
 
 	'campaigns:field:title' => 'Title',
 	'campaigns:field:description' => 'Description',
@@ -527,8 +532,9 @@ return [
 		See campaign details here:
 		%s
 
-		'
+		',
 
+	'campaigns:enable_maps' => 'Enable maps',
+	'campaigns:enable_maps:help' => 'Enable display of campaigns on maps. Requires hypeMapsOpen plugin to function.',
 
-	
 ];

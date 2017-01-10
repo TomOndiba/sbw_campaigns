@@ -32,15 +32,17 @@ if ($entity->guid == elgg_get_logged_in_user_guid()) {
 }
 
 $vars['entity'] = $entity;
+$vars['filter_context'] = $entity->guid == elgg_get_logged_in_user_guid() ? 'mine' : '';
 
 $content = elgg_view('campaigns/listing/owner', $vars);
+
 $filter = elgg_view('campaigns/filter', $vars);
 
-$layout = elgg_view_layout('campaign', $vars + [
+$layout = elgg_view_layout('campaign', [
 	'title' => $title,
 	'content' => $content,
 	'filter' => $filter,
-	'filter_context' => $entity->guid == elgg_get_logged_in_user_guid() ? 'mine' : '',
+	'ajax_tabs' => false,
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);

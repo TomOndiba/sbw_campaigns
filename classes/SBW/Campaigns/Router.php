@@ -17,6 +17,10 @@ class Router {
 		switch ($page) {
 
 			default :
+			case 'active' :
+				$resource = elgg_view_resource('campaigns/active');
+				break;
+			
 			case 'all' :
 				$resource = elgg_view_resource('campaigns/all');
 				break;

@@ -46,5 +46,10 @@
 		<type>plugin</type>
 		<name>hypeScraper</name>
 	</suggests>
-	
+
+	<suggests>
+		<type>plugin</type>
+		<name>hypeMapsOpen</name>
+	</suggests>
+
 </plugin_manifest>

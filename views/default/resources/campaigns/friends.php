@@ -33,11 +33,11 @@ $vars['entity'] = $entity;
 $content = elgg_view('campaigns/listing/friends', $vars);
 $filter = elgg_view('campaigns/filter', $vars);
 
-$layout = elgg_view_layout('campaign', $vars + [
+$layout = elgg_view_layout('campaign', [
 	'title' => $title,
 	'content' => $content,
 	'filter' => $filter,
-	'filter_context' => $entity->guid == elgg_get_logged_in_user_guid() ? 'mine' : '',
+	'ajax_tabs' => false,
 		]);
 
 echo elgg_view_page($title, $layout, 'default', $vars);
