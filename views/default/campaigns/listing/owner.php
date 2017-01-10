@@ -11,7 +11,8 @@ $options = [
 	'no_results' => elgg_echo('campaigns:no_results'),
 	'preload_owners' => true,
 	'preload_containers' => true,
-	'full_view' => false,
+	'list_type' => 'gallery',
+	'gallery_class' => 'campaigns-gallery',
 ];
 
 $entity = elgg_extract('entity', $vars);
