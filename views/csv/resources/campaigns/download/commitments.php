@@ -73,7 +73,12 @@ $headers = [
 		return $merchant ? $merchant->title : '';
 	},
 	'reward' => function(TransactionInterface $transaction) {
-		$items = $transaction->getOrder()->all();
+		$order = $transaction->getOrder();
+		if (!$order) {
+			return 'ERROR';
+		}
+
+		$items = $order->all();
 		foreach ($items as $item) {
 			$product = $item->getProduct();
 			if ($product instanceof Reward) {
