@@ -54,15 +54,17 @@ if ($entity->model == Campaign::MODEL_RELIEF) {
 	];
 }
 
-if (date('Y', $entity->calendar_start) == date('Y', $entity->calendar_end)) {
-	$start_format = 'M j';
-} else {
-	$start_format = 'M j, Y';
-}
-$period = elgg_echo('campaigns:funding_period', [
-	date($start_format, $entity->calendar_start),
-	date('M j, Y', $entity->calendar_end)
-		]);
+//if (date('Y', $entity->calendar_start) == date('Y', $entity->calendar_end)) {
+//	$start_format = 'M j';
+//} else {
+//	$start_format = 'M j, Y';
+//}
+//$period = elgg_echo('campaigns:funding_period', [
+//	date($start_format, $entity->calendar_start),
+//	date('M j, Y', $entity->calendar_end)
+//		]);
+
+$period = date('M j, Y', $entity->calendar_end);
 
 $data['funding_period'] = [
 	'icon' => 'calendar',
