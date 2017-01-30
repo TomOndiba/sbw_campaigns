@@ -1,7 +1,7 @@
 <?php
 
-if (!elgg_get_plugin_setting('enable_user_map', 'hypeMapsOpen', false)) {
-	return;
+if (!elgg_get_plugin_setting('enable_maps', 'sbw_campaigns')) {
+	forward('', '404');
 }
 
 $svc = new \hypeJunction\MapsOpen\MapsService();

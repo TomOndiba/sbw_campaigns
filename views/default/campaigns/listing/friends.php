@@ -16,6 +16,7 @@ echo elgg_list_entities_from_relationship([
 	'relationship' => 'friend',
 	'relationship_guid' => (int) $entity->guid,
 	'relationship_join_on' => 'owner_guid',
-	'full_view' => false,
+	'list_type' => 'gallery',
+	'gallery_class' => 'campaigns-gallery',
 ]);
 
