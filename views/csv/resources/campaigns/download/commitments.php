@@ -65,26 +65,8 @@ $headers = [
 		return $transaction->getAmount()->format();
 	},
 	'payee' => function(TransactionInterface $transaction) {
-		$customer_name = '';
-		$customer_email = '';
-
 		$customer = $transaction->getCustomer();
-		if ($customer instanceof ElggEntity) {
-			$customer_name = $customer->getDisplayName();
-			if ($customer->email) {
-				$customer_email = ' [' . $customer_email . ']';
-			}
-		}
-
-		if (empty($customer_name)) {
-			$customer_name = implode(' ', [$transaction->first_name, $transaction->last_name]);
-		}
-
-		if (empty($customer_email)) {
-			$customer_email = $transaction->email;
-		}
-
-		return $customer_name . $customer_email;
+		return $customer ? $customer->name : '';
 	},
 	'merchant' => function(TransactionInterface $transaction) {
 		$merchant = $transaction->getMerchant();
