@@ -182,12 +182,21 @@ class Notifications {
 		/* @var $event NotificationEvent */
 
 		$object = $event->getObject();
-		if (!$object instanceof Campaign) {
-			return;
+
+		if ($object instanceof Donation && $object->anonymous) {
+			// Do not notify friends/subscriers about anonymous donations
+			// Only campaign subscribers receive a notification about an anonymous donation
+			$return = [];
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
-		$query = "
+		if (!$object instanceof Campaign) {
+			// Notify campaigns subscribers about donations, news items etc contained by the campaign
+			$object = $object->getContainerEntity();
+		}
+		
+		if ($object instanceof Campaign) {
+			$dbprefix = elgg_get_config('dbprefix');
+			$query = "
 			SELECT guid_one AS guid,
 			GROUP_CONCAT(relationship SEPARATOR ',') AS methods
 			FROM {$dbprefix}entity_relationships
@@ -195,25 +204,26 @@ class Notifications {
 				  relationship LIKE 'notify%' GROUP BY guid_one
 			";
 
-		$records = get_data($query, null, [
-			':guid_two' => (int) $object->guid,
-		]);
-
-		foreach ($records as $record) {
-			$deliveryMethods = explode(',', $record->methods);
-			$return[$record->guid] = substr_replace($deliveryMethods, '', 0, 6);
-		}
-
-		if (in_array($event->getAction(), ['start', 'end', 'milestone'])) {
-			// Always notify admins about campaign start and end
-			$admins = elgg_get_admins([
-				'limit' => 0,
-				'batch' => true,
+			$records = get_data($query, null, [
+				':guid_two' => (int) $object->guid,
 			]);
 
-			foreach ($admins as $admin) {
-				if (!array_key_exists($admin->guid, $return)) {
-					$return[$admin->guid] = ['email'];
+			foreach ($records as $record) {
+				$deliveryMethods = explode(',', $record->methods);
+				$return[$record->guid] = substr_replace($deliveryMethods, '', 0, 6);
+			}
+
+			if (in_array($event->getAction(), ['start', 'end', 'milestone'])) {
+				// Always notify admins about campaign start and end
+				$admins = elgg_get_admins([
+					'limit' => 0,
+					'batch' => true,
+				]);
+
+				foreach ($admins as $admin) {
+					if (!array_key_exists($admin->guid, $return)) {
+						$return[$admin->guid] = ['email'];
+					}
 				}
 			}
 		}

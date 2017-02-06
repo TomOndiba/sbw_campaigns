@@ -116,10 +116,10 @@ elgg_register_event_handler('init', 'system', function() {
 	elgg_register_plugin_hook_handler('format', 'notification:end:object:campaign', [Notifications::class, 'formatEndNotification']);
 
 	elgg_register_notification_event('object', Donation::SUBTYPE, ['create']);
-	elgg_register_plugin_hook_handler('format', 'notification:create:object:donation', [Notifications::class, 'formatDonationNotification']);
+	elgg_register_plugin_hook_handler('format', 'notification:create:object:campaign_donation', [Notifications::class, 'formatDonationNotification']);
 
 	elgg_register_notification_event('object', NewsItem::SUBTYPE, ['create']);
-	elgg_register_plugin_hook_handler('format', 'notification:end:object:campaign', [Notifications::class, 'formatNewsNotification']);
+	elgg_register_plugin_hook_handler('format', 'notification:create:object:campaign_news', [Notifications::class, 'formatNewsNotification']);
 
 	elgg_register_plugin_hook_handler('get', 'subscriptions', [Notifications::class, 'getSubscriptions']);
 	
