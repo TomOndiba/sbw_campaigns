@@ -171,6 +171,8 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->container_guid = $campaign->guid;
 	$transaction->access_id = $campaign->access_id;
 
+	$transaction->comment = get_input('comment');
+	
 	$transaction->save();
 
 	$transaction->setStatus(Commitment::STATUS_COMMITTED);
@@ -200,6 +202,8 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->owner_guid = $user->guid;
 	$transaction->container_guid = $campaign->guid;
 	$transaction->access_id = $campaign->write_access_id;
+
+	$transaction->comment = get_input('comment');
 
 	$transaction->save();
 

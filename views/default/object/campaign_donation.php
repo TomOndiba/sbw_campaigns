@@ -33,6 +33,19 @@ $amount = elgg_format_element('div', [
 	'class' => 'campaigns-donation-amount',
 		], $entity->getNetAmount()->format());
 
-echo elgg_view_image_block($icon, $title, [
-	'image_alt' => $amount,
+$comment = '';
+if ($entity->comment) {
+	$comment = elgg_view('output/longtext', [
+		'value' => $entity->comment,
+	]);
+	$comment = elgg_format_element('blockquote', [], $comment);
+}
+
+echo elgg_view('object/elements/summary', [
+	'entity' => $entity,
+	'title' => $title,
+	'metadata' => $amount,
+	'tags' => false,
+	'content' => $comment,
+	'icon' => $icon,
 ]);

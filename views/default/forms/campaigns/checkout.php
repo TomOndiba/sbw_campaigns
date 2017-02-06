@@ -184,6 +184,15 @@ if (!elgg_is_logged_in()) {
 }
 
 echo elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => elgg_echo('campaigns:checkout:comment'),
+	'#help' => elgg_echo('campaigns:checkout:comment:help'),
+	'name' => 'comment',
+	'rows' => 2,
+	'visual' => false,
+]);
+
+echo elgg_view_field([
 	'#type' => 'checkbox',
 	'label' => elgg_echo('campaigns:checkout:subscribe'),
 	'name' => 'subscribe',

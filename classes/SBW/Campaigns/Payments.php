@@ -233,6 +233,7 @@ class Payments {
 			$donation->transaction_id = $transaction->getId();
 			$donation->container_guid = $campaign->guid;
 			$donation->access_id = $campaign->access_id;
+			$donation->comment = $transaction->comment;
 			$donation->save();
 
 			$campaign->addDonation($donation);

@@ -541,4 +541,6 @@ return [
 	'campaigns:enable_maps' => 'Enable maps',
 	'campaigns:enable_maps:help' => 'Enable display of campaigns on maps. Requires hypeMapsOpen plugin to function.',
 
+	'campaigns:checkout:comment' => 'Comment',
+	'campaigns:checkout:comment:help' => 'Here you can add a comment that will be displayed publically next to your donation listing',
 ];

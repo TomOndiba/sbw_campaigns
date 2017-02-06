@@ -385,3 +385,15 @@ span.campaigns-give-item-stock {
 .campaigns-info-window .elgg-gallery {
     margin: 10px 0;
 }
+
+.elgg-item-object-campaign_donation .campaigns-donation-amount {
+    float: right;
+}
+
+.elgg-item-object-campaign_donation blockquote {
+    margin: 0;
+}
+
+.elgg-item-object-campaign_donation blockquote .elgg-output {
+    margin: 0;
+}
