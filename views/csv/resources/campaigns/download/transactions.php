@@ -121,8 +121,26 @@ $headers = [
 		return (new Amount($gross, $transaction->currency))->format();
 	},
 	'payee' => function(TransactionInterface $transaction) {
+		$customer_name = '';
+		$customer_email = '';
+
 		$customer = $transaction->getCustomer();
-		return $customer ? $customer->name : '';
+		if ($customer instanceof ElggEntity) {
+			$customer_name = $customer->getDisplayName();
+			if ($customer->email) {
+				$customer_email = ' [' . $customer_email . ']';
+			}
+		}
+
+		if (empty($customer_name)) {
+			$customer_name = implode(' ', [$transaction->first_name, $transaction->last_name]);
+		}
+
+		if (empty($customer_email)) {
+			$customer_email = $transaction->email;
+		}
+
+		return $customer_name . $customer_email;
 	},
 	'merchant' => function(TransactionInterface $transaction) {
 		$merchant = $transaction->getMerchant();
