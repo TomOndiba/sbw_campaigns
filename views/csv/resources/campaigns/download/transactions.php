@@ -29,7 +29,11 @@ $transactions = new ElggBatch('elgg_get_entities_from_relationship', [
 		]);
 
 $address_part = function(TransactionInterface $transaction, $part) {
-	$shipping = $transaction->getOrder()->getShippingAddress();
+	$order = $transaction->getOrder();
+	if (!$order) {
+		return 'ERROR';
+	}
+	$shipping = $order->getShippingAddress();
 	if (!$shipping) {
 		return '';
 	}
@@ -37,11 +41,15 @@ $address_part = function(TransactionInterface $transaction, $part) {
 };
 
 $billing_part = function(TransactionInterface $transaction, $part) {
-	$shipping = $transaction->getOrder()->getBillingAddress();
-	if (!$shipping) {
+	$order = $transaction->getOrder();
+	if (!$order) {
+		return 'ERROR';
+	}
+	$billing = $order->getBillingAddress();
+	if (!$billing) {
 		return '';
 	}
-	return $shipping->$part ?: '';
+	return $billing->$part ?: '';
 };
 
 $transaction_meta = function(TransactionInterface $transaction, $name) {
