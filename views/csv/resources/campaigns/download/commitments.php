@@ -46,6 +46,7 @@ $billing_part = function(TransactionInterface $transaction, $part) {
 	if (!$billing) {
 		return '';
 	}
+	$part = substr($part, 8); // remove billing_ prefix
 	return $billing->$part ?: '';
 };
 

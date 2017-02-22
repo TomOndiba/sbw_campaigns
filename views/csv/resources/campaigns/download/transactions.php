@@ -49,6 +49,7 @@ $billing_part = function(TransactionInterface $transaction, $part) {
 	if (!$billing) {
 		return '';
 	}
+	$part = substr($part, 8); // remove billing_ prefix
 	return $billing->$part ?: '';
 };
 
@@ -177,7 +178,7 @@ $headerDisplayed = false;
 foreach ($transactions as $transaction) {
 
 	if (!$headerDisplayed) {
-// Use the keys from $data as the titles
+		// Use the keys from $data as the titles
 		fputcsv($fh, array_keys($headers));
 		$headerDisplayed = true;
 	}
@@ -187,7 +188,7 @@ foreach ($transactions as $transaction) {
 		$data[$key] = call_user_func($callback, $transaction, $key);
 	}
 
-// Put the data into the stream
+	// Put the data into the stream
 	fputcsv($fh, $data);
 }
 
