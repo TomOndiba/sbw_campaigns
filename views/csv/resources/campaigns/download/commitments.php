@@ -70,8 +70,11 @@ $headers = [
 	'anonymous' => function(TransactionInterface $transaction) {
 		return $transaction->anonymous ? 'yes' : 'no';
 	},
+	'currency' => function(TransactionInterface $transaction) {
+		return $transaction->getAmount()->getCurrency();
+	},
 	'amount' => function(TransactionInterface $transaction) {
-		return $transaction->getAmount()->format();
+		return $transaction->getAmount()->getConvertedAmount();
 	},
 	'payee' => function(TransactionInterface $transaction) {
 		$customer = $transaction->getCustomer();
@@ -122,7 +125,7 @@ $relief_items = elgg_get_entities([
 	'container_guids' => (int) $campaign->guid,
 	'limit' => 0,
 	'batch' => true,
-]);
+		]);
 
 foreach ($relief_items as $relief_item) {
 	$headers[$relief_item->title] = function(TransactionInterface $transaction) use ($relief_item) {

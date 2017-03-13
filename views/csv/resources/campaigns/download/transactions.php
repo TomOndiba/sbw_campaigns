@@ -111,14 +111,17 @@ $headers = [
 	'anonymous' => function(TransactionInterface $transaction) {
 		return $transaction->anonymous ? 'yes' : 'no';
 	},
+	'currency' => function(TransactionInterface $transaction) {
+		return $transaction->getAmount()->getCurrency();
+	},
 	'gross_amount' => function(TransactionInterface $transaction) {
-		return $transaction->getAmount()->format();
+		return $transaction->getAmount()->getConvertedAmount();
 	},
 	'processor_fee' => function(TransactionInterface $transaction) use ($processor_fee) {
-		return $processor_fee($transaction)->format();
+		return $processor_fee($transaction)->getConvertedAmount();
 	},
 	'site_commission' => function(TransactionInterface $transaction) use ($site_commission) {
-		return $site_commission($transaction)->format();
+		return $site_commission($transaction)->getConvertedAmount();
 	},
 	'net_amount' => function(TransactionInterface $transaction) use ($processor_fee, $site_commission) {
 		$net = $transaction->getAmount();
@@ -126,7 +129,7 @@ $headers = [
 		$commission = $site_commission($transaction);
 
 		$gross = $net->getAmount() - $fee->getAmount() - $commission->getAmount();
-		return (new Amount($gross, $transaction->currency))->format();
+		return (new Amount($gross, $transaction->currency))->getConvertedAmount();
 	},
 	'payee' => function(TransactionInterface $transaction) {
 		$customer = $transaction->getCustomer();
