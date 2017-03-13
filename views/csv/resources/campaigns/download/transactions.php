@@ -82,10 +82,9 @@ $site_commission = function(TransactionInterface $transaction) use ($processor_f
 		}
 
 		$gross = $transaction->getAmount();
-		$fee = $processor_fee($transaction);
 
 		$commission = new Commission('site_commission', $commission_rate);
-		$commission->setBaseAmount(new Amount($gross->getAmount() - $fee->getAmount(), $transaction->currency));
+		$commission->setBaseAmount(new Amount($gross->getAmount(), $transaction->currency));
 
 		return $commission->getTotalAmount();
 	}
