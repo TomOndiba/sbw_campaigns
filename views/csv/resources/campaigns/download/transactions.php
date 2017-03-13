@@ -96,6 +96,16 @@ $headers = [
 	'campaign' => function(TransactionInterface $transaction) {
 		return $transaction->getContainerEntity()->getDisplayName();
 	},
+	'merchant' => function(TransactionInterface $transaction) {
+		$merchant = $transaction->getMerchant();
+		if ($merchant instanceof ElggEntity) {
+			$owner = $merchant->getOwnerEntity();
+			if ($owner) {
+				return "$owner->name [$owner->email]";
+			}
+		}
+		return $merchant ? $merchant->title : '';
+	},
 	'invoice' => function(TransactionInterface $transaction) {
 		return $transaction->guid;
 	},
@@ -134,10 +144,6 @@ $headers = [
 	'payee' => function(TransactionInterface $transaction) {
 		$customer = $transaction->getCustomer();
 		return $customer ? $customer->name : '';
-	},
-	'merchant' => function(TransactionInterface $transaction) {
-		$merchant = $transaction->getMerchant();
-		return $merchant ? $merchant->title : '';
 	},
 	'reward' => function(TransactionInterface $transaction) {
 		$order = $transaction->getOrder();
