@@ -397,3 +397,8 @@ span.campaigns-give-item-stock {
 .elgg-item-object-campaign_donation blockquote .elgg-output {
     margin: 0;
 }
+
+.campaigns-billing-as-shipping {
+    display: block!important;
+    margin: 10px 0 25px !important;
+}
