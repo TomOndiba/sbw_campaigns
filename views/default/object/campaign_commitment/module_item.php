@@ -32,8 +32,10 @@ $title = elgg_format_element('h3', [
 
 $item_list = [];
 $order = $entity->getOrder();
-foreach ($order->all() as $item) {
-	$item_list[] = strtolower("{$item->getQuantity()} $item->title");
+if ($order) {
+	foreach ($order->all() as $item) {
+		$item_list[] = strtolower("{$item->getQuantity()} $item->title");
+	}
 }
 
 echo elgg_view_image_block($icon, $title, [

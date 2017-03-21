@@ -31,7 +31,9 @@ class Cron {
 
 		foreach ($campaigns as $campaign) {
 			/* @var $campaign Campaign */
-			$campaign->end();
+			if ($campaign->end()) {
+				echo PHP_EOL . "Campaign $campaign->title was ended" . PHP_EOL;
+			}
 		}
 
 		elgg_set_ignore_access($ia);
@@ -62,7 +64,9 @@ class Cron {
 
 		foreach ($campaigns as $campaign) {
 			/* @var $campaign Campaign */
-			$campaign->start();
+			if ($campaign->start()) {
+				echo PHP_EOL . "Campaign $campaign->title was started" . PHP_EOL;
+			}
 		}
 
 		elgg_set_ignore_access($ia);

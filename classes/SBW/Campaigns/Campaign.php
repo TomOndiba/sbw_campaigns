@@ -168,6 +168,7 @@ class Campaign extends Merchant {
 			'object_guid' => $this->guid,
 			'target_guid' => $this->container_guid,
 		]);
+		
 		return true;
 	}
 

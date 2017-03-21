@@ -10,8 +10,10 @@ if (!$entity instanceof Commitment) {
 
 $item_list = [];
 $order = $entity->getOrder();
-foreach ($order->all() as $item) {
-	$item_list[] = strtolower("{$item->getQuantity()} $item->title");
+if ($order) {
+	foreach ($order->all() as $item) {
+		$item_list[] = strtolower("{$item->getQuantity()} $item->title");
+	}
 }
 
 echo implode('<br />', $item_list);

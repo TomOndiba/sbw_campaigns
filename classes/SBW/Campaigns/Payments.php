@@ -535,14 +535,20 @@ class Payments {
 
 		$transaction_fees = 0;
 		foreach ($transactions as $transaction) {
-			/* @var $donation Transaction */
+			/* @var $transaction Transaction */
 			if ($transaction->getStatus() == TransactionInterface::STATUS_PAID) {
 				$item = new Contribution();
-				$item->setPrice($transaction->getAmount());
+				$amount = $transaction->getAmount();
+				if ($amount) {
+					$item->setPrice($transaction->getAmount());
+				}
 				$item->title = elgg_echo('campaigns:contribution:from', [$transaction->getCustomer()->name]);
 				$order->add($item);
 
-				$transaction_fees += $transaction->getProcessorFee()->getAmount();
+				$processor_fee = $transaction->getProcessorFee();
+				if ($processor_fee) {
+					$transaction_fees += $processor_fee->getAmount();
+				}
 			}
 		}
 

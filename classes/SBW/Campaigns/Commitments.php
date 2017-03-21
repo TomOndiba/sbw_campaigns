@@ -28,8 +28,10 @@ class Commitments {
 
 		$item_list = [];
 		$order = $commitment->getOrder();
-		foreach ($order->all() as $item) {
-			$item_list[] = "$item->title - {$item->getQuantity()}";
+		if ($order) {
+			foreach ($order->all() as $item) {
+				$item_list[] = "$item->title - {$item->getQuantity()}";
+			}
 		}
 
 		$from = elgg_get_site_entity()->email;
@@ -89,13 +91,18 @@ class Commitments {
 			return;
 		}
 
-		$items = $commitment->getOrder()->all();
+		$order = $commitment->getOrder();
 
-		foreach ($items as $item) {
-			/* @var $item OrderItem */
-			$relief_item = $item->getProduct();
-			/* @var $relief_item ReliefItem */
-			$relief_item->addCommitment($commitment->getCustomer(), $item->getQuantity());
+		if ($order) {
+			$items = $order->all();
+			foreach ($items as $item) {
+				/* @var $item OrderItem */
+				$relief_item = $item->getProduct();
+				if ($relief_item) {
+					/* @var $relief_item ReliefItem */
+					$relief_item->addCommitment($commitment->getCustomer(), $item->getQuantity());
+				}
+			}
 		}
 
 		$campaign = $commitment->getMerchant();
@@ -138,9 +145,10 @@ class Commitments {
 		}
 
 		$item_list = [];
-		$order = $commitment->getOrder();
-		foreach ($order->all() as $item) {
-			$item_list[] = "$item->title - {$item->getQuantity()}";
+		if ($order) {
+			foreach ($order->all() as $item) {
+				$item_list[] = "$item->title - {$item->getQuantity()}";
+			}
 		}
 
 		$from = elgg_get_site_entity()->email;
@@ -193,13 +201,18 @@ class Commitments {
 			return;
 		}
 
-		$items = $commitment->getOrder()->all();
+		$order = $commitment->getOrder();
+		if ($order) {
+			$items = $order->all();
 
-		foreach ($items as $item) {
-			/* @var $item OrderItem */
-			$relief_item = $item->getProduct();
-			/* @var $relief_item ReliefItem */
-			$relief_item->addDelivery($commitment->getCustomer(), $item->getQuantity());
+			foreach ($items as $item) {
+				/* @var $item OrderItem */
+				$relief_item = $item->getProduct();
+				if ($relief_item) {
+					/* @var $relief_item ReliefItem */
+					$relief_item->addDelivery($commitment->getCustomer(), $item->getQuantity());
+				}
+			}
 		}
 
 		self::updateStats($commitment->getMerchant());
@@ -208,9 +221,10 @@ class Commitments {
 		$campaign = $commitment->getMerchant();
 
 		$item_list = [];
-		$order = $commitment->getOrder();
-		foreach ($order->all() as $item) {
-			$item_list[] = "$item->title - {$item->getQuantity()}";
+		if ($order) {
+			foreach ($order->all() as $item) {
+				$item_list[] = "$item->title - {$item->getQuantity()}";
+			}
 		}
 
 		$subject = elgg_echo('campaigns:commitment:delivered:notify:subject', [$campaign->getDisplayName()]);
