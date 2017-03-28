@@ -80,13 +80,13 @@ if ($users) {
 
 	if ($register && $username && $password) {
 		try {
-			$guid = register_user($username, $password, $name, $email);
+			$user_guid = register_user($username, $password, $name, $email);
 		} catch (Exception $e) {
 			register_error($e->getMessage());
 		}
 
-		if ($guid) {
-			$user = get_entity($guid);
+		if ($user_guid) {
+			$user = get_entity($user_guid);
 			$params = array(
 				'user' => $user,
 				'password' => $password,
@@ -94,6 +94,7 @@ if ($users) {
 			if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
 				$ia = elgg_set_ignore_access(true);
 				$user->delete();
+				unset($user);
 				elgg_set_ignore_access($ia);
 			}
 		}
