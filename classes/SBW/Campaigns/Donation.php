@@ -4,6 +4,7 @@ namespace SBW\Campaigns;
 
 use ElggObject;
 use hypeJunction\Payments\Amount;
+use hypeJunction\Payments\SerializedMetadata;
 
 /**
  * @property int    $net_amount
@@ -13,6 +14,8 @@ use hypeJunction\Payments\Amount;
  */
 class Donation extends ElggObject {
 
+	use SerializedMetadata;
+	
 	const SUBTYPE = 'campaign_donation';
 
 	/**

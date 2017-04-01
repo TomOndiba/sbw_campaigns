@@ -38,7 +38,7 @@ if ($object instanceof SBW\Campaigns\Donation) {
 }
 
 $vars['message'] = elgg_view('output/longtext', [
-	'value' => $object->comment,
+	'value' => $object->getUnserializedMetadata('comment'),
 		]);
 
 $vars['attachments'] = elgg_view('campaigns/modules/river', [

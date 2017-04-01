@@ -33,10 +33,10 @@ $amount = elgg_format_element('div', [
 	'class' => 'campaigns-donation-amount',
 		], $entity->getNetAmount()->format());
 
-$comment = '';
-if ($entity->comment) {
+$comment = $entity->getUnserializedMetadata('comment');
+if ($comment) {
 	$comment = elgg_view('output/longtext', [
-		'value' => $entity->comment,
+		'value' => $comment,
 	]);
 	$comment = elgg_format_element('blockquote', [], $comment);
 }

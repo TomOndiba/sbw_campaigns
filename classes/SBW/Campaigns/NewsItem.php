@@ -3,9 +3,12 @@
 namespace SBW\Campaigns;
 
 use ElggObject;
+use hypeJunction\Payments\SerializedMetadata;
 
 class NewsItem extends ElggObject {
 
+	use SerializedMetadata;
+	
 	const SUBTYPE = 'campaign_news';
 
 	/**

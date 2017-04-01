@@ -172,7 +172,7 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->container_guid = $campaign->guid;
 	$transaction->access_id = $campaign->access_id;
 
-	$transaction->comment = get_input('comment');
+	$transaction->setSerializedMetadata('comment', get_input('comment'));
 	
 	$transaction->save();
 
@@ -204,7 +204,7 @@ if ($campaign->model == Campaign::MODEL_RELIEF) {
 	$transaction->container_guid = $campaign->guid;
 	$transaction->access_id = $campaign->write_access_id;
 
-	$transaction->comment = get_input('comment');
+	$transaction->setSerializedMetadata('comment', get_input('comment'));
 
 	$transaction->save();
 
