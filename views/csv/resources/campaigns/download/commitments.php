@@ -55,6 +55,9 @@ $transaction_meta = function(TransactionInterface $transaction, $name) {
 };
 
 $headers = [
+	'date' => function(TransactionInterface $transaction) {
+		return date('j M, Y H:i', $transaction->time_created);
+	},
 	'invoice' => function(TransactionInterface $transaction) {
 		return $transaction->guid;
 	},

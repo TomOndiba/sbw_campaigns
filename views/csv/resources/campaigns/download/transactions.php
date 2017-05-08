@@ -93,6 +93,9 @@ $site_commission = function(TransactionInterface $transaction) use ($processor_f
 };
 
 $headers = [
+	'date' => function(TransactionInterface $transaction) {
+		return date('j M, Y H:i', $transaction->time_created);
+	},
 	'campaign' => function(TransactionInterface $transaction) {
 		return $transaction->getContainerEntity()->getDisplayName();
 	},
