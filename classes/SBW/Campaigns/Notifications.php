@@ -189,11 +189,11 @@ class Notifications {
 			$return = [];
 		}
 
-		if (!$object instanceof Campaign) {
+		if (!$object instanceof Campaign && $object instanceof ElggObject) {
 			// Notify campaigns subscribers about donations, news items etc contained by the campaign
 			$object = $object->getContainerEntity();
 		}
-		
+
 		if ($object instanceof Campaign) {
 			$dbprefix = elgg_get_config('dbprefix');
 			$query = "
