@@ -153,7 +153,7 @@ foreach ($transactions as $transaction) {
 		error_log("Something is wrong with transaction with the guid $transaction->guid. Transaction amount information is missing or corrupted");
 		continue;
 	}
-	
+
 	if (!$headerDisplayed) {
 		// Use the keys from $data as the titles
 		fputcsv($fh, array_keys($headers));
