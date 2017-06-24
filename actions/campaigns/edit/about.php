@@ -109,7 +109,14 @@ $website = get_input('website', '');
 $location = get_input('location', '');
 
 $entity->title = htmlentities($title, ENT_QUOTES, 'UTF-8');
-$entity->description = $description;
+foreach ($description as $lang => $desc) {
+	if ($lang == 'en') {
+		$entity->description = $desc;
+	} else {
+		$entity->{"description_{$lang}"} = $desc;
+	}
+}
+
 $entity->briefdescription = elgg_get_excerpt($briefdescription);
 $entity->rules = $rules;
 $entity->tags = string_to_tag_array($tags);

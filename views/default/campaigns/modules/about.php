@@ -8,9 +8,41 @@ if (!$entity instanceof Campaign) {
 	return;
 }
 
-echo elgg_view('output/longtext', [
-	'value' => $entity->description,
-]);
+$tabs = [];
+$languages = array_keys(get_installed_translations());
+foreach ($languages as $lang) {
+	if ($lang == 'en') {
+		$value = $entity->description;
+	} else {
+		$value = $entity->{"description_{$lang}"};
+	}
+	if (!$value) {
+		continue;
+	}
+
+	if (elgg_view_exists("language_selector/flags/$lang.gif")) {
+		$label = elgg_view('output/img', [
+			'src' => elgg_get_simplecache_url("language_selector/flags/$lang.gif"),
+			'alt' => elgg_echo($lang),
+		]);
+	} else {
+		$label = elgg_echo($lang);
+	}
+
+	$tabs[] = [
+		'text' => $label,
+		'content' => elgg_view('output/longtext', [
+			'value' => $value,
+		]),
+		'selected' => get_current_language() == $lang,
+	];
+}
+
+if (!empty($tabs)) {
+	echo elgg_view('page/components/tabs', [
+		'tabs' => $tabs,
+	]);
+}
 
 $links[] = [
 	'name' => 'terms:campaign',

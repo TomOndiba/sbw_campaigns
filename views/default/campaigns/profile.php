@@ -8,48 +8,65 @@ if (!$entity instanceof Campaign) {
 	return;
 }
 
-$media = elgg_view('campaigns/modules/media', $vars);
+$tabs = [];
 
-$news = elgg_view('campaigns/modules/news', $vars);
-if ($news) {
-	$news = elgg_view_module('aside', elgg_echo('campaigns:news'), $news, [
-		'class' => 'campaigns-module',
-	]);
-}
+$media = elgg_view('campaigns/modules/media', $vars);
 
 $about = elgg_view('campaigns/modules/about', $vars);
 if ($about) {
-	$about = elgg_view_module('aside', elgg_echo('campaigns:about'), $about, [
-		'class' => 'campaigns-module',
-	]);
+	$tabs[] = [
+		'text' => elgg_echo('campaigns:about'),
+		'content' => $about,
+		'selected' => true,
+	];
+}
+
+$comments = elgg_view_comments($entity);
+if ($comments) {
+	$tabs[] = [
+		'text' => elgg_echo('comments'),
+		'content' => $comments,
+	];
+}
+
+$news = elgg_view('campaigns/modules/news', $vars);
+if ($news) {
+	$tabs[] = [
+		'text' => elgg_echo('campaigns:news'),
+		'content' => $news,
+	];
 }
 
 if ($entity->model == Campaign::MODEL_RELIEF) {
 	$commitments = elgg_view('campaigns/modules/commitments', $vars);
 	if ($commitments) {
-		$commitments = elgg_view_module('aside', elgg_echo('campaigns:commitments'), $commitments, [
-			'class' => 'campaigns-module',
-		]);
+		$tabs[] = [
+			'text' => elgg_echo('campaigns:commitments'),
+			'content' => $commitments,
+		];
 	}
 } else {
 	$donations = elgg_view('campaigns/modules/donations', $vars);
 	if ($donations) {
-		$donations = elgg_view_module('aside', elgg_echo('campaigns:donations'), $donations, [
-			'class' => 'campaigns-module',
-		]);
+		$tabs[] = [
+			'text' => elgg_echo('campaigns:donations'),
+			'content' => $donations,
+		];
 	}
 }
 
-$comments = elgg_view_comments($entity);
-if ($comments) {
-	$comments = elgg_view_module('aside', elgg_echo('comments'), $comments, [
-		'class' => 'campaigns-module',
-	]);
-}
-
 echo $media;
-echo $about;
-echo $news;
-echo $commitments;
-echo $donations;
-echo $comments;
+
+echo elgg_view('page/components/tabs', [
+	'tabs' => $tabs,
+]);
+
+$items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
+foreach ($items as &$item) {
+	$item->addLinkClass('elgg-button elgg-button-action');
+}
+echo elgg_view_menu('campaign:actions', [
+	'items' => $items,
+	'class' => 'elgg-menu-hz',
+	'sort_by' => 'priority',
+]);

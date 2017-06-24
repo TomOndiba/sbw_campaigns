@@ -13,6 +13,7 @@ class Forms {
 	 * @param string $type   "campaigns/edit/about"
 	 * @param array  $return Fields
 	 * @param array  $params Hook params
+	 *
 	 * @return array
 	 */
 	public static function setupAboutForm($hook, $type, $return, $params) {
@@ -38,24 +39,24 @@ class Forms {
 		$default_status = $entity->isPublished() ? 'published' : 'draft';
 
 		$fields = [
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'guid',
 				'value' => $entity->guid,
 			],
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'container_guid',
 				'value' => $container->guid,
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:title'),
 				'name' => 'title',
 				'required' => true,
 				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:briefdescription'),
 				'name' => 'briefdescription',
@@ -63,14 +64,15 @@ class Forms {
 				'required' => true,
 				'value' => elgg_extract('briefdescription', $params, $entity->briefdescription),
 			],
-				[
-				'#type' => 'longtext',
+			[
+				'#type' => 'campaigns/description',
 				'#label' => elgg_echo('campaigns:field:description'),
 				'name' => 'description',
 				'required' => true,
-				'value' => elgg_extract('description', $params, $entity->description),
+				'value' => elgg_extract('description', $params),
+				'entity' => $entity,
 			],
-				[
+			[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('campaigns:field:rules'),
 				'#help' => elgg_echo('campaigns:field:rules:help'),
@@ -78,39 +80,39 @@ class Forms {
 				'required' => true,
 				'value' => elgg_extract('rules', $params, $entity->rules),
 			],
-				[
+			[
 				'#type' => 'file',
 				'#label' => elgg_echo('campaigns:field:icon'),
 				'#help' => elgg_echo('campaigns:field:icon:help'),
 				'name' => 'icon',
 				'value' => $entity->guid && $entity->hasIcon('small'),
 			],
-				[
+			[
 				'#type' => 'tags',
 				'#label' => elgg_echo('tags'),
 				'name' => 'tags',
 				'value' => elgg_extract('tags', $params, $entity->tags),
 			],
-				[
+			[
 				'#type' => 'url',
 				'#label' => elgg_echo('campaigns:field:video_url'),
 				'#help' => elgg_echo('campaigns:field:video_url:help'),
 				'name' => 'video_url',
 				'value' => elgg_extract('video_url', $params, $entity->video_url),
 			],
-				[
+			[
 				'#type' => 'url',
 				'#label' => elgg_echo('campaigns:field:website'),
 				'name' => 'website',
 				'value' => elgg_extract('website', $params, $entity->website),
 			],
-				[
+			[
 				'#type' => 'location',
 				'#label' => elgg_echo('campaigns:field:location'),
 				'name' => 'location',
 				'value' => elgg_extract('location', $params, $entity->location),
 			],
-				[
+			[
 				'#type' => 'access',
 				'#label' => elgg_echo('campaigns:field:access'),
 				'name' => 'access_id',
@@ -141,12 +143,12 @@ class Forms {
 		if (!$entity->started || elgg_is_admin_logged_in()) {
 			// Details that can not be changed after the campaign start
 			$non_editable = [
-					[
+				[
 					'#type' => 'fieldset',
 					'#label' => elgg_echo('campaigns:field:model'),
 					'class' => 'campaigns-field-model',
 					'fields' => [
-							[
+						[
 							'#type' => 'radio',
 							'#help' => elgg_echo('campaigns:model:all_or_nothing:help'),
 							'name' => 'model',
@@ -156,7 +158,7 @@ class Forms {
 							]),
 							'required' => true,
 						],
-							[
+						[
 							'#type' => 'radio',
 							'#help' => elgg_echo('campaigns:model:money_pot:help'),
 							'name' => 'model',
@@ -167,7 +169,7 @@ class Forms {
 							]),
 							'required' => true,
 						],
-							[
+						[
 							'#type' => 'radio',
 							'#help' => elgg_echo('campaigns:model:relief:help'),
 							'name' => 'model',
@@ -180,11 +182,11 @@ class Forms {
 						],
 					]
 				],
-					[
+				[
 					'#type' => 'fieldset',
 					'align' => 'horizontal',
 					'fields' => [
-							[
+						[
 							'#type' => 'date',
 							'#label' => elgg_echo('campaigns:field:calendar_start'),
 							'name' => 'calendar_start',
@@ -196,7 +198,7 @@ class Forms {
 							],
 							'required' => true,
 						],
-							[
+						[
 							'#type' => 'date',
 							'#label' => elgg_echo('campaigns:field:calendar_end'),
 							'name' => 'calendar_end',
@@ -210,7 +212,7 @@ class Forms {
 						],
 					]
 				],
-					[
+				[
 					'#type' => 'fieldset',
 					'#class' => [
 						'campaigns-field-monetary',
@@ -218,21 +220,21 @@ class Forms {
 					],
 					'align' => 'horizontal',
 					'fields' => [
-							[
+						[
 							'#type' => 'text',
 							'#label' => elgg_echo('campaigns:field:target_amount'),
 							'value' => elgg_extract('target_amount', $params, $target_amount),
 							'name' => 'target_amount',
 							'required' => true,
 						],
-							[
+						[
 							'#type' => 'text',
 							'#label' => elgg_echo('campaigns:field:donation_minimum'),
 							'value' => elgg_extract('donation_minimum', $params, $donation_minimum),
 							'name' => 'donation_minimum',
 							'required' => true,
 						],
-							[
+						[
 							'#type' => 'payments/currency',
 							'#label' => elgg_echo('campaigns:field:currency'),
 							'value' => elgg_extract('currency', $params, $entity->currency),
@@ -286,6 +288,7 @@ class Forms {
 	 * @param string $type   "campaigns/edit/reward"
 	 * @param array  $return Fields
 	 * @param array  $params Hook params
+	 *
 	 * @return array
 	 */
 	public static function setupRewardForm($hook, $type, $return, $params) {
@@ -305,55 +308,55 @@ class Forms {
 		}
 
 		$fields = [
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'guid',
 				'value' => $entity->guid,
 			],
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'container_guid',
 				'value' => $container->guid,
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:title'),
 				'name' => 'title',
 				'required' => true,
 				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
 			],
-				[
+			[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('campaigns:field:description'),
 				'name' => 'description',
 				'required' => true,
 				'value' => elgg_extract('description', $params, $entity->description),
 			],
-				[
+			[
 				'#type' => 'file',
 				'#label' => elgg_echo('campaigns:field:icon'),
 				'#help' => elgg_echo('campaigns:field:icon:help'),
 				'name' => 'icon',
 				'value' => $entity->guid && $entity->hasIcon('small'),
 			],
-				[
+			[
 				'#type' => 'fieldset',
 				'align' => 'horizontal',
 				'fields' => [
-						[
+					[
 						'#type' => 'text',
 						'#label' => elgg_echo('campaigns:field:donation_minimum'),
 						'value' => elgg_extract('donation_minimum', $params, $donation_minimum),
 						'name' => 'donation_minimum',
 						'required' => true,
 					],
-						[
+					[
 						'#type' => 'text',
 						'#label' => elgg_echo('campaigns:field:currency'),
 						'disabled' => true,
 						'value' => $container->currency,
 					],
-						[
+					[
 						'#type' => 'text',
 						'#label' => elgg_echo('campaigns:field:quantity'),
 						'value' => elgg_extract('quantity', $params, $entity->getStock()),
@@ -374,6 +377,7 @@ class Forms {
 	 * @param string $type   "campaigns/edit/relief_item"
 	 * @param array  $return Fields
 	 * @param array  $params Hook params
+	 *
 	 * @return array
 	 */
 	public static function setupReliefItemForm($hook, $type, $return, $params) {
@@ -387,37 +391,37 @@ class Forms {
 		}
 
 		$fields = [
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'guid',
 				'value' => $entity->guid,
 			],
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'container_guid',
 				'value' => $container->guid,
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:title'),
 				'name' => 'title',
 				'required' => true,
 				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
 			],
-				[
+			[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('campaigns:field:description'),
 				'name' => 'description',
 				'required' => true,
 				'value' => elgg_extract('description', $params, $entity->description),
 			],
-				[
+			[
 				'#type' => 'file',
 				'#label' => elgg_echo('campaigns:field:icon'),
 				'name' => 'icon',
 				'value' => $entity->guid && $entity->hasIcon('small'),
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:required_quantity'),
 				'value' => elgg_extract('required_quantity', $params, $entity->required_quantity),
@@ -436,6 +440,7 @@ class Forms {
 	 * @param string $type   "campaigns/edit/news_item"
 	 * @param array  $return Fields
 	 * @param array  $params Hook params
+	 *
 	 * @return array
 	 */
 	public static function setupNewsItemForm($hook, $type, $return, $params) {
@@ -449,24 +454,24 @@ class Forms {
 		}
 
 		$fields = [
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'guid',
 				'value' => $entity->guid,
 			],
-				[
+			[
 				'#type' => 'hidden',
 				'name' => 'container_guid',
 				'value' => $container->guid,
 			],
-				[
+			[
 				'#type' => 'text',
 				'#label' => elgg_echo('campaigns:field:title'),
 				'name' => 'title',
 				'required' => true,
 				'value' => elgg_extract('title', $params, $entity->getDisplayName()),
 			],
-				[
+			[
 				'#type' => 'longtext',
 				'#label' => elgg_echo('campaigns:field:description'),
 				'name' => 'description',

@@ -397,3 +397,19 @@ span.campaigns-give-item-stock {
     display: block!important;
     margin: 10px 0 25px !important;
 }
+
+.campaigns-main-content .elgg-tabs-component > .elgg-body {
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-top: 0;
+    padding: 16px;
+}
+
+.campaigns-main-content .elgg-tabs-component > .elgg-head {
+    margin:0
+
+}
+
+.campaigns-main-content .elgg-tabs {
+    margin: 0;
+}
