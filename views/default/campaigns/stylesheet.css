@@ -130,11 +130,6 @@
     font-style: italic;
 }
 
-.campaigns-profile-layout table,
-.campaigns-table {
-    table-layout: fixed;
-}
-
 .campaigns-give-item-minimimum-donation {
     margin: 0 10px;
     font-weight: bold;
