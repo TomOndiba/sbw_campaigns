@@ -543,4 +543,16 @@ return [
 
 	'campaigns:checkout:comment' => 'Comment',
 	'campaigns:checkout:comment:help' => 'Here you can add a comment that will be displayed publically next to your donation listing',
+
+	'payments:wire:instructions:reminder' => 'Reminder about your donation to %s',
+	'payments:wire:instructions:body:reminder' => '
+		You have recently decided to make a donation of %s to %s using wire transfer. 
+		
+		If you have not yet made the transfer, please use the following banking details:
+
+		%s
+
+		You can view the details of the transaction here:
+		%s
+	',
 ];
