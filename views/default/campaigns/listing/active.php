@@ -4,11 +4,13 @@ echo elgg_list_entities_from_metadata([
 	'types' => 'object',
 	'subtypes' => SBW\Campaigns\Campaign::SUBTYPE,
 	'metadata_name_value_pairs' => [
-		// Only show campaigns that have ended max 1 day ago
+		// Show only campaigns that haven't been ended. The 'ended'
+		// metadata will be FALSE until the campaign gets ended (either
+		// by cron or manual ending). After that the value is timestamp
+		// of the ending time.
 		[
-			'name' => 'calendar_end',
-			'value' => time() - 24 * 60 * 60,
-			'operand' => '>='
+			'name' => 'ended',
+			'value' => false,
 		],
 	],
 	'order_by_metadata' => [
