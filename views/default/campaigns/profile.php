@@ -8,6 +8,8 @@ if (!$entity instanceof Campaign) {
 	return;
 }
 
+echo elgg_format_element('div', ['id' => 'campaigns-page-start']);
+
 $tabs = [];
 
 $media = elgg_view('campaigns/modules/media', $vars);
@@ -65,6 +67,15 @@ $items = \SBW\Campaigns\Menus::getProfileMenuItems($entity);
 foreach ($items as &$item) {
 	$item->addLinkClass('elgg-button elgg-button-action');
 }
+
+$items[] = [
+	'name' => 'page-start',
+	'href' => '#campaigns-page-start',
+	'text' => elgg_view_icon('arrow-up') . elgg_echo('campaigns:page-start'),
+	'priority' => 1,
+	'link_class' => 'elgg-button elgg-button-action',
+];
+
 echo elgg_view_menu('campaign:actions', [
 	'items' => $items,
 	'class' => 'elgg-menu-hz',

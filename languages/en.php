@@ -555,4 +555,7 @@ return [
 		You can view the details of the transaction here:
 		%s
 	',
+
+	'campaigns:page-start' => 'Top',
+
 ];

@@ -413,3 +413,22 @@ span.campaigns-give-item-stock {
 .campaigns-main-content .elgg-tabs {
     margin: 0;
 }
+
+.elgg-menu.elgg-menu-campaign-actions {
+    text-align: center;
+}
+
+.elgg-menu.elgg-menu-campaign-actions > li + li {
+    margin-left: 8px;
+}
+
+.elgg-menu.elgg-menu-campaign-actions > li .elgg-icon {
+    color: inherit;
+    font-size: inherit;
+    margin-right: 8px;
+}
+
+#campaigns-page-start {
+    position: absolute;
+    top: -300px;
+}
