@@ -44,6 +44,7 @@ foreach ($languages as $lang) {
 	}
 
 	$field_vars = $vars;
+	$filed_vars['id'] = "elgg-field-" . base_convert(mt_rand(), 10, 36);
 	$field_vars['required'] = $vars['required'] && $lang !== 'en';
 	$field_vars['name'] = "{$vars['name']}[$lang]";
 	$field_vars['value'] = elgg_extract($lang, $value);
